@@ -1,0 +1,10 @@
+Redesign index.html, css/style.css and js/app.js for MathSolveIQ to look like a modern AI math solver app with a sidebar layout. Keep every feature that already works (graph, quadratic, tools, formulas, router, dark mode, API_URL).
+
+DESKTOP LAYOUT
+- Fixed left sidebar, 260px wide, containing top to bottom: logo "MathSolveIQ", a "New Chat" button, a "Calculators" link, "Practice Tests" link, "Video Lessons" link, "Formulas" link, a "Recent" list (read from localStorage, shows "No chats yet" when empty), then at the bottom: language dropdown, "Sign in to sync" button, theme toggle, and small links to Blog, Contact, Privacy, Terms.
+- Main area on the right, centred content, max width 820px.
+
+HOME (main area)
+- Big heading "Free AI Math Solver" and one short sentence below it.
+- A large rounded input card: a textarea with placeholder "Type your math problem, or click Σ to insert a formula…", a row of buttons under it: Upload image or PDF, Σ math keyboard (opens a popup of symbols), microphone, and a Solve button. Under the card, 3 chips to choose the mode: Full solution, Hints only, Socratic.
+- Section "Popular
