@@ -1,138 +1,172 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MathSolveIQ - Free AI Math Helper & Calculators</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- KaTeX for math rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-</head>
-<body>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathSolveIQ – Free Math Solver</title>
+<meta name="description" content="MathSolveIQ: a free math helper with step-by-step explanations, hints, graphing and calculators.">
+<link rel="stylesheet" href="css/style.css"></head><body>
 
-  <header>
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
-      <a href="#home" style="font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration:none;">MathSolve<span style="color: var(--text-main);">IQ</span></a>
-      <nav style="display: flex; gap: 18px;">
-        <a href="#home">Home</a>
-        <a href="#calculators">Calculators</a>
-        <a href="#graph">Graph</a>
-        <a href="#quadratic">Quadratic</a>
-        <a href="#tools">Tools</a>
-        <a href="#formulas">Formulas</a>
-      </nav>
-      <a href="#home" style="background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration:none;">+ New problem</a>
-    </div>
-  </header>
+<header><div class="wrap">
+ <a class="logo" href="#home">MathSolve<span>IQ</span></a>
+ <a class="btn newchat" href="#home" id="newchat">＋ New problem</a>
+ <nav id="nav">
+  <a href="#home">Home</a><a href="#calculators">Calculators</a><a href="#graph">Graph</a>
+  <a href="#quadratic">Quadratic</a><a href="#tools">Tools</a><a href="#formulas">Formulas</a>
+ </nav>
+ <div class="recent"><div class="rt">Recent</div><div id="recent"><span class="hint">No problems yet</span></div></div>
+ <button class="btn ghost" id="theme" aria-label="Toggle theme">◐</button>
+</div></header>
 
-  <main style="max-width: 1000px; margin: 0 auto; padding: 20px;">
+<main class="wrap">
 
-    <!-- Hero AI Solver Box -->
-    <section id="home" class="solver-box">
-      <h2 style="margin-top:0;">Free AI Math Helper</h2>
-      <p style="color: var(--text-muted);">Type a problem, speak it, or pick a calculator. Learn the method, not just the answer.</p>
+<!-- ===== PAGE: home ===== -->
+<section class="page" id="page-home">
+ <h2>Free AI Math Helper</h2>
+ <p class="lead">Type a problem, speak it, or pick a calculator. Learn the method, not just the answer.</p>
 
-      <div style="display: flex; gap: 10px; margin: 20px 0;">
-        <input type="text" placeholder="Type a math problem (e.g. x^2 - 4 = 0)..." style="flex: 1; padding: 14px 18px; border-radius: var(--radius-input); border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); font-size: 1rem; outline: none;" />
-        <button style="background: var(--primary); color: white; border: none; padding: 0 24px; border-radius: var(--radius-input); font-weight: 600; cursor: pointer;">Solve</button>
-      </div>
+ <div class="card hero">
+  <textarea id="q" placeholder="Type your math problem, or tap Σ to add symbols…"></textarea>
+  <div class="syms" id="syms" hidden></div>
+  <div class="row">
+   <button class="btn ghost fit" id="symBtn" type="button">Σ</button>
+   <button class="btn ghost fit" id="micBtn" type="button">🎤 Speak</button>
+   <button class="btn ghost fit" type="button" disabled title="Coming soon">📷 Photo (soon)</button>
+   <button class="btn fit" id="solveBtn" type="button">Solve step by step</button>
+  </div>
+  <div class="chips" id="modes">
+   <button class="chip on" data-m="">Full solution</button>
+   <button class="chip" data-m="Give hints only, one at a time. Do not reveal the final answer. Problem: ">Hints only</button>
+   <button class="chip" data-m="Act as a Socratic tutor: ask guiding questions, never give the answer. Problem: ">Socratic</button>
+  </div>
+  <div class="out" id="solveOut"></div>
+ </div>
 
-      <h3>Popular calculators</h3>
-      <div class="grid-container">
-        <div class="card"><b>Algebra Solver</b><p style="color: var(--text-muted); font-size: 0.85rem;">Linear equations & polynomials</p></div>
-        <div class="card"><b>Calculus</b><p style="color: var(--text-muted); font-size: 0.85rem;">Integrals & derivatives</p></div>
-        <div class="card"><b>Trigonometry</b><p style="color: var(--text-muted); font-size: 0.85rem;">Angles & identities</p></div>
-      </div>
-      <p style="margin-top: 15px;"><a href="#calculators" style="color: var(--primary);">Browse all calculators ?</a></p>
-    </section>
+ <h3>Popular calculators</h3>
+ <div class="grid" id="popular"></div>
+ <p><a href="#calculators">Browse all calculators →</a></p>
 
-    <!-- How it works -->
-    <section style="margin-top: 40px;">
-      <h3>How it works</h3>
-      <div class="grid-container">
-        <div class="card"><span>1</span> <b>Enter</b><p style="color: var(--text-muted);">Type, speak or choose a calculator for your problem.</p></div>
-        <div class="card"><span>2</span> <b>Understand</b><p style="color: var(--text-muted);">See every step with the rule used and the reason for it.</p></div>
-        <div class="card"><span>3</span> <b>Practise</b><p style="color: var(--text-muted);">Ask follow-ups, request hints and try similar questions.</p></div>
-      </div>
-    </section>
+ <h3>How it works</h3>
+ <div class="grid steps3">
+  <div class="card"><span class="num">1</span><b>Enter</b><p>Type, speak or choose a calculator for your problem.</p></div>
+  <div class="card"><span class="num">2</span><b>Understand</b><p>See every step with the rule used and the reason for it.</p></div>
+  <div class="card"><span class="num">3</span><b>Practise</b><p>Ask follow-ups, request hints and try similar questions.</p></div>
+ </div>
 
-    <!-- Why Students Pick MathSolveIQ -->
-    <section style="margin-top: 40px;">
-      <h3>Why students pick MathSolveIQ</h3>
-      <div class="grid-container">
-        <div class="card"><b>Hints, not just answers</b><p style="color: var(--text-muted);">Switch to hint or Socratic mode and work it out yourself.</p></div>
-        <div class="card"><b>Your language</b><p style="color: var(--text-muted);">Explanations in English, Urdu, Hindi and Roman Urdu.</p></div>
-        <div class="card"><b>Instant tools</b><p style="color: var(--text-muted);">Graphing, quadratics, units and statistics work in milliseconds.</p></div>
-        <div class="card"><b>Made for exams</b><p style="color: var(--text-muted);">Built around SAT, AP, O/A Level, FSc and JEE style questions.</p></div>
-        <div class="card"><b>Free to start</b><p style="color: var(--text-muted);">Core tools need no account and no payment.</p></div>
-        <div class="card"><b>Works on phones</b><p style="color: var(--text-muted);">Light and dark themes, tuned for small screens.</p></div>
-      </div>
-    </section>
+ <h3>Why students pick MathSolveIQ</h3>
+ <div class="grid">
+  <div class="card"><b>Hints, not just answers</b><p>Switch to hint or Socratic mode and work it out yourself.</p></div>
+  <div class="card"><b>Your language</b><p>Explanations in English, Urdu, Hindi and Roman Urdu.</p></div>
+  <div class="card"><b>Instant tools</b><p>Graphing, quadratics, units and statistics work in milliseconds.</p></div>
+  <div class="card"><b>Made for exams</b><p>Built around SAT, AP, O/A Level, FSc and JEE style questions.</p></div>
+  <div class="card"><b>Free to start</b><p>Core tools need no account and no payment.</p></div>
+  <div class="card"><b>Works on phones</b><p>Light and dark themes, tuned for small screens.</p></div>
+ </div>
 
-    <!-- Subjects -->
-    <section style="margin-top: 40px;">
-      <h3>Subjects</h3>
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <span class="card" style="padding: 6px 14px;">Arithmetic</span>
-        <span class="card" style="padding: 6px 14px;">Algebra</span>
-        <span class="card" style="padding: 6px 14px;">Geometry</span>
-        <span class="card" style="padding: 6px 14px;">Trigonometry</span>
-        <span class="card" style="padding: 6px 14px;">Precalculus</span>
-        <span class="card" style="padding: 6px 14px;">Calculus</span>
-        <span class="card" style="padding: 6px 14px;">Linear algebra</span>
-        <span class="card" style="padding: 6px 14px;">Statistics</span>
-        <span class="card" style="padding: 6px 14px;">Probability</span>
-      </div>
-    </section>
+ <h3>Subjects</h3>
+ <p class="subj"><span>Arithmetic</span><span>Algebra</span><span>Geometry</span><span>Trigonometry</span><span>Precalculus</span><span>Calculus</span><span>Linear algebra</span><span>Statistics</span><span>Probability</span></p>
 
-    <!-- Graphing Tool Section -->
-    <section id="graph" class="solver-box" style="margin-top: 50px;">
-      <h2>Interactive Graphing Calculator</h2>
-      <p style="color: var(--text-muted);">Use x, + - * / ^, sin, cos, tan, sqrt, abs, ln, log, exp, pi, e. Drag to pan, wheel to zoom.</p>
-      <div style="text-align: center;">
-        <canvas height="400" width="700" style="max-width: 100%; border: 1px solid var(--border-color); border-radius: 12px; background: var(--bg-card);"></canvas>
-      </div>
-    </section>
+ <h3>Questions</h3>
+ <details><summary>Is it really free?</summary><p>Yes. The core tools are free and need no account.</p></details>
+ <details><summary>Can I trust the answers?</summary><p>AI can slip, especially with arithmetic. Use the check step and verify important results.</p></details>
+ <details><summary>What is Socratic mode?</summary><p>The helper asks guiding questions instead of giving the answer, so you reach it yourself.</p></details>
+ <details><summary>Which topics are covered?</summary><p>From arithmetic to calculus, linear algebra, statistics and probability.</p></details>
+ <details><summary>Does it work offline?</summary><p>The graph, quadratic and tools pages run in your browser. The AI solver needs internet.</p></details>
+</section>
 
-    <!-- Quadratic Solver Section -->
-    <section id="quadratic" class="solver-box" style="margin-top: 40px;">
-      <h2>Quadratic Equation Solver</h2>
-      <p style="color: var(--text-muted);">Solve equations of form ax� + bx + c = 0</p>
-    </section>
+<!-- ===== PAGE: calculators ===== -->
+<section class="page" id="page-calculators">
+ <h2>Calculators</h2><p class="lead">Pick a skill. Tools with their own page open directly; the others fill the solver for you.</p>
+ <div class="grid" id="allcalc"></div>
+</section>
 
-    <!-- Tools Section -->
-    <section id="tools" class="solver-box" style="margin-top: 40px;">
-      <h2>Tools</h2>
-      <p style="color: var(--text-muted);">Scientific calculator, unit converter and statistics.</p>
-      <div class="grid-container">
-        <div class="card"><b>Scientific calculator</b></div>
-        <div class="card"><b>Unit converter</b></div>
-        <div class="card"><b>Statistics</b></div>
-      </div>
-    </section>
+<!-- ===== PAGE: graph ===== -->
+<section class="page" id="page-graph">
+ <h2>Graph</h2><p class="lead">Use x, + − * / ^, sin, cos, tan, sqrt, abs, ln, log, exp, pi, e. Drag to pan, wheel to zoom.</p>
+ <div class="card">
+  <div id="fns"></div>
+  <div class="row"><button class="btn ghost fit" id="addf">+ Add</button><button class="btn fit" id="plot">Plot</button><button class="btn ghost fit" id="rst">Reset view</button></div>
+  <canvas id="cv" width="800" height="520" style="margin-top:12px"></canvas>
+ </div>
+</section>
 
-    <!-- Formulas Section -->
-    <section id="formulas" class="solver-box" style="margin-top: 40px;">
-      <h2>Formulas Reference</h2>
-      <p style="color: var(--text-muted);">Quick mathematical formulas lookup.</p>
-    </section>
+<!-- ===== PAGE: quadratic ===== -->
+<section class="page" id="page-quadratic">
+ <h2>Quadratic Equation Solver</h2><p class="lead">ax² + bx + c = 0</p>
+ <div class="card">
+  <div class="row"><input id="qa" type="number" step="any" value="1" placeholder="a"><input id="qb" type="number" step="any" value="-5" placeholder="b"><input id="qc" type="number" step="any" value="6" placeholder="c"><button class="btn fit" id="qgo">Solve</button></div>
+  <div id="qout" style="margin-top:12px"></div>
+ </div>
+</section>
 
-    <!-- FAQ Accordion -->
-    <section style="margin-top: 40px;">
-      <h3>Questions</h3>
-      <details><summary>Is it really free?</summary><p style="color: var(--text-muted);">Yes. The core tools are free and need no account.</p></details>
-      <details><summary>Can I trust the answers?</summary><p style="color: var(--text-muted);">AI can slip, especially with arithmetic. Use the check step and verify important results.</p></details>
-      <details><summary>What is Socratic mode?</summary><p style="color: var(--text-muted);">The helper asks guiding questions instead of giving the answer, so you reach it yourself.</p></details>
-      <details><summary>Which topics are covered?</summary><p style="color: var(--text-muted);">From arithmetic to calculus, linear algebra, statistics and probability.</p></details>
-      <details><summary>Does it work offline?</summary><p style="color: var(--text-muted);">The graph, quadratic and tools pages run in your browser. The AI solver needs internet.</p></details>
-    </section>
+<!-- ===== PAGE: tools ===== -->
+<section class="page" id="page-tools">
+ <h2>Tools</h2><p class="lead">Calculator, unit converter and statistics.</p>
+ <div class="card"><b>Scientific calculator</b>
+  <div class="row"><input id="sc" placeholder="sin(pi/2)+sqrt(16)*2^3"><button class="btn fit" id="scg">=</button></div><div class="out" id="sr"></div></div>
+ <div class="card"><b>Unit converter</b>
+  <div class="row"><select id="uc"></select><input id="uv" type="number" value="1"><select id="uf"></select><select id="ut"></select></div><div class="out" id="ur"></div></div>
+ <div class="card"><b>Statistics</b>
+  <div class="row"><input id="st" placeholder="4, 8, 15, 16, 23, 42"><button class="btn fit" id="stg">Calculate</button></div><div class="out" id="so"></div></div>
+</section>
 
-  </main>
+<!-- ===== PAGE: formulas ===== -->
+<section class="page" id="page-formulas">
+ <h2>Formulas</h2><p class="lead">Quick reference.</p><div id="fl"></div>
+</section>
 
-  <footer style="text-align: center; padding: 40px 0; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 60px;">
-    � MathSolveIQ � AI and calculators can make mistakes � check important answers.
-  </footer>
+<!-- ===== NAYA PAGE ADD KARNE KI JAGAH =====
+ <section class="page" id="page-NAAM"><h2>Title</h2> ... </section>
+ aur nav mein: <a href="#NAAM">Title</a>
+-->
+</main>
 
-</body>
-</html>
+<footer>© MathSolveIQ · AI and calculators can make mistakes — check important answers.</footer>
+
+<script>
+/* Home page extras. Runs BEFORE app.js so the mode chips can prefix the question. */
+(function(){
+ var $=function(i){return document.getElementById(i)};
+ var CALC=[
+  ["Solve for x","Linear and multistep equations","Solve 3x + 7 = 22"],
+  ["Graphing","Plot and compare functions","#graph"],
+  ["Quadratic","Roots with full steps","#quadratic"],
+  ["Factoring","GCF, trinomials, special products","Factor x^2 - 5x + 6"],
+  ["Fractions","Add, subtract, multiply, divide","Compute 3/4 + 5/6"],
+  ["Systems of equations","Substitution and elimination","Solve x + y = 10 and x - y = 2"],
+  ["Inequalities","Intervals and sign changes","Solve -2x + 3 < 11"],
+  ["Logarithms","Evaluate, expand and solve","Solve log2(x) + log2(x-2) = 3"],
+  ["Derivatives","Power, product and chain rules","Differentiate x^2 * sin(x)"],
+  ["Integrals","Antiderivatives and methods","Integrate 2x * e^(x^2)"],
+  ["Matrices","Operations and row reduction","Find the inverse of [[2,1],[5,3]]"],
+  ["Determinants","2x2 and larger matrices","Determinant of [[1,2,3],[0,4,5],[1,0,6]]"],
+  ["Trig identities","Verify and simplify","Prove sin^2x + cos^2x = 1"],
+  ["Standard deviation","Sample and population spread","#tools"],
+  ["Limits","Left, right and at infinity","Find the limit of sin(x)/x as x approaches 0"],
+  ["Probability","Events, combinations, permutations","Probability of two sixes with two dice"]
+ ];
+ function card(c){var a=document.createElement("a");a.innerHTML="<b>"+c[0]+"</b>"+c[1];
+  if(c[2][0]==="#"){a.href=c[2]}else{a.href="#home";a.onclick=function(){setTimeout(function(){$("q").value=c[2];$("q").focus()},0)}}
+  return a}
+ CALC.slice(0,14).forEach(function(c){$("popular").appendChild(card(c))});
+ CALC.forEach(function(c){$("allcalc").appendChild(card(c))});
+ /* symbols */
+ ["²","³","√(","π","∫","∑","≤","≥","≠","×","÷","^","(",")","/","θ","lim","∞","[[1,2],[3,4]]"].forEach(function(s){
+  var b=document.createElement("button");b.type="button";b.textContent=s;b.onclick=function(){var q=$("q");q.setRangeText(s,q.selectionStart,q.selectionEnd,"end");q.focus()};$("syms").appendChild(b)});
+ $("symBtn").onclick=function(){$("syms").hidden=!$("syms").hidden};
+ /* mic */
+ $("micBtn").onclick=function(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!R){$("solveOut").textContent="Voice input is not supported in this browser.";return}
+  var r=new R();r.lang="en-US";r.onresult=function(e){$("q").value+=" "+e.results[0][0].transcript};r.start()};
+ /* mode chips */
+ var mode="";document.querySelectorAll("#modes .chip").forEach(function(c){c.onclick=function(){
+  document.querySelectorAll("#modes .chip").forEach(function(x){x.classList.remove("on")});c.classList.add("on");mode=c.dataset.m}});
+ /* prefix mode + save recent (capture so it runs before app.js handler) */
+ $("solveBtn").addEventListener("click",function(){var q=$("q"),orig=q.value.trim();if(!orig)return;
+  save(orig);if(mode){q.value=mode+orig;setTimeout(function(){q.value=orig},0)}},true);
+ function save(t){try{var a=JSON.parse(localStorage.getItem("msiq_recent")||"[]");a=[t].concat(a.filter(function(x){return x!==t})).slice(0,6);localStorage.setItem("msiq_recent",JSON.stringify(a));show()}catch(e){}}
+ function show(){var a=[];try{a=JSON.parse(localStorage.getItem("msiq_recent")||"[]")}catch(e){}
+  var r=$("recent");if(!a.length)return;r.innerHTML="";a.forEach(function(t){var d=document.createElement("a");d.href="#home";d.textContent=t.length>34?t.slice(0,34)+"…":t;d.title=t;d.onclick=function(){setTimeout(function(){$("q").value=t},0)};r.appendChild(d)})}
+ show();
+ $("newchat").onclick=function(){setTimeout(function(){$("q").value="";$("solveOut").textContent="";$("q").focus()},0)};
+})();
+</script>
+<script src="js/app.js"></script></body></html>
