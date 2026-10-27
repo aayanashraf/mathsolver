@@ -1,20 +1,20 @@
-/* math-solver.io Inspired Color Palette & Theme Engine */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Modern High-Contrast Math Engine Theme */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Exact math-solver.io Dark Slate Palette */
-  --bg-main: #090d16;
-  --bg-card: #0f172a;
-  --bg-card-hover: #1e293b;
+  --bg-main: #0b0f19;
+  --bg-card: #111827;
+  --bg-card-hover: #1f2937;
   --primary: #3b82f6;
   --primary-hover: #2563eb;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border-color: #1e293b;
-  --accent-light: #1e293b;
+  --accent: #38bdf8;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --border-color: #1f2937;
+  --border-highlight: #374151;
   --radius-card: 16px;
   --radius-input: 12px;
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 [data-theme="light"] {
@@ -23,13 +23,13 @@
   --bg-card-hover: #f1f5f9;
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
+  --accent: #0284c7;
   --text-main: #0f172a;
   --text-muted: #64748b;
   --border-color: #e2e8f0;
-  --accent-light: #f1f5f9;
+  --border-highlight: #cbd5e1;
 }
 
-/* General Layout & Fonts */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -44,100 +44,119 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Modern Header Navbar */
+/* Header Navbar */
 header {
-  background: var(--bg-card);
+  background: rgba(17, 24, 39, 0.85);
   border-bottom: 1px solid var(--border-color);
-  padding: 14px 24px;
+  padding: 16px 24px;
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
 }
 
 header a {
   color: var(--text-main);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95rem;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 header a:hover {
-  color: var(--primary);
+  color: var(--accent);
 }
 
-/* Modern Dark Cards & Solver Container */
+/* Main Container & Solver Box */
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
 section, .solver-box {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-card);
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
-/* Inputs, Textareas & Select Dropdowns */
-input[type="text"], textarea, select {
+/* Form Controls & Inputs */
+input[type="text"], input[type="search"], textarea, select {
   background: var(--bg-main) !important;
   color: var(--text-main) !important;
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid var(--border-highlight) !important;
   border-radius: var(--radius-input);
-  padding: 12px 16px;
+  padding: 14px 18px;
   font-family: var(--font-family);
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  transition: all 0.2s ease;
 }
 
 input[type="text"]:focus, textarea:focus {
   outline: none;
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
 }
 
-/* Buttons Styling */
-button {
+/* Action Buttons */
+button, .btn {
   font-family: var(--font-family);
+  font-weight: 600;
   border-radius: var(--radius-input);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 button:hover {
-  opacity: 0.95;
   transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
-/* Custom Grid Cards */
-.card {
+/* Cards & Grid Items */
+.card, div[class*="card"] {
   background: var(--bg-main);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-input);
-  padding: 16px 20px;
-  transition: background 0.2s, border-color 0.2s;
+  padding: 20px;
+  transition: all 0.2s ease;
 }
 
 .card:hover {
   background: var(--bg-card-hover);
-  border-color: var(--primary);
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
-/* FAQ Accordions */
+/* Details Accordion */
 details {
   background: var(--bg-main);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-input);
-  padding: 14px 18px;
-  margin-bottom: 10px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
 }
 
 summary {
   font-weight: 600;
-  color: var(--text-main);
   cursor: pointer;
 }
 
-/* Footer Styling */
+/* Canvas Graph Area */
+canvas {
+  background: #030712 !important;
+  border: 1px solid var(--border-highlight) !important;
+  border-radius: var(--radius-card);
+}
+
 footer {
-  border-top: 1px solid var(--border-color);
+  text-align: center;
+  padding: 40px 0;
   color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
 }
