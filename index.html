@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MathSolveIQ - Free AI Math Helper & Calculators</title>
   <link rel="stylesheet" href="style.css">
+  <!-- KaTeX for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 </head>
 <body>
 
   <header>
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; gap: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
       <a href="#home" style="font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration:none;">MathSolve<span style="color: var(--text-main);">IQ</span></a>
-      
-      <nav style="display: flex; gap: 18px; align-items: center;">
+      <nav style="display: flex; gap: 18px;">
         <a href="#home">Home</a>
         <a href="#calculators">Calculators</a>
         <a href="#graph">Graph</a>
@@ -22,77 +22,71 @@
         <a href="#tools">Tools</a>
         <a href="#formulas">Formulas</a>
       </nav>
-
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <!-- Language Switcher -->
-        <select style="background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 10px; border-radius: 8px; font-size: 0.85rem; cursor: pointer;">
-          <option>?? English</option>
-          <option>???? (Urdu)</option>
-          <option>?????? (Hindi)</option>
-          <option>Español</option>
-        </select>
-
-        <a href="#home" style="background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration:none; font-weight: 500;">+ New problem</a>
-      </div>
+      <a href="#home" style="background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration:none;">+ New problem</a>
     </div>
   </header>
 
   <main style="max-width: 1000px; margin: 0 auto; padding: 20px;">
 
-    <!-- Hero AI Solver Box with Image Upload & Math Toolbar -->
+    <!-- Hero AI Solver Box -->
     <section id="home" class="solver-box">
       <h2 style="margin-top:0;">Free AI Math Helper</h2>
-      <p style="color: var(--text-muted);">Type a problem, upload a photo, or pick a calculator.</p>
+      <p style="color: var(--text-muted);">Type a problem, speak it, or pick a calculator. Learn the method, not just the answer.</p>
 
-      <!-- Input Box Container -->
-      <div style="border: 1px solid var(--border-color); background: var(--bg-main); border-radius: var(--radius-input); padding: 8px; margin: 20px 0;">
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="text" placeholder="Type a math problem or click S to insert a formula..." style="flex: 1; border: none; background: transparent; color: var(--text-main); font-size: 1rem; outline: none; padding: 8px;" />
-          
-          <!-- Upload Image Button -->
-          <label title="Upload Math Image" style="cursor: pointer; padding: 8px; color: var(--text-muted); font-size: 1.2rem;">
-            ??
-            <input type="file" accept="image/*" style="display: none;" />
-          </label>
-
-          <!-- Sigma Symbol Button -->
-          <button title="Insert Math Symbol" style="background: var(--accent-light); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; padding: 6px 12px; font-weight: bold; cursor: pointer;">S</button>
-
-          <!-- Solve Button -->
-          <button style="background: var(--primary); color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: 600; cursor: pointer;">Solve</button>
-        </div>
-
-        <!-- Quick Math Symbols Bar -->
-        <div style="display: flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">x²</button>
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">vx</button>
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">a/b</button>
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">p</button>
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">?</button>
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">lim</button>
-          <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">log</button>
-        </div>
+      <div style="display: flex; gap: 10px; margin: 20px 0;">
+        <input type="text" placeholder="Type a math problem (e.g. x^2 - 4 = 0)..." style="flex: 1; padding: 14px 18px; border-radius: var(--radius-input); border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); font-size: 1rem; outline: none;" />
+        <button style="background: var(--primary); color: white; border: none; padding: 0 24px; border-radius: var(--radius-input); font-weight: 600; cursor: pointer;">Solve</button>
       </div>
 
-      <!-- App Download Banner -->
-      <div style="display: flex; gap: 15px; align-items: center; margin-top: 25px; padding: 12px 18px; background: var(--accent-light); border-radius: 12px;">
-        <span style="font-size: 0.9rem; font-weight: 500;">Take MathSolveIQ with you:</span>
-        <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">? App Store</button>
-        <button style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">? Google Play</button>
-      </div>
-    </section>
-
-    <!-- Popular Calculators -->
-    <section id="calculators" style="margin-top: 40px;">
       <h3>Popular calculators</h3>
       <div class="grid-container">
         <div class="card"><b>Algebra Solver</b><p style="color: var(--text-muted); font-size: 0.85rem;">Linear equations & polynomials</p></div>
         <div class="card"><b>Calculus</b><p style="color: var(--text-muted); font-size: 0.85rem;">Integrals & derivatives</p></div>
         <div class="card"><b>Trigonometry</b><p style="color: var(--text-muted); font-size: 0.85rem;">Angles & identities</p></div>
       </div>
+      <p style="margin-top: 15px;"><a href="#calculators" style="color: var(--primary);">Browse all calculators ?</a></p>
     </section>
 
-    <!-- Interactive Graphing Calculator -->
+    <!-- How it works -->
+    <section style="margin-top: 40px;">
+      <h3>How it works</h3>
+      <div class="grid-container">
+        <div class="card"><span>1</span> <b>Enter</b><p style="color: var(--text-muted);">Type, speak or choose a calculator for your problem.</p></div>
+        <div class="card"><span>2</span> <b>Understand</b><p style="color: var(--text-muted);">See every step with the rule used and the reason for it.</p></div>
+        <div class="card"><span>3</span> <b>Practise</b><p style="color: var(--text-muted);">Ask follow-ups, request hints and try similar questions.</p></div>
+      </div>
+    </section>
+
+    <!-- Why Students Pick MathSolveIQ -->
+    <section style="margin-top: 40px;">
+      <h3>Why students pick MathSolveIQ</h3>
+      <div class="grid-container">
+        <div class="card"><b>Hints, not just answers</b><p style="color: var(--text-muted);">Switch to hint or Socratic mode and work it out yourself.</p></div>
+        <div class="card"><b>Your language</b><p style="color: var(--text-muted);">Explanations in English, Urdu, Hindi and Roman Urdu.</p></div>
+        <div class="card"><b>Instant tools</b><p style="color: var(--text-muted);">Graphing, quadratics, units and statistics work in milliseconds.</p></div>
+        <div class="card"><b>Made for exams</b><p style="color: var(--text-muted);">Built around SAT, AP, O/A Level, FSc and JEE style questions.</p></div>
+        <div class="card"><b>Free to start</b><p style="color: var(--text-muted);">Core tools need no account and no payment.</p></div>
+        <div class="card"><b>Works on phones</b><p style="color: var(--text-muted);">Light and dark themes, tuned for small screens.</p></div>
+      </div>
+    </section>
+
+    <!-- Subjects -->
+    <section style="margin-top: 40px;">
+      <h3>Subjects</h3>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <span class="card" style="padding: 6px 14px;">Arithmetic</span>
+        <span class="card" style="padding: 6px 14px;">Algebra</span>
+        <span class="card" style="padding: 6px 14px;">Geometry</span>
+        <span class="card" style="padding: 6px 14px;">Trigonometry</span>
+        <span class="card" style="padding: 6px 14px;">Precalculus</span>
+        <span class="card" style="padding: 6px 14px;">Calculus</span>
+        <span class="card" style="padding: 6px 14px;">Linear algebra</span>
+        <span class="card" style="padding: 6px 14px;">Statistics</span>
+        <span class="card" style="padding: 6px 14px;">Probability</span>
+      </div>
+    </section>
+
+    <!-- Graphing Tool Section -->
     <section id="graph" class="solver-box" style="margin-top: 50px;">
       <h2>Interactive Graphing Calculator</h2>
       <p style="color: var(--text-muted);">Use x, + - * / ^, sin, cos, tan, sqrt, abs, ln, log, exp, pi, e. Drag to pan, wheel to zoom.</p>
@@ -126,9 +120,12 @@
 
     <!-- FAQ Accordion -->
     <section style="margin-top: 40px;">
-      <h3>Frequently Asked Questions</h3>
-      <details><summary>Is MathSolveIQ really free?</summary><p style="color: var(--text-muted);">Yes. The core tools are free and need no account.</p></details>
-      <details><summary>Can I upload a photo of my homework?</summary><p style="color: var(--text-muted);">Yes! Click the camera icon in the solver box to upload images or handwritten math problems.</p></details>
+      <h3>Questions</h3>
+      <details><summary>Is it really free?</summary><p style="color: var(--text-muted);">Yes. The core tools are free and need no account.</p></details>
+      <details><summary>Can I trust the answers?</summary><p style="color: var(--text-muted);">AI can slip, especially with arithmetic. Use the check step and verify important results.</p></details>
+      <details><summary>What is Socratic mode?</summary><p style="color: var(--text-muted);">The helper asks guiding questions instead of giving the answer, so you reach it yourself.</p></details>
+      <details><summary>Which topics are covered?</summary><p style="color: var(--text-muted);">From arithmetic to calculus, linear algebra, statistics and probability.</p></details>
+      <details><summary>Does it work offline?</summary><p style="color: var(--text-muted);">The graph, quadratic and tools pages run in your browser. The AI solver needs internet.</p></details>
     </section>
 
   </main>
@@ -139,4 +136,3 @@
 
 </body>
 </html>
-
