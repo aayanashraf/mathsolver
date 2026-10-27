@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exam Practice Modes (SAT, FSc, JEE) - MathSolveIQ</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto;">
+      <a href="index.html" style="font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration:none;">MathSolve<span style="color: var(--text-main);">IQ</span></a>
+      <a href="index.html" style="color: var(--text-muted); text-decoration: none;">? Back to Main Solver</a>
+    </div>
+  </header>
+
+  <main style="max-width: 850px; margin: 40px auto; padding: 0 20px;">
+    <section class="solver-box">
+      <h2>Specialized Exam Practice Modes</h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Choose your target examination mode for timed questions, exam-style formatting, and detailed score breakdown.</p>
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+        <select id="exam-type" style="flex: 1; padding: 12px; background: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-highlight); border-radius: var(--radius-input);">
+          <option value="SAT">SAT Math Mode (Digital SAT Format)</option>
+          <option value="FSc">FSc Board Math (Class 11 & 12 Pakistan)</option>
+          <option value="JEE">JEE Main / Advanced (India Engineering)</option>
+        </select>
+        <button id="start-exam-btn" style="background: var(--primary); color: white; border: none; padding: 12px 24px; font-weight: 600; cursor: pointer; border-radius: var(--radius-input);">Start Exam</button>
+      </div>
+
+      <div id="exam-timer-bar" style="display: none; background: var(--bg-main); padding: 12px; border-radius: var(--radius-input); border: 1px solid var(--border-color); margin-bottom: 20px; font-weight: bold; color: var(--accent);">
+        ? Time Remaining: <span id="timer-display">05:00</span>
+      </div>
+
+      <div id="exam-card-container" style="display: none; border-top: 1px solid var(--border-color); padding-top: 20px;">
+        <h3 id="exam-question-title" style="margin-bottom: 15px; color: var(--text-main);"></h3>
+        <div id="exam-options-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        <div id="exam-result-feedback" style="margin-top: 15px; font-weight: 600;"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

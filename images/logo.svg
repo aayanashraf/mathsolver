@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="MathSolveIQ logo">
+  <rect width="64" height="64" rx="14" fill="#0f766e"/>
+  <path d="M12 34 L19 34 L27 49 L40 15 L54 15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M47 27 L49 33 L55 35 L49 37 L47 43 L45 37 L39 35 L45 33 Z" fill="#fbbf24"/>
+</svg>

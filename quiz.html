@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practice Quizzes - MathSolveIQ</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto;">
+      <a href="index.html" style="font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration:none;">MathSolve<span style="color: var(--text-main);">IQ</span></a>
+      <a href="index.html" style="color: var(--text-muted); text-decoration: none;">? Back to Solver</a>
+    </div>
+  </header>
+
+  <main style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+    <section class="solver-box">
+      <h2>Interactive Math Practice Quizzes</h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Select a topic to generate a custom quiz and test your problem-solving skills.</p>
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+        <select id="quiz-topic" style="flex: 1; padding: 10px;">
+          <option value="algebra">Algebra (Linear Equations)</option>
+          <option value="quadratic">Quadratic Equations</option>
+          <option value="calculus">Calculus (Derivatives)</option>
+          <option value="fractions">Fractions & Arithmetic</option>
+        </select>
+        <button id="generate-quiz-btn" style="background: var(--primary); color: white; border: none; padding: 10px 20px; font-weight: 600; cursor: pointer;">Generate Quiz</button>
+      </div>
+
+      <div id="quiz-container" style="display: none; border-top: 1px solid var(--border-color); padding-top: 20px;">
+        <h3 id="quiz-question" style="margin-bottom: 15px; color: var(--text-main);"></h3>
+        <div id="quiz-options" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        <div id="quiz-feedback" style="margin-top: 15px; font-weight: 600;"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
