@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathSolveIQ – Free Math Solver</title>
+<meta name="description" content="MathSolveIQ: free math tools with step-by-step help. Solve quadratics, plot graphs, convert units and more.">
+<link rel="stylesheet" href="css/style.css"></head><body>
+
+<header><div class="wrap">
+ <a class="logo" href="#home">MathSolve<span>IQ</span></a>
+ <!-- NAV: ek naya page add karo to yahan ek link bhi add karo -->
+ <nav id="nav">
+  <a href="#home">Home</a><a href="#solve">Solve</a><a href="#graph">Graph</a>
+  <a href="#quadratic">Quadratic</a><a href="#tools">Tools</a><a href="#formulas">Formulas</a>
+ </nav>
+ <button class="btn ghost" id="theme" aria-label="Toggle theme">◐</button>
+</div></header>
+
+<main class="wrap">
+
+<!-- ===== PAGE: home ===== -->
+<section class="page" id="page-home">
+ <h2>Math, step by step.</h2>
+ <p class="lead">Free tools for students: solve, graph and practise.</p>
+ <div class="grid">
+  <a href="#solve"><b>Solve</b>Type a problem and get a solution</a>
+  <a href="#graph"><b>Graph</b>Plot up to 4 functions</a>
+  <a href="#quadratic"><b>Quadratic</b>Roots with full steps</a>
+  <a href="#tools"><b>Tools</b>Calculator, units, statistics</a>
+  <a href="#formulas"><b>Formulas</b>Quick reference sheet</a>
+ </div>
+</section>
+
+<!-- ===== PAGE: solve (AI backend yahan jorna hai) ===== -->
+<section class="page" id="page-solve">
+ <h2>Solve</h2><p class="lead">Type your problem below.</p>
+ <div class="card">
+  <textarea id="q" placeholder="e.g. Solve 3x² − 12x + 9 = 0"></textarea>
+  <div class="row"><button class="btn fit" id="solveBtn">Solve step by step</button></div>
+  <div class="out" id="solveOut"></div>
+ </div>
+</section>
+
+<!-- ===== PAGE: graph ===== -->
+<section class="page" id="page-graph">
+ <h2>Graph</h2><p class="lead">Use x, + − * / ^, sin, cos, tan, sqrt, abs, ln, log, exp, pi, e. Drag to pan, wheel to zoom.</p>
+ <div class="card">
+  <div id="fns"></div>
+  <div class="row"><button class="btn ghost fit" id="addf">+ Add</button><button class="btn fit" id="plot">Plot</button><button class="btn ghost fit" id="rst">Reset view</button></div>
+  <canvas id="cv" width="800" height="520" style="margin-top:12px"></canvas>
+ </div>
+</section>
+
+<!-- ===== PAGE: quadratic ===== -->
+<section class="page" id="page-quadratic">
+ <h2>Quadratic Equation Solver</h2><p class="lead">ax² + bx + c = 0</p>
+ <div class="card">
+  <div class="row"><input id="qa" type="number" step="any" value="1" placeholder="a"><input id="qb" type="number" step="any" value="-5" placeholder="b"><input id="qc" type="number" step="any" value="6" placeholder="c"><button class="btn fit" id="qgo">Solve</button></div>
+  <div id="qout" style="margin-top:12px"></div>
+ </div>
+</section>
+
+<!-- ===== PAGE: tools ===== -->
+<section class="page" id="page-tools">
+ <h2>Tools</h2><p class="lead">Calculator, unit converter and statistics.</p>
+ <div class="card"><b>Scientific calculator</b>
+  <div class="row"><input id="sc" placeholder="sin(pi/2)+sqrt(16)*2^3"><button class="btn fit" id="scg">=</button></div><div class="out" id="sr"></div></div>
+ <div class="card"><b>Unit converter</b>
+  <div class="row"><select id="uc"></select><input id="uv" type="number" value="1"><select id="uf"></select><select id="ut"></select></div><div class="out" id="ur"></div></div>
+ <div class="card"><b>Statistics</b>
+  <div class="row"><input id="st" placeholder="4, 8, 15, 16, 23, 42"><button class="btn fit" id="stg">Calculate</button></div><div class="out" id="so"></div></div>
+</section>
+
+<!-- ===== PAGE: formulas ===== -->
+<section class="page" id="page-formulas">
+ <h2>Formulas</h2><p class="lead">Quick reference.</p><div id="fl"></div>
+</section>
+
+<!-- ===== NAYA PAGE ADD KARNE KI JAGAH =====
+ Template:
+ <section class="page" id="page-NAAM"><h2>Title</h2> ... </section>
+ aur nav mein: <a href="#NAAM">Title</a>
+-->
+</main>
+
+<footer>© MathSolveIQ · AI and calculators can make mistakes — check important answers.</footer>
+
+<script src="js/app.js"></script></body></html>
