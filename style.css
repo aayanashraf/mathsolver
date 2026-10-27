@@ -1,12 +1,12 @@
-/* Modern High-Contrast Math Engine Theme */
+/* Premium Modern Math Solver UI Theme */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   --bg-main: #0b0f19;
   --bg-card: #111827;
   --bg-card-hover: #1f2937;
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
   --accent: #38bdf8;
   --text-main: #f9fafb;
   --text-muted: #9ca3af;
@@ -67,7 +67,7 @@ header a:hover {
   color: var(--accent);
 }
 
-/* Main Container & Solver Box */
+/* Layout Containers & Solver Box */
 main {
   max-width: 1080px;
   margin: 0 auto;
@@ -102,7 +102,7 @@ input[type="text"]:focus, textarea:focus {
   box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
 }
 
-/* Action Buttons */
+/* Buttons */
 button, .btn {
   font-family: var(--font-family);
   font-weight: 600;
@@ -118,7 +118,7 @@ button:hover {
   filter: brightness(1.1);
 }
 
-/* Cards & Grid Items */
+/* Grid & Cards */
 .card, div[class*="card"] {
   background: var(--bg-main);
   border: 1px solid var(--border-color);
@@ -133,7 +133,7 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Details Accordion */
+/* FAQ Accordion Details */
 details {
   background: var(--bg-main);
   border: 1px solid var(--border-color);
@@ -147,7 +147,7 @@ summary {
   cursor: pointer;
 }
 
-/* Canvas Graph Area */
+/* Graphing Canvas */
 canvas {
   background: #030712 !important;
   border: 1px solid var(--border-highlight) !important;
