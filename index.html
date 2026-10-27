@@ -4,7 +4,23 @@
 <title>MathSolveIQ – Free Math Solver</title>
 <meta name="description" content="MathSolveIQ: a free math helper with step-by-step explanations, hints, graphing and calculators.">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/style.css"></head><body>
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MathSolveIQ">
+<meta property="og:title" content="MathSolveIQ - Free Math Solver">
+<meta property="og:description" content="Free math helper with step-by-step solutions, hints, photo upload, graphing and calculators. English, Urdu, Hindi and Roman Urdu.">
+<meta property="og:url" content="https://mathsolveiq.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MathSolveIQ - Free Math Solver">
+<meta name="twitter:description" content="Step-by-step math solutions, hints, graphing and calculators.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MathSolveIQ","url":"https://mathsolveiq.vercel.app/","applicationCategory":"EducationalApplication","operatingSystem":"Any","description":"Free math helper with step-by-step explanations, hints, graphing and calculators.","inLanguage":["en","ur","hi"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script><meta property="og:image" content="https://mathsolveiq.vercel.app/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://mathsolveiq.vercel.app/images/og-image.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#4f46e5">
+<link rel="apple-touch-icon" href="/images/icon-192.png"></head><body>
 
 <header><div class="wrap">
  <a class="logo" href="#home"><img src="images/logo.svg" alt="" width="30" height="30" style="vertical-align:middle;margin-right:8px">MathSolve<span>IQ</span></a>
@@ -30,7 +46,7 @@
   <div class="row">
    <button class="btn ghost fit" id="symBtn" type="button">Σ</button>
    <button class="btn ghost fit" id="micBtn" type="button">🎤 Speak</button>
-   <button class="btn ghost fit" type="button" disabled title="Coming Upload Photo / PDF">📷 Photo (Upload Photo / PDF)</button>
+   <button class="btn ghost fit" type="button" id="photoBtn" title="Upload a photo or PDF of your problem">📷 Photo (Upload Photo / PDF)</button>
    <button class="btn fit" id="solveBtn" type="button">Solve step by step</button>
   </div>
   <div class="chips" id="modes">
@@ -93,7 +109,7 @@
 <section class="page" id="page-quadratic">
  <h2>Quadratic Equation Solver</h2><p class="lead">ax² + bx + c = 0</p>
  <div class="card">
-  <div class="row"><input id="qa" type="number" step="any" value="1" placeholder="a"><input id="qb" type="number" step="any" value="-5" placeholder="b"><input id="qc" type="number" step="any" value="6" placeholder="c"> <button class="btn fit" id="qgo">Solve</button><button type="button" id="hint-btn" style="background: var(--bg-card-hover); color: var(--accent); border: 1px solid var(--border-highlight); padding: 10px 16px; margin-left: 8px; font-weight: 600; cursor: pointer;">?? Get Hint</button></div>
+  <div class="row"><input id="qa" type="number" step="any" value="1" placeholder="a"><input id="qb" type="number" step="any" value="-5" placeholder="b"><input id="qc" type="number" step="any" value="6" placeholder="c"> <button class="btn fit" id="qgo">Solve</button><button type="button" id="hint-btn" style="background: var(--bg-card-hover); color: var(--accent); border: 1px solid var(--border-highlight); padding: 10px 16px; margin-left: 8px; font-weight: 600; cursor: pointer;">&#128161; Get Hint</button></div>
   <div id="qout" style="margin-top:12px"></div>
  </div>
 </section>
@@ -125,9 +141,9 @@
       <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy Policy</a>
       <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms of Service</a>
       <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
-      <a href="quiz.html" style="color:var(--primary); text-decoration:none; font-weight:600;">Practice Quizzes</a> <a href="exam-mode.html" style="color:var(--accent); text-decoration:none; margin-left:15px; font-weight:600;">Exam Modes (SAT/FSc/JEE)</a>
+      <a href="quiz.html" style="color:var(--primary); text-decoration:none; font-weight:600;">Practice Quizzes</a> <a href="exam-mode.html" style="color:var(--accent); text-decoration:none; margin-left:15px; font-weight:600;">Exam Modes (SAT/FSc/JEE)</a> <a href="guides/index.html" style="color:var(--text-muted); text-decoration:none; margin-left:15px;">Guides</a> <a href="about.html" style="color:var(--text-muted); text-decoration:none; margin-left:15px;">About</a>
     </div>
-    <p>� MathSolveIQ � Free AI Math Solver & Calculators</p>
+    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
   </footer>
 
 <script>
@@ -178,7 +194,7 @@
  $("newchat").onclick=function(){setTimeout(function(){$("q").value="";$("solveOut").textContent="";$("q").focus()},0)};
 })();
 </script>
-<script src="js/app.js"></script><script src='script.js'></script></body></html>
+<script src="js/extras.js"></script><script src="js/app.js"></script><script src="js/photo.js"></script><script src='script.js'></script><script defer src="/_vercel/insights/script.js"></script></body></html>
 
 
 

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mathsolveiq.vercel.app/sitemap.xml

@@ -18,7 +18,7 @@ $("theme").onclick=()=>{const r=document.documentElement,d=r.dataset.theme==="da
 
 /* ---------- Solve (AI) : apna backend yahan jorna ----------
    API_URL mein apne server ka link daalo. Server POST {question} le aur {answer} wapas kare. */
-const API_URL="";
+const API_URL="/api/solve";
 $("solveBtn").onclick=async()=>{
   const q=$("q").value.trim(),o=$("solveOut");if(!q)return;
   if(!API_URL){o.innerHTML='<span class="err">AI solver abhi connect nahi hai. script mein API_URL set karo.</span>';return}
