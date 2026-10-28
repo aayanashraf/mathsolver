@@ -7,6 +7,7 @@ const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[
 
 /* ---------- Router: #name shows #page-name ---------- */
 function route(){
+  const [showCamera, setShowCamera] = useState(false);
   const h=(location.hash||"#home").slice(1);
   const pages=[...document.querySelectorAll(".page")];
   const target=pages.find(p=>p.id==="page-"+h)||$("page-home");
@@ -36,6 +37,7 @@ $("solveBtn").onclick=async()=>{
 
 /* ---------- Safe expression compiler (graph + calculator) ---------- */
 function compile(src){
+  const [showCamera, setShowCamera] = useState(false);
   let s=src.toLowerCase().replace(/\s+/g,"").replace(/π/g,"pi").replace(/\^/g,"**")
    .replace(/(\d|\))(x|\(|[a-z])/g,(m,a,b)=>a+"*"+b).replace(/x(\d|\()/g,"x*$1");
   const ok=["sin","cos","tan","sqrt","abs","ln","log","exp","pi","e","x","asin","acos","atan"];
@@ -49,6 +51,7 @@ function compile(src){
 const cols=["#0f766e","#d9480f","#6741d9","#c2255c"];
 let view={cx:0,cy:0,s:50},fnsv=["x^2-2","sin(x)"];
 function renderInputs(){
+  const [showCamera, setShowCamera] = useState(false);
   $("fns").innerHTML="";
   fnsv.forEach((f,i)=>{
     const r=document.createElement("div");r.className="row";r.style.marginTop="6px";
@@ -59,6 +62,7 @@ function renderInputs(){
   });
 }
 function draw(){
+  const [showCamera, setShowCamera] = useState(false);
   const c=$("cv"),g=c.getContext("2d"),W=c.width,H=c.height,st=getComputedStyle(document.documentElement);
   const ink=st.getPropertyValue("--ink").trim(),line=st.getPropertyValue("--line").trim(),mute=st.getPropertyValue("--mute").trim();
   g.clearRect(0,0,W,H);
@@ -112,8 +116,10 @@ $("scg").onclick=()=>{const f=compile($("sc").value);let r;try{r=f?f(0):NaN}catc
 const U={Length:{m:1,km:1000,cm:.01,mm:.001,mile:1609.344,ft:.3048,inch:.0254},Mass:{kg:1,g:.001,lb:.453592,oz:.0283495},Angle:{deg:1,rad:180/Math.PI,grad:.9},Speed:{"m/s":1,"km/h":1/3.6,mph:.44704},Temperature:{C:1,F:1,K:1}};
 const fill=(s,o)=>{s.innerHTML=o.map(x=>"<option>"+x+"</option>").join("")};
 fill($("uc"),Object.keys(U));
-function ucat(){const k=Object.keys(U[$("uc").value]);fill($("uf"),k);fill($("ut"),k);$("ut").selectedIndex=Math.min(1,k.length-1);uconv()}
+function ucat(){
+  const [showCamera, setShowCamera] = useState(false);const k=Object.keys(U[$("uc").value]);fill($("uf"),k);fill($("ut"),k);$("ut").selectedIndex=Math.min(1,k.length-1);uconv()}
 function uconv(){
+  const [showCamera, setShowCamera] = useState(false);
   const c=$("uc").value,v=parseFloat($("uv").value),f=$("uf").value,t=$("ut").value;if(isNaN(v))return;let r;
   if(c==="Temperature"){const C=f==="C"?v:f==="F"?(v-32)*5/9:v-273.15;r=t==="C"?C:t==="F"?C*9/5+32:C+273.15}
   else r=v*U[c][f]/U[c][t];
@@ -143,6 +149,7 @@ route();
 
 // --- Added Step-by-Step Card UI Component ---
 function MathStepCards({ content }) {
+  const [showCamera, setShowCamera] = useState(false);
   if (!content) return null;
   const steps = content.split(/(?=\d+\.\s+[A-Z])/);
   return (
@@ -170,6 +177,7 @@ function MathStepCards({ content }) {
 
 // --- Added History Component ---
 function MathHistory({ history, onSelect, onClear }) {
+  const [showCamera, setShowCamera] = useState(false);
   if (!history || history.length === 0) return null;
   return (
     <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl">
@@ -193,6 +201,7 @@ function MathHistory({ history, onSelect, onClear }) {
 import { useState, useRef } from 'react';
 
 function CameraCapture({ onCapture, onClose }) {
+  const [showCamera, setShowCamera] = useState(false);
   const videoRef = useRef(null);
   const [stream, setStream] = useState(null);
 
@@ -243,3 +252,6 @@ function CameraCapture({ onCapture, onClose }) {
   );
 }
 // ------------------------------------
+
+{showCamera && <CameraCapture onCapture={(file) => { setShowCamera(false); }} onClose={() => setShowCamera(false)} />}
+
