@@ -1,3 +1,7 @@
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 const $=id=>document.getElementById(id), n=v=>+(+v).toFixed(6);
 const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 
@@ -17,7 +21,9 @@ addEventListener("hashchange",route);
 $("theme").onclick=()=>{const r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark";draw()};
 
 /* ---------- Solve (AI) : apna backend yahan jorna ----------
-   API_URL mein apne server ka link daalo. Server POST {question} le aur {answer} wapas kare. */
+   API_URL mein apne server ka link daalo. Server POST {question} le aur <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+  {answer}
+</ReactMarkdown> wapas kare. */
 const API_URL="/api/solve";
 $("solveBtn").onclick=async()=>{
   const q=$("q").value.trim(),o=$("solveOut");if(!q)return;
@@ -132,3 +138,108 @@ const F={Algebra:["Quadratic: x = (−b ± √(b²−4ac)) / 2a","(a+b)² = a² 
 Object.entries(F).forEach(([k,v])=>{const d=document.createElement("div");d.className="card";d.innerHTML="<b>"+k+"</b>"+v.map(x=>'<div class="step">'+esc(x)+"</div>").join("");$("fl").appendChild(d)});
 
 route();
+
+
+
+// --- Added Step-by-Step Card UI Component ---
+function MathStepCards({ content }) {
+  if (!content) return null;
+  const steps = content.split(/(?=\d+\.\s+[A-Z])/);
+  return (
+    <div className="space-y-4 my-4">
+      {steps.map((step, index) => {
+        if (!step.trim()) return null;
+        return (
+          <div key={index} className="p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm transition-all hover:shadow-md">
+            <div className="flex items-center space-x-2 mb-2 font-semibold text-indigo-600 dark:text-indigo-400">
+              <span className="bg-indigo-100 dark:bg-indigo-900 px-2.5 py-1 rounded-full text-xs">Step {index + 1}</span>
+            </div>
+            <div className="text-gray-700 dark:text-gray-300 whitespace-pre-line text-sm md:text-base">
+              <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                {step.replace(/^\d+\.\s*/, '')}
+              </ReactMarkdown>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+// ---------------------------------------------
+
+
+// --- Added History Component ---
+function MathHistory({ history, onSelect, onClear }) {
+  if (!history || history.length === 0) return null;
+  return (
+    <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl">
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="font-semibold text-gray-700 dark:text-gray-300 text-sm">Recent Calculations</h3>
+        <button onClick={onClear} className="text-xs text-red-500 hover:underline">Clear History</button>
+      </div>
+      <div className="space-y-2 max-h-48 overflow-y-auto">
+        {history.map((item, index) => (
+          <div key={index} onClick={() => onSelect(item)} className="p-2.5 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 cursor-pointer hover:border-indigo-500 transition text-xs truncate">
+            <span className="font-medium text-indigo-600 dark:text-indigo-400">Q:</span> {item.question}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+// -----------------------------
+
+// --- Added Camera Capture Component ---
+import { useState, useRef } from 'react';
+
+function CameraCapture({ onCapture, onClose }) {
+  const videoRef = useRef(null);
+  const [stream, setStream] = useState(null);
+
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      videoRef.current.srcObject = mediaStream;
+      setStream(mediaStream);
+    } catch (err) {
+      console.error("Camera access error:", err);
+      alert("Camera access denied or unavailable.");
+    }
+  };
+
+  const captureImage = () => {
+    const video = videoRef.current;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    canvas.toBlob((blob) => {
+      const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
+      onCapture(file);
+      stopCamera();
+    }, 'image/jpeg');
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 flex flex-col items-center justify-center p-4">
+      <div className="relative w-full max-w-md bg-black rounded-xl overflow-hidden shadow-2xl">
+        <video ref={videoRef} autoPlay playsInline className="w-full h-auto" />
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+          <button onClick={startCamera} className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium">Start Camera</button>
+          <button onClick={captureImage} className="px-6 py-2 bg-green-600 text-white rounded-lg text-sm font-medium">Capture</button>
+          <button onClick={stopCamera} className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium">Close</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+// ------------------------------------
