@@ -1,41 +1,175 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Practice Quizzes - MathSolveIQ</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
-</head>
-<body>
-  <header>
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto;">
-      <a href="index.html" style="font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration:none;">MathSolve<span style="color: var(--text-main);">IQ</span></a>
-      <a href="index.html" style="color: var(--text-muted); text-decoration: none;">? Back to Solver</a>
-    </div>
-  </header>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice Quizzes - MathSolveIQ</title>
+<meta name="description" content="Free math practice quizzes with instant feedback and explanations: algebra, quadratics, derivatives, fractions, percentages, statistics, geometry and trigonometry.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/quiz.html">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{padding-left:0}.doc{max-width:720px;margin:0 auto;padding:24px 16px 60px}.doc h1{font:700 32px/1.2 Georgia,serif;margin:12px 0 6px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.top a{color:var(--acc);text-decoration:none;font-weight:600}
+label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}
+.opt{display:block;width:100%;text-align:left;margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--acc)}.opt.ok{border-color:var(--ok,#067647);background:var(--acc2)}.opt.no{border-color:var(--bad)}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0 16px}.bar i{display:block;height:100%;background:var(--acc);width:0}
+.q{font-size:20px;font-weight:600;margin:6px 0}.why{margin-top:12px;padding:12px;border-radius:12px;background:var(--acc2)}
+.score{font:700 44px/1.1 Georgia,serif;color:var(--acc);margin:6px 0}
+.rev{padding:10px 0;border-bottom:1px dashed var(--line)}.rev:last-child{border:0}
+[hidden]{display:none!important}
+</style></head><body>
+<div class="doc">
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <h1>Interactive Math Practice Quizzes</h1>
+ <p class="lead">Pick a topic, answer, and read why. Every question has an explanation.</p>
 
-  <main style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
-    <section class="solver-box">
-      <h2>Interactive Math Practice Quizzes</h2>
-      <p style="color: var(--text-muted); margin-bottom: 20px;">Select a topic to generate a custom quiz and test your problem-solving skills.</p>
-      
-      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-        <select id="quiz-topic" style="flex: 1; padding: 10px;">
-          <option value="algebra">Algebra (Linear Equations)</option>
-          <option value="quadratic">Quadratic Equations</option>
-          <option value="calculus">Calculus (Derivatives)</option>
-          <option value="fractions">Fractions & Arithmetic</option>
-        </select>
-        <button id="generate-quiz-btn" style="background: var(--primary); color: white; border: none; padding: 10px 20px; font-weight: 600; cursor: pointer;">Generate Quiz</button>
-      </div>
+ <div class="card" id="setup">
+  <div class="row">
+   <div><label for="topic">Topic</label><select id="topic"></select></div>
+   <div><label for="count">Questions</label><select id="count"><option value="5">5</option><option value="10">10</option></select></div>
+  </div>
+  <div class="row"><button class="btn fit" id="start" type="button">Generate Quiz</button></div>
+  <p class="hint" id="best"></p>
+  <p class="hint">A single topic has 6 questions, so choose "Mixed" for 10.</p>
+ </div>
 
-      <div id="quiz-container" style="display: none; border-top: 1px solid var(--border-color); padding-top: 20px;">
-        <h3 id="quiz-question" style="margin-bottom: 15px; color: var(--text-main);"></h3>
-        <div id="quiz-options" style="display: flex; flex-direction: column; gap: 10px;"></div>
-        <div id="quiz-feedback" style="margin-top: 15px; font-weight: 600;"></div>
-      </div>
-    </section>
-  </main>
-</body>
-</html>
+ <div class="card" id="play" hidden>
+  <div class="hint" id="prog"></div><div class="bar"><i id="fill"></i></div>
+  <div class="q" id="qtext"></div><div id="opts"></div>
+  <div class="why" id="why" hidden></div>
+  <div class="row"><button class="btn fit" id="next" type="button" hidden>Next</button></div>
+ </div>
+
+ <div class="card" id="done" hidden>
+  <div class="hint">Your score</div><div class="score" id="score"></div><p id="msg"></p>
+  <div id="review"></div>
+  <div class="row"><button class="btn fit" id="retry" type="button" hidden>Retry the ones I missed</button><button class="btn ghost fit" id="again" type="button">New quiz</button></div>
+ </div>
+</div>
+
+<script>
+var BANK = {
+ "Algebra (Linear Equations)": [
+  {q:"Solve 3x + 7 = 22",o:["x = 3","x = 4","x = 5","x = 6"],a:2,e:"Subtract 7 to get 3x = 15, then divide by 3: x = 5."},
+  {q:"Solve 2(x − 4) = 10",o:["x = 5","x = 7","x = 9","x = 13"],a:2,e:"Expand: 2x − 8 = 10, so 2x = 18 and x = 9."},
+  {q:"Solve 5x − 3 = 2x + 12",o:["x = 3","x = 5","x = 9","x = 15"],a:1,e:"Subtract 2x from both sides: 3x − 3 = 12, so 3x = 15 and x = 5."},
+  {q:"Solve x/4 + 2 = 6",o:["x = 8","x = 12","x = 16","x = 24"],a:2,e:"Subtract 2: x/4 = 4. Multiply by 4: x = 16."},
+  {q:"Solve −2x + 3 < 11",o:["x < −4","x > −4","x < 4","x > 4"],a:1,e:"Subtract 3: −2x < 8. Dividing by a negative flips the sign: x > −4."},
+  {q:"Solve (x + 1)/3 = (x − 1)/2",o:["x = 1","x = 3","x = 5","x = 7"],a:2,e:"Cross-multiply: 2(x + 1) = 3(x − 1), so 2x + 2 = 3x − 3 and x = 5."}],
+ "Quadratic Equations": [
+  {q:"What are the roots of x² − 5x + 6 = 0?",o:["1 and 6","2 and 3","−2 and −3","−1 and 6"],a:1,e:"It factors as (x − 2)(x − 3) = 0, so x = 2 or x = 3."},
+  {q:"What is the discriminant of x² + 4x + 4?",o:["0","8","16","−16"],a:0,e:"D = b² − 4ac = 16 − 16 = 0, so there is one repeated root."},
+  {q:"Solve x² − 9 = 0",o:["x = 3 only","x = −3 only","x = 3 or x = −3","No real solution"],a:2,e:"x² = 9, so x = ±3."},
+  {q:"What is the x-coordinate of the vertex of y = x² − 6x + 5?",o:["−3","3","5","6"],a:1,e:"x = −b/(2a) = 6/2 = 3."},
+  {q:"Solve 2x² − 8 = 0",o:["x = ±2","x = ±4","x = ±8","x = ±√2"],a:0,e:"2x² = 8, so x² = 4 and x = ±2."},
+  {q:"How many real roots does x² + x + 5 = 0 have?",o:["0","1","2","Cannot tell"],a:0,e:"D = 1 − 20 = −19, which is negative, so there are no real roots."}],
+ "Calculus (Derivatives)": [
+  {q:"d/dx of x³ is",o:["x⁴/4","3x²","3x","x²"],a:1,e:"Power rule: bring down the 3 and reduce the power by 1."},
+  {q:"d/dx of 5x² + 3x is",o:["10x + 3","5x + 3","10x² + 3","10x"],a:0,e:"Differentiate each term: 10x from 5x² and 3 from 3x."},
+  {q:"d/dx of sin x is",o:["−cos x","cos x","−sin x","tan x"],a:1,e:"The derivative of sine is cosine."},
+  {q:"d/dx of e^(2x) is",o:["e^(2x)","2e^x","2e^(2x)","2x·e^(2x−1)"],a:2,e:"Chain rule: the derivative of e^u is e^u times u′, and u′ = 2."},
+  {q:"d/dx of x·ln x is",o:["ln x","1/x","ln x + 1","x + ln x"],a:2,e:"Product rule: 1·ln x + x·(1/x) = ln x + 1."},
+  {q:"d/dx of (x² + 1)³ is",o:["3(x² + 1)²","6x(x² + 1)²","3x(x² + 1)²","6(x² + 1)²"],a:1,e:"Chain rule: 3(x² + 1)² times the inner derivative 2x gives 6x(x² + 1)²."}],
+ "Fractions & Arithmetic": [
+  {q:"1/2 + 1/3 =",o:["2/5","5/6","2/6","1/6"],a:1,e:"Common denominator 6: 3/6 + 2/6 = 5/6."},
+  {q:"3/4 ÷ 3/8 =",o:["1/2","2","9/32","4/3"],a:1,e:"Flip and multiply: 3/4 × 8/3 = 24/12 = 2."},
+  {q:"2/3 × 9/10 =",o:["11/13","3/5","2/5","6/5"],a:1,e:"Multiply across: 18/30, then divide by 6 to get 3/5."},
+  {q:"Simplify 18/24",o:["2/3","3/4","5/6","9/8"],a:1,e:"Divide top and bottom by their GCF, 6: 3/4."},
+  {q:"5 + 3 × 2² =",o:["17","32","64","23"],a:0,e:"Order of operations: 2² = 4, then 3 × 4 = 12, then 5 + 12 = 17."},
+  {q:"What is the least common multiple of 4 and 6?",o:["8","12","18","24"],a:1,e:"Multiples of 4: 4, 8, 12. Multiples of 6: 6, 12. The first shared one is 12."}],
+ "Percentages": [
+  {q:"What is 20% of 150?",o:["20","30","45","75"],a:1,e:"0.20 × 150 = 30."},
+  {q:"45 is what percent of 60?",o:["65%","70%","75%","80%"],a:2,e:"45 ÷ 60 = 0.75, which is 75%."},
+  {q:"A price of 80 is increased by 25%. The new price is",o:["95","100","105","120"],a:1,e:"25% of 80 is 20, and 80 + 20 = 100."},
+  {q:"A price falls from 50 to 40. The percent decrease is",o:["10%","20%","25%","80%"],a:1,e:"The change is 10, and 10 ÷ 50 = 0.20, so 20%."},
+  {q:"After a 20% discount a shirt costs 40. What was the original price?",o:["48","50","52","60"],a:1,e:"The price is 80% of the original: 40 ÷ 0.8 = 50."},
+  {q:"What is 150% of 40?",o:["40","50","60","150"],a:2,e:"1.5 × 40 = 60."}],
+ "Statistics": [
+  {q:"What is the mean of 4, 8, 6, 10?",o:["6","7","8","28"],a:1,e:"The sum is 28 and there are 4 numbers: 28 ÷ 4 = 7."},
+  {q:"What is the median of 3, 9, 5, 7, 1?",o:["3","5","7","9"],a:1,e:"Sorted: 1, 3, 5, 7, 9. The middle value is 5."},
+  {q:"What is the mode of 2, 3, 3, 5, 7, 3, 8?",o:["2","3","5","8"],a:1,e:"3 appears most often (three times)."},
+  {q:"What is the range of 12, 5, 20, 9?",o:["8","11","15","20"],a:2,e:"Largest minus smallest: 20 − 5 = 15."},
+  {q:"The mean of 5 numbers is 12. What is their sum?",o:["17","48","60","72"],a:2,e:"Sum = mean × count = 12 × 5 = 60."},
+  {q:"What is the standard deviation of 10, 10, 10?",o:["0","1","10","30"],a:0,e:"Every value equals the mean, so there is no spread."}],
+ "Geometry": [
+  {q:"What is the area of a circle with radius 5?",o:["10π","25π","5π","50π"],a:1,e:"A = πr² = π × 25."},
+  {q:"A triangle has base 10 and height 6. Its area is",o:["16","30","60","32"],a:1,e:"A = ½ × 10 × 6 = 30."},
+  {q:"A right triangle has legs 6 and 8. The hypotenuse is",o:["7","10","12","14"],a:1,e:"6² + 8² = 100, and √100 = 10."},
+  {q:"The angles inside a triangle add up to",o:["90°","180°","270°","360°"],a:1,e:"The interior angles of any triangle sum to 180°."},
+  {q:"What is the volume of a cube with side 3?",o:["9","18","27","81"],a:2,e:"3 × 3 × 3 = 27."},
+  {q:"What is the circumference of a circle with radius 7?",o:["7π","14π","49π","28π"],a:1,e:"C = 2πr = 2 × π × 7 = 14π."}],
+ "Trigonometry": [
+  {q:"sin 30° =",o:["√3/2","1/2","1","√2/2"],a:1,e:"sin 30° = 1/2 is a standard exact value."},
+  {q:"cos 0° =",o:["0","1","1/2","−1"],a:1,e:"At 0° the point on the unit circle is (1, 0), so cosine is 1."},
+  {q:"tan 45° =",o:["0","√3","1","Undefined"],a:2,e:"At 45° sine and cosine are equal, so tan = 1."},
+  {q:"sin²θ + cos²θ =",o:["0","1","2","tan θ"],a:1,e:"This is the Pythagorean identity."},
+  {q:"180° in radians is",o:["π/2","π","2π","3π/2"],a:1,e:"A half turn is π radians."},
+  {q:"In a right triangle the opposite side is 3 and the hypotenuse is 5. sin θ =",o:["3/5","4/5","3/4","5/3"],a:0,e:"sin θ = opposite ÷ hypotenuse = 3/5."}]
+};
+var MIXED = "Mixed (all topics)";
+var $ = function (i) { return document.getElementById(i); };
+var cur = [], idx = 0, score = 0, wrong = [], topic = "";
+
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function store(get, v) { try { if (get) return JSON.parse(localStorage.getItem("msiq_quiz") || "{}"); localStorage.setItem("msiq_quiz", JSON.stringify(v)); } catch (e) { return {}; } }
+function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+
+var sel = $("topic");
+Object.keys(BANK).concat([MIXED]).forEach(function (t) { var o = document.createElement("option"); o.textContent = t; sel.appendChild(o); });
+function showBest() { var b = store(true)[sel.value]; $("best").textContent = b ? "Your best score on this topic: " + b : ""; }
+sel.onchange = showBest; showBest();
+
+function pool() {
+  var t = sel.value, all = [];
+  if (t === MIXED) Object.keys(BANK).forEach(function (k) { BANK[k].forEach(function (q) { all.push(q); }); }); else all = BANK[t];
+  return all;
+}
+function build(qs) {
+  return qs.map(function (q) {
+    var order = shuffle([0, 1, 2, 3]);
+    return { q: q.q, e: q.e, o: order.map(function (i) { return q.o[i]; }), a: order.indexOf(q.a) };
+  });
+}
+function begin(qs) {
+  cur = qs; idx = 0; score = 0; wrong = [];
+  $("setup").hidden = true; $("done").hidden = true; $("play").hidden = false; ask();
+}
+function ask() {
+  var q = cur[idx];
+  $("prog").textContent = "Question " + (idx + 1) + " of " + cur.length;
+  $("fill").style.width = (idx / cur.length * 100) + "%";
+  $("qtext").textContent = q.q; $("why").hidden = true; $("next").hidden = true;
+  var box = $("opts"); box.innerHTML = "";
+  q.o.forEach(function (txt, i) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = txt;
+    b.onclick = function () { pick(i); }; box.appendChild(b);
+  });
+}
+function pick(i) {
+  var q = cur[idx], bs = $("opts").children;
+  for (var k = 0; k < bs.length; k++) { bs[k].disabled = true; if (k === q.a) bs[k].classList.add("ok"); }
+  if (i === q.a) score++; else { bs[i].classList.add("no"); wrong.push(q); }
+  $("why").hidden = false; $("why").innerHTML = "<b>" + (i === q.a ? "Correct. " : "Not quite. ") + "</b>" + esc(q.e);
+  $("next").hidden = false; $("next").textContent = idx + 1 === cur.length ? "See my score" : "Next";
+}
+$("next").onclick = function () { idx++; if (idx < cur.length) ask(); else finish(); };
+function finish() {
+  $("play").hidden = true; $("done").hidden = false;
+  $("score").textContent = score + " / " + cur.length;
+  var pct = score / cur.length;
+  $("msg").textContent = pct === 1 ? "Perfect. Try a harder topic or the mixed quiz." : pct >= 0.7 ? "Good work. Review the ones you missed below." : "Keep going. Read each explanation, then retry the ones you missed.";
+  var b = store(true), key = topic, prev = b[key];
+  if (!prev || score > parseInt(prev, 10)) { b[key] = score + " / " + cur.length; store(false, b); }
+  var r = $("review"); r.innerHTML = "";
+  wrong.forEach(function (q) { var d = document.createElement("div"); d.className = "rev"; d.innerHTML = "<b>" + esc(q.q) + "</b><br>Answer: " + esc(q.o[q.a]) + "<br><span class='hint'>" + esc(q.e) + "</span>"; r.appendChild(d); });
+  $("retry").hidden = wrong.length === 0;
+}
+$("start").onclick = function () {
+  topic = sel.value;
+  var n = Math.min(parseInt($("count").value, 10), pool().length);
+  begin(build(shuffle(pool()).slice(0, n)));
+};
+$("retry").onclick = function () { begin(build(wrong.map(function (q) { return { q: q.q, e: q.e, o: q.o, a: q.a }; }))); };
+$("again").onclick = function () { $("done").hidden = true; $("setup").hidden = false; showBest(); };
+</script>
+</body></html>
