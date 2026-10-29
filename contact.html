@@ -1,17 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <title>Contact Us - MathSolveIQ</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header style="padding:15px; border-bottom:1px solid var(--border-color);">
-    <a href="index.html" style="color:var(--primary); font-weight:bold; text-decoration:none;">? Back to MathSolveIQ</a>
-  </header>
-  <main style="max-width:800px; margin:40px auto; padding:20px;" class="solver-box">
-    <h2>Contact Us</h2>
-    <p style="color:var(--text-muted); margin-top:10px;">Have suggestions or math tool inquiries? Reach out to support@mathsolveiq.com</p>
-  </main>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact – MathSolveIQ</title>
+<meta name="description" content="Send feedback, report a wrong answer or ask a question about MathSolveIQ.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/contact.html">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<style>body{padding-left:0}.doc{max-width:640px;margin:0 auto;padding:28px 16px 60px}.doc h1{font:700 34px/1.2 Georgia,serif;margin:10px 0 4px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.top a{color:var(--acc);text-decoration:none;font-weight:600}label{display:block;font-weight:600;margin:14px 0 6px}</style>
+</head><body>
+<div class="doc">
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <h1>Contact us</h1>
+ <p class="lead">Found a wrong answer, a bug, or have an idea? Tell us. Please do not include passwords or private details.</p>
+
+ <div class="card">
+  <label for="n">Your name</label><input id="n" autocomplete="name">
+  <label for="e">Your email (so we can reply)</label><input id="e" type="email" autocomplete="email">
+  <label for="t">What is this about?</label>
+  <select id="t"><option>Wrong answer</option><option>Bug or something broken</option><option>Feature idea</option><option>Privacy question</option><option>Other</option></select>
+  <label for="m">Message</label><textarea id="m" placeholder="If it is a wrong answer, paste the problem and what you expected."></textarea>
+  <div class="row"><button class="btn fit" id="send" type="button">Send message</button></div>
+  <p class="hint" id="note">This opens your email app with the message ready to send.</p>
+ </div>
+</div>
+<script>
+/* CHANGE THIS to the email where you want to receive messages */
+var CONTACT_EMAIL = "support@mathsolveiq.com";
+document.getElementById("send").onclick = function(){
+  var g = function(i){ return document.getElementById(i).value.trim(); };
+  if(!g("m")){ document.getElementById("note").textContent = "Please write a message first."; return; }
+  var subject = "MathSolveIQ: " + g("t");
+  var body = g("m") + "\n\n— " + (g("n") || "Anonymous") + (g("e") ? " (" + g("e") + ")" : "");
+  location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+};
+</script>
+</body></html>

@@ -1,0 +1,12 @@
+  <url><loc>https://mathsolveiq.vercel.app/calculator</loc><priority>0.8</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/fraction</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/percentage</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/gcf-lcm</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/standard-deviation</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/mean-median-mode</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/z-score</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/permutation-combination</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/slope</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/distance-formula</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/pythagorean-theorem</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/quadratic-equation</loc><priority>0.7</priority></url>
