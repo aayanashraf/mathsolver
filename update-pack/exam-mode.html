@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Practice Modes (SAT, FSc, JEE) - MathSolveIQ</title>
+<meta name="description" content="Timed math practice in SAT, FSc and JEE Main style with scoring, answer review and explanations.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/exam-mode.html">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{padding-left:0}.doc{max-width:760px;margin:0 auto;padding:24px 16px 60px}.doc h1{font:700 32px/1.2 Georgia,serif;margin:12px 0 6px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.top a{color:var(--acc);text-decoration:none;font-weight:600}
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.pick button{text-align:left;padding:16px;border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.pick button.on{border-color:var(--acc);background:var(--acc2)}.pick b{display:block;color:var(--acc);font-size:17px}
+.pick span{font-size:14px;color:var(--mute)}
+.opt{display:block;width:100%;text-align:left;margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.opt:hover{border-color:var(--acc)}.opt.sel{border-color:var(--acc);background:var(--acc2);font-weight:600}
+.timer{font:700 22px/1 Georgia,serif;color:var(--acc)}.timer.low{color:var(--bad)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pal{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.pal button{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.pal button.done{background:var(--acc2);border-color:var(--acc)}.pal button.cur{outline:2px solid var(--acc)}
+.q{font-size:20px;font-weight:600;margin:10px 0}
+.score{font:700 44px/1.1 Georgia,serif;color:var(--acc);margin:6px 0}
+.rev{padding:12px 0;border-bottom:1px dashed var(--line)}.rev:last-child{border:0}
+.good{color:#067647;font-weight:700}.badc{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+</style></head><body>
+<div class="doc">
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <h1>Specialized Exam Practice Modes</h1>
+ <p class="lead">Timed questions, exam-style scoring and a full review at the end. These are practice sets written in the style of each exam, not official papers.</p>
+
+ <div class="card" id="setup">
+  <div class="pick" id="pick"></div>
+  <p class="hint" id="info"></p>
+  <div class="row"><button class="btn fit" id="start" type="button">Start Exam</button></div>
+  <p class="hint" id="best"></p>
+ </div>
+
+ <div class="card" id="play" hidden>
+  <div class="bar"><span class="hint" id="prog"></span><span class="timer" id="clock"></span></div>
+  <div class="pal" id="pal"></div>
+  <div class="q" id="qtext"></div><div id="opts"></div>
+  <div class="row"><button class="btn ghost fit" id="prev" type="button">Previous</button><button class="btn ghost fit" id="clear" type="button">Clear answer</button><button class="btn ghost fit" id="next" type="button">Next</button><button class="btn fit" id="submit" type="button">Submit exam</button></div>
+ </div>
+
+ <div class="card" id="done" hidden>
+  <div class="hint" id="what"></div><div class="score" id="score"></div><p id="msg"></p><p class="hint" id="stats"></p>
+  <div id="review"></div>
+  <div class="row"><button class="btn fit" id="again" type="button">Try another exam</button></div>
+ </div>
+</div>
+
+<script>
+var EXAMS = {
+ "SAT Math Mode (Digital SAT Format)": {short:"SAT", minutes:10, right:1, wrong:0, note:"8 questions, 10 minutes, 1 point each, no penalty for wrong answers.",
+  qs:[
+  {q:"If 3x + 5 = 20, what is the value of 6x + 10?",o:["30","35","40","45"],a:2,e:"6x + 10 is 2 times (3x + 5), so it equals 2 × 20 = 40. You do not need to find x."},
+  {q:"A line passes through (0, 3) and (2, 7). What is its slope?",o:["1","2","3","4"],a:1,e:"Slope = (7 − 3) / (2 − 0) = 4 / 2 = 2."},
+  {q:"If f(x) = 2x² − 3x + 1, what is f(3)?",o:["8","10","12","16"],a:1,e:"f(3) = 2(9) − 9 + 1 = 18 − 9 + 1 = 10."},
+  {q:"The sum of two numbers is 20 and their difference is 4. What is the larger number?",o:["8","10","12","16"],a:2,e:"Add the equations: 2x = 24, so x = 12. The other number is 8."},
+  {q:"A shirt costs $60. It is discounted 25%, then 10% sales tax is added. What is the final price?",o:["$46.50","$49.50","$51.00","$54.00"],a:1,e:"60 × 0.75 = 45, then 45 × 1.10 = 49.50."},
+  {q:"The mean of five numbers is 14. Four of them are 10, 12, 16 and 18. What is the fifth?",o:["12","14","16","18"],a:1,e:"The total must be 5 × 14 = 70. The four given add to 56, so the fifth is 14."},
+  {q:"Which value is a solution to x² − 4x − 5 = 0?",o:["x = −5","x = −1","x = 1","x = 4"],a:1,e:"It factors as (x − 5)(x + 1) = 0, so x = 5 or x = −1."},
+  {q:"In a right triangle, sin A = 3/5. What is cos A?",o:["3/4","4/5","5/4","5/3"],a:1,e:"The sides are 3, 4, 5, so cos A = adjacent / hypotenuse = 4/5."}]},
+ "FSc Board Math (Class 11 & 12 Pakistan)": {short:"FSc", minutes:10, right:1, wrong:0, note:"8 questions, 10 minutes, 1 mark each, no negative marking.",
+  qs:[
+  {q:"The roots of x² − 7x + 12 = 0 are",o:["2 and 6","3 and 4","−3 and −4","1 and 12"],a:1,e:"x² − 7x + 12 = (x − 3)(x − 4), so x = 3 or 4."},
+  {q:"The sum of the first 10 terms of the AP 2, 5, 8, ... is",o:["145","155","165","175"],a:1,e:"S₁₀ = (10/2)[2(2) + 9(3)] = 5 × 31 = 155."},
+  {q:"The 5th term of the GP 3, 6, 12, ... is",o:["24","36","48","96"],a:2,e:"aₙ = a·rⁿ⁻¹ = 3 × 2⁴ = 48."},
+  {q:"The value of i² + i⁴ is (where i² = −1)",o:["−2","0","1","2"],a:1,e:"i² = −1 and i⁴ = 1, so the sum is 0."},
+  {q:"The coefficient of x² in the expansion of (1 + x)⁵ is",o:["5","10","15","20"],a:1,e:"The coefficient is C(5, 2) = 10."},
+  {q:"lim as x → 2 of (x² − 4)/(x − 2) is",o:["0","2","4","Does not exist"],a:2,e:"Factor: (x − 2)(x + 2)/(x − 2) = x + 2, which tends to 4."},
+  {q:"d/dx of (x³ − 3x² + 2) is",o:["3x² − 6x","x² − 3x","3x² − 3","3x² − 6x + 2"],a:0,e:"Differentiate term by term: 3x² − 6x + 0."},
+  {q:"∫ 2x dx =",o:["x² + C","2x² + C","x + C","2 + C"],a:0,e:"The antiderivative of 2x is x², plus a constant."}]},
+ "JEE Main / Advanced (India Engineering)": {short:"JEE", minutes:12, right:4, wrong:-1, note:"8 questions, 12 minutes. JEE Main style: +4 for a correct answer, −1 for a wrong answer, 0 if left blank.",
+  qs:[
+  {q:"If the roots of x² − 6x + k = 0 differ by 2, then k =",o:["5","7","8","9"],a:2,e:"(α − β)² = (α + β)² − 4αβ = 36 − 4k = 4, so k = 8. The roots are 2 and 4."},
+  {q:"lim as x → 0 of sin(3x) / x =",o:["0","1","3","1/3"],a:2,e:"sin(3x)/x = 3 · sin(3x)/(3x), which tends to 3 × 1 = 3."},
+  {q:"How many distinct arrangements of the letters of LEVEL are there?",o:["20","30","60","120"],a:1,e:"5 letters with L twice and E twice: 5! / (2! · 2!) = 120 / 4 = 30."},
+  {q:"The determinant of [[1, 2, 3], [0, 1, 4], [5, 6, 0]] is",o:["−1","0","1","2"],a:2,e:"1(0 − 24) − 2(0 − 20) + 3(0 − 5) = −24 + 40 − 15 = 1."},
+  {q:"d/dx of tan x at x = π/4 is",o:["1","2","√2","1/2"],a:1,e:"The derivative is sec² x, and sec²(π/4) = (√2)² = 2."},
+  {q:"The sum of the infinite series 1 + 1/2 + 1/4 + 1/8 + ... is",o:["1.5","2","3","Infinite"],a:1,e:"Geometric series: a / (1 − r) = 1 / (1 − 1/2) = 2."},
+  {q:"If z = 1 + i, then z² =",o:["2","2i","1 + 2i","−2i"],a:1,e:"(1 + i)² = 1 + 2i + i² = 1 + 2i − 1 = 2i."},
+  {q:"Two fair dice are rolled. The probability that the sum is 7 is",o:["1/12","1/6","1/9","5/36"],a:1,e:"There are 6 favourable outcomes out of 36, so 6/36 = 1/6."}]}
+};
+var $ = function (i) { return document.getElementById(i); };
+var names = Object.keys(EXAMS), chosen = names[0], ex, qs, ans, cur, left, timerId, startTs;
+function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function store(get, v) { try { if (get) return JSON.parse(localStorage.getItem("msiq_exam") || "{}"); localStorage.setItem("msiq_exam", JSON.stringify(v)); } catch (e) { return {}; } }
+function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r; }
+
+function drawPick() {
+  var box = $("pick"); box.innerHTML = "";
+  names.forEach(function (n) {
+    var b = document.createElement("button"); b.type = "button"; b.className = n === chosen ? "on" : "";
+    b.innerHTML = "<b>" + esc(EXAMS[n].short) + "</b><span>" + esc(n) + "</span>";
+    b.onclick = function () { chosen = n; drawPick(); }; box.appendChild(b);
+  });
+  $("info").textContent = EXAMS[chosen].note;
+  var best = store(true)[chosen]; $("best").textContent = best ? "Your best score in this mode: " + best : "";
+}
+drawPick();
+
+$("start").onclick = function () {
+  ex = EXAMS[chosen]; qs = shuffle(ex.qs); ans = qs.map(function () { return -1; }); cur = 0;
+  left = ex.minutes * 60; startTs = Date.now();
+  $("setup").hidden = true; $("done").hidden = true; $("play").hidden = false;
+  clearInterval(timerId); tick(); timerId = setInterval(tick, 1000); show();
+};
+function tick() {
+  $("clock").textContent = "⏱ " + fmt(Math.max(left, 0)); $("clock").className = "timer" + (left <= 60 ? " low" : "");
+  if (left <= 0) { finish(true); return; } left--;
+}
+function show() {
+  var q = qs[cur];
+  $("prog").textContent = "Question " + (cur + 1) + " of " + qs.length;
+  $("qtext").textContent = q.q;
+  var box = $("opts"); box.innerHTML = "";
+  q.o.forEach(function (t, i) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "opt" + (ans[cur] === i ? " sel" : ""); b.textContent = t;
+    b.onclick = function () { ans[cur] = i; show(); }; box.appendChild(b);
+  });
+  var p = $("pal"); p.innerHTML = "";
+  qs.forEach(function (_, i) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = i + 1;
+    b.className = (ans[i] >= 0 ? "done " : "") + (i === cur ? "cur" : ""); b.onclick = function () { cur = i; show(); }; p.appendChild(b);
+  });
+  $("prev").disabled = cur === 0; $("next").disabled = cur === qs.length - 1;
+}
+$("prev").onclick = function () { if (cur > 0) { cur--; show(); } };
+$("next").onclick = function () { if (cur < qs.length - 1) { cur++; show(); } };
+$("clear").onclick = function () { ans[cur] = -1; show(); };
+$("submit").onclick = function () {
+  var blank = ans.filter(function (a) { return a < 0; }).length;
+  if (blank && !confirm("You left " + blank + " question(s) blank. Submit anyway?")) return;
+  finish(false);
+};
+function finish(timeUp) {
+  clearInterval(timerId);
+  var used = Math.min(Math.round((Date.now() - startTs) / 1000), ex.minutes * 60);
+  var right = 0, wrong = 0, blank = 0;
+  ans.forEach(function (a, i) { if (a < 0) blank++; else if (a === qs[i].a) right++; else wrong++; });
+  var pts = right * ex.right + wrong * ex.wrong, max = qs.length * ex.right;
+  $("play").hidden = true; $("done").hidden = false;
+  $("what").textContent = (timeUp ? "Time is up. " : "") + ex.short + " practice result";
+  $("score").textContent = pts + " / " + max;
+  var pct = pts / max;
+  $("msg").textContent = pct >= 0.85 ? "Excellent. You are exam ready on these topics." : pct >= 0.6 ? "Good. Study the explanations below and try again." : "Keep practising. Read every explanation, then retake the exam.";
+  $("stats").textContent = "Correct " + right + " · Wrong " + wrong + " · Blank " + blank + " · Time used " + fmt(used);
+  var b = store(true), prev = parseInt(b[chosen], 10);
+  if (isNaN(prev) || pts > prev) { b[chosen] = pts + " / " + max; store(false, b); }
+  var r = $("review"); r.innerHTML = "";
+  qs.forEach(function (q, i) {
+    var d = document.createElement("div"); d.className = "rev";
+    var status = ans[i] < 0 ? "<span class='hint'>Not answered</span>" : ans[i] === q.a ? "<span class='good'>Correct</span>" : "<span class='badc'>Wrong</span>";
+    d.innerHTML = "<b>" + (i + 1) + ". " + esc(q.q) + "</b><br>" + status + (ans[i] >= 0 && ans[i] !== q.a ? " · You chose: " + esc(q.o[ans[i]]) : "") + "<br>Answer: <b>" + esc(q.o[q.a]) + "</b><br><span class='hint'>" + esc(q.e) + "</span>";
+    r.appendChild(d);
+  });
+}
+$("again").onclick = function () { $("done").hidden = true; $("setup").hidden = false; drawPick(); };
+</script>
+</body></html>
