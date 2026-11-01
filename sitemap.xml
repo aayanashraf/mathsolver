@@ -19,4 +19,18 @@
   <url><loc>https://mathsolveiq.vercel.app/calculator/distance-formula</loc><priority>0.7</priority></url>
   <url><loc>https://mathsolveiq.vercel.app/calculator/pythagorean-theorem</loc><priority>0.7</priority></url>
   <url><loc>https://mathsolveiq.vercel.app/calculator/quadratic-equation</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/determinant</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/inverse-matrix</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/matrix</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/dot-product</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/cross-product</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/systems-of-equations</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/factoring</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/complete-the-square</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/inequality</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/logarithm</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/law-of-cosines</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/unit-circle</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/derivative</loc><priority>0.7</priority></url>
+  <url><loc>https://mathsolveiq.vercel.app/calculator/integral</loc><priority>0.7</priority></url>
 </urlset>
