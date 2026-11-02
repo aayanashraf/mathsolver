@@ -72,7 +72,7 @@
   var css = document.createElement("style");
   css.textContent = [
     "@keyframes msiqPulse{0%{box-shadow:0 0 0 0 rgba(220,38,38,.55)}100%{box-shadow:0 0 0 14px rgba(220,38,38,0)}}",
-    ".mic-on{background:#dc2626!important;color:#fff!important;animation:msiqPulse 1.2s infinite}",
+    "button.mic-on,.mic-on{background:#dc2626!important;background-image:none!important;border-color:#dc2626!important;color:#fff!important;animation:msiqPulse 1.2s infinite}",
     ".mic-status{display:none;align-items:center;gap:10px;margin-top:10px;padding:10px 14px;border-radius:12px;background:#fee2e2;color:#991b1b;font-weight:600}",
     ".mic-status.on{display:flex}.mic-dot{width:12px;height:12px;border-radius:50%;background:#dc2626;animation:msiqPulse 1.2s infinite;flex:none}",
     ".mic-status small{font-weight:400;display:block;color:#7f1d1d}",
@@ -96,7 +96,13 @@
 
   /* ================= 1. microphone indicator ================= */
   var micBtn = $("micBtn"), q = $("q");
+  if (!micBtn) {
+    Array.prototype.forEach.call(document.querySelectorAll("button"), function (b) { if (!micBtn && /🎤|speak|voice|\bmic/i.test(b.textContent + " " + (b.id || "") + " " + (b.getAttribute("aria-label") || ""))) micBtn = b; });
+  }
+  if (!q) q = document.querySelector("textarea");
   if (micBtn && q) {
+    /* remove any older click handlers so only this one runs */
+    var fresh = micBtn.cloneNode(true); micBtn.parentNode.replaceChild(fresh, micBtn); micBtn = fresh;
     var status = document.createElement("div");
     status.className = "mic-status"; status.setAttribute("role", "status"); status.setAttribute("aria-live", "polite");
     status.innerHTML = '<span class="mic-dot"></span><span><span id="micMsg">Microphone is ON. Speak now…</span><small id="micLive"></small></span>';
@@ -109,26 +115,51 @@
       $("micMsg").textContent = msg || "Microphone is ON. Speak now…"; if (!v && !msg) $("micLive").textContent = "";
       document.title = v ? "🎤 Listening… " + baseTitle : baseTitle;
     };
+    var tickId = null, autoOff = false, stopping = false, lastVoice = 0, SILENCE = 5000, forceTimer = null;
+    var clearTick = function () { if (tickId) { clearInterval(tickId); tickId = null; } if (forceTimer) { clearTimeout(forceTimer); forceTimer = null; } };
     micBtn.onclick = function () {
-      if (on && rec) { rec.stop(); return; }
+      if (on) {                       /* manual stop: turn the button off RIGHT NOW */
+        stopping = true; clearTick(); setOn(false);
+        try { rec.stop(); } catch (x) {}
+        return;
+      }
       var R = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!R) { setOn(false, "Voice input is not supported in this browser. Try Chrome or Edge."); return; }
       var sel = document.querySelector('select[title="Answer language"]');
-      rec = new R(); rec.lang = LMAP[sel ? sel.value : "English"] || "en-US"; rec.interimResults = true; rec.continuous = false;
+      var r = new R(); rec = r; r.lang = LMAP[sel ? sel.value : "English"] || "en-US"; r.interimResults = true; r.continuous = true;
+      autoOff = false; stopping = false;
       var before = q.value ? q.value.replace(/\s+$/, "") + " " : "";
-      rec.onstart = function () { setOn(true); };
-      rec.onresult = function (e) {
+      var alive = function () { return rec === r && !stopping; };   /* ignore events from an old session */
+      r.onstart = function () {
+        if (!alive()) return;
+        lastVoice = Date.now(); setOn(true); clearTick();
+        tickId = setInterval(function () {
+          var left = Math.ceil((SILENCE - (Date.now() - lastVoice)) / 1000);
+          if (left <= 0) { autoOff = true; clearTick(); setOn(false, "Mic turned off: no voice for 5 seconds. Tap the mic to start again."); try { r.stop(); } catch (x) {} }
+          else { $("micMsg").textContent = "Microphone is ON. Speak now… (turns off in " + left + "s if silent)"; }
+        }, 250);
+      };
+      r.onresult = function (e) {
+        if (!alive()) return;
+        lastVoice = Date.now();
         var t = ""; for (var k = 0; k < e.results.length; k++) t += e.results[k][0].transcript;
         $("micLive").textContent = "“" + t + "”"; q.value = before + t;
       };
-      rec.onerror = function (e) {
+      r.onerror = function (e) {
+        if (rec !== r) return;
+        clearTick();
+        if (stopping || e.error === "aborted") return;
         var m = e.error === "not-allowed" || e.error === "service-not-allowed" ? "Microphone is blocked. Click the lock icon in the address bar and allow the microphone."
           : e.error === "no-speech" ? "I did not hear anything. Tap the mic and try again."
           : e.error === "audio-capture" ? "No microphone was found on this device." : "Voice input stopped (" + e.error + ").";
         setOn(false, m);
       };
-      rec.onend = function () { if (on) setOn(false); };
-      try { rec.start(); } catch (err) { setOn(false, "Could not start the microphone. Try again."); }
+      r.onend = function () {
+        if (rec !== r) return;
+        clearTick();
+        if (on && !stopping && !autoOff) setOn(false);     /* ended by itself */
+      };
+      try { r.start(); setOn(true); lastVoice = Date.now(); } catch (err) { setOn(false, "Could not start the microphone. Try again."); }
     };
   }
 
