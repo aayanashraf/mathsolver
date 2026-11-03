@@ -64,7 +64,8 @@ body{padding-left:0}.doc{max-width:900px;margin:0 auto;padding:24px 16px 60px}.d
     };
     var m = document.createElement("div"); m.className = "vm"; var b = document.createElement("b"); b.textContent = v.title;
     var s = document.createElement("span"); s.textContent = (v.channel || "YouTube") + " · " + (v.topic || "Math");
-    m.appendChild(b); m.appendChild(s); d.appendChild(t); d.appendChild(m); return d;
+    var w = document.createElement("a"); w.href = "https://www.youtube.com/watch?v=" + v.id; w.target = "_blank"; w.rel = "noopener noreferrer"; w.textContent = "Watch on YouTube ↗"; w.style.cssText = "display:block;margin-top:4px;font-size:14px;color:var(--acc)";
+    m.appendChild(b); m.appendChild(s); m.appendChild(w); d.appendChild(t); d.appendChild(m); return d;
   }
   function more(topic, q) {
     var a = document.createElement("a"); a.className = "vc more"; a.target = "_blank"; a.rel = "noopener noreferrer";

@@ -16,10 +16,19 @@ foreach ($f in "flashcards.html", "formulas.html", "homework.html", "videos.html
   Copy-Item "$pack\$f" "$Project\$f" -Force; Write-Host "OK    $f" -ForegroundColor Green
 }
 Copy-Item "$pack\js\studydata.js" "$Project\js\studydata.js" -Force; Write-Host "OK    js\studydata.js" -ForegroundColor Green
-if (Test-Path "$Project\js\videos-data.js") {
-  Write-Host "ok    js\videos-data.js already exists (your videos are kept)" -ForegroundColor DarkGreen
+if (-not (Test-Path "$Project\js\videos-data.js")) {
+  Copy-Item "$pack\js\videos-data.js" "$Project\js\videos-data.js" -Force; Write-Host "OK    js\videos-data.js (13 starter videos)" -ForegroundColor Green
 } else {
-  Copy-Item "$pack\js\videos-data.js" "$Project\js\videos-data.js" -Force; Write-Host "OK    js\videos-data.js" -ForegroundColor Green
+  # keep the videos you added yourself, and add any starter videos that are missing
+  $vf = "$Project\js\videos-data.js"; $vt = [IO.File]::ReadAllText($vf); $added = 0
+  if ($vt.Contains("/* VIDEOS-END */")) {
+    foreach ($l in [IO.File]::ReadAllLines("$pack\js\videos-data.js")) {
+      $m = [regex]::Match($l, '^\s*\{ id: "([A-Za-z0-9_-]{11})"')
+      if ($m.Success -and -not $vt.Contains('id: "' + $m.Groups[1].Value + '"')) { $vt = $vt.Replace("  /* VIDEOS-END */", $l + "`n  /* VIDEOS-END */"); $added++ }
+    }
+    if ($added) { [IO.File]::WriteAllText($vf, $vt, $utf8) }
+    Write-Host "OK    js\videos-data.js: $added starter videos added, your own videos kept" -ForegroundColor Green
+  } else { Write-Host "NOTE  videos-data.js has no /* VIDEOS-END */ marker, left unchanged" -ForegroundColor Yellow }
 }
 
 Write-Host "`n--- 2. Editing index.html ---" -ForegroundColor Cyan

@@ -26,8 +26,21 @@
  <a class="logo" href="#home"><img src="images/logo.svg" alt="" width="30" height="30" style="vertical-align:middle;margin-right:8px">MathSolve<span>IQ</span></a>
  <a class="btn newchat" href="#home" id="newchat">＋ New problem</a>
  <nav id="nav">
-  <a href="#home">Home</a><a href="/calculator">Calculators</a><a href="#graph">Graph</a>
-  <a href="#quadratic">Quadratic</a><a href="#tools">Tools</a><a href="#formulas">Formulas</a>
+  <a href="#home"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+  <a href="/calculator"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg><span>Calculators</span></a>
+  <a href="#graph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><span>Graph</span></a>
+  <a href="#quadratic"><svg viewBox="0 0 24 24"><path d="M4 20c2-8 5-14 8-14s6 6 8 14"/><path d="M8 12h8"/></svg><span>Quadratic</span></a>
+  <a href="#tools"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>Tools</span></a>
+
+  <div class="nav-title">Learning</div>
+  <a href="quiz.html"><svg viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg><span>Practice Quizzes</span></a>
+  <a href="flashcards.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span>Flashcards</span></a>
+  <a href="formulas.html"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10M6 14h6"/></svg><span>Formula Library</span></a>
+  <a href="homework.html"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span>Homework Mode</span></a>
+
+  <div class="nav-title">Resources</div>
+  <a href="exam-mode.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span>Exam Modes (SAT/FSc/JEE)</span></a>
+  <a href="videos.html"><svg viewBox="0 0 24 24"><path d="m10 8 6 4-6 4V8z"/><rect width="20" height="16" x="2" y="4" rx="3"/></svg><span>Video Lessons</span></a>
  </nav>
  <div class="recent"><div class="rt">Recent</div><div id="recent"><span class="hint">No problems yet</span></div></div>
  <button class="btn ghost" id="theme" aria-label="Toggle theme">◐</button>
@@ -136,12 +149,12 @@
 -->
 </main>
 
-  <footer style="text-align: center; padding: 30px 0; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 50px;">
-    <div style="display:flex; justify-center; gap:20px; justify-content:center; margin-bottom:12px;">
-      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy Policy</a>
-      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms of Service</a>
-      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a> <a href="about.html">About</a>
-      <a href="quiz.html" style="color:var(--primary); text-decoration:none; font-weight:600;">Practice Quizzes</a> <a href="exam-mode.html" style="color:var(--accent); text-decoration:none; margin-left:15px; font-weight:600;">Exam Modes (SAT/FSc/JEE)</a> <a href="flashcards.html">Flashcards</a> <a href="formulas.html">Formula Library</a> <a href="homework.html">Homework Mode</a> <a href="videos.html">Video Lessons</a>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
     </div>
     <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
   </footer>

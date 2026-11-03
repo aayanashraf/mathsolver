@@ -34,6 +34,15 @@ body{padding-left:0}.doc{max-width:900px;margin:0 auto;padding:24px 16px 60px}.d
   <a href="https://www.youtube.com/@ProfessorLeonard" target="_blank" rel="noopener noreferrer">Professor Leonard</a>
   <a href="https://www.youtube.com/@patrickjmt" target="_blank" rel="noopener noreferrer">PatrickJMT</a>
  </div>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
+  </footer>
 </div>
 <script src="js/videos-data.js"></script>
 <script>
@@ -64,7 +73,8 @@ body{padding-left:0}.doc{max-width:900px;margin:0 auto;padding:24px 16px 60px}.d
     };
     var m = document.createElement("div"); m.className = "vm"; var b = document.createElement("b"); b.textContent = v.title;
     var s = document.createElement("span"); s.textContent = (v.channel || "YouTube") + " · " + (v.topic || "Math");
-    m.appendChild(b); m.appendChild(s); d.appendChild(t); d.appendChild(m); return d;
+    var w = document.createElement("a"); w.href = "https://www.youtube.com/watch?v=" + v.id; w.target = "_blank"; w.rel = "noopener noreferrer"; w.textContent = "Watch on YouTube ↗"; w.style.cssText = "display:block;margin-top:4px;font-size:14px;color:var(--acc)";
+    m.appendChild(b); m.appendChild(s); m.appendChild(w); d.appendChild(t); d.appendChild(m); return d;
   }
   function more(topic, q) {
     var a = document.createElement("a"); a.className = "vc more"; a.target = "_blank"; a.rel = "noopener noreferrer";
