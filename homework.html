@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework Mode – MathSolveIQ</title>
+<meta name="description" content="Homework mode: try the answer yourself first. You get hints after wrong tries and the full solution only after two tries or when you ask for it.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/homework.html">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<style>
+body{padding-left:0}.doc{max-width:760px;margin:0 auto;padding:24px 16px 60px}.doc h1{font:700 32px/1.2 Georgia,serif;margin:12px 0 6px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.top a{color:var(--acc);text-decoration:none;font-weight:600}
+label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}[hidden]{display:none!important}
+
+.q{font-size:20px;font-weight:600;margin:8px 0}.ok{color:#067647;font-weight:700}.badc{color:var(--bad);font-weight:700}
+.hintbox{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--acc2)}.steps div{padding:6px 0;border-bottom:1px dashed var(--line)}
+</style><link rel="manifest" href="/manifest.webmanifest">
+<script defer src="/js/pwa.js"></script>
+</head><body>
+<div class="doc">
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <h1>Homework Mode</h1>
+ <p class="lead">Try it yourself first. A wrong answer earns a hint, not the solution. The full working appears after two wrong tries, or when you choose to see it.</p>
+
+ <div class="card"><div class="row"><div><label for="topic">Topic</label><select id="topic"></select></div></div>
+  <div class="row"><button class="btn fit" id="newq" type="button">Give me a problem</button></div>
+  <p class="hint" id="score"></p></div>
+
+ <div class="card" id="play" hidden>
+  <div class="hint" id="meta"></div><div class="q" id="qt"></div>
+  <div class="row"><input id="ans" inputmode="decimal" placeholder="Your answer (number, or a fraction like 3/4)" aria-label="Your answer"><button class="btn fit" id="check" type="button">Check</button></div>
+  <div id="fb" style="margin-top:10px"></div><div id="hb"></div>
+  <div class="row"><button class="btn ghost fit" id="show" type="button">Show me the solution</button><button class="btn ghost fit" id="nextq" type="button" hidden>Next problem</button></div>
+  <div class="steps" id="sol" hidden></div>
+ </div>
+</div>
+<script src="js/studydata.js"></script>
+<script>
+(function () {
+  var $ = function (i) { return document.getElementById(i); }, P = window.MSIQ_STUDY.PROBLEMS, check = window.MSIQ_STUDY.check;
+  var topics = ["All topics"]; P.forEach(function (p) { if (topics.indexOf(p[0]) < 0) topics.push(p[0]); });
+  topics.forEach(function (t) { var o = document.createElement("option"); o.textContent = t; $("topic").appendChild(o); });
+  var R = { first: 0, solved: 0, tried: 0, seen: [] };
+  try { R = JSON.parse(localStorage.getItem("msiq_hw") || "") || R; } catch (e) {}
+  function save() { try { localStorage.setItem("msiq_hw", JSON.stringify(R)); } catch (e) {} }
+  function score() { $("score").textContent = R.tried ? "Solved " + R.solved + " of " + R.tried + " problems, " + R.first + " on the first try." : "No problems yet."; }
+  score();
+  var cur = null, tries = 0, done = false;
+  function pick() {
+    var pool = P.map(function (p, i) { return i; }).filter(function (i) { return $("topic").value === "All topics" || P[i][0] === $("topic").value; });
+    var fresh = pool.filter(function (i) { return R.seen.indexOf(i) < 0; });
+    if (!fresh.length) { R.seen = R.seen.filter(function (i) { return pool.indexOf(i) < 0; }); fresh = pool; }
+    return fresh[Math.floor(Math.random() * fresh.length)];
+  }
+  function ask() {
+    var i = pick(); cur = P[i]; tries = 0; done = false; R.seen.push(i); R.tried++; save(); score();
+    $("play").hidden = false; $("meta").textContent = cur[0]; $("qt").textContent = cur[1];
+    $("ans").value = ""; $("fb").textContent = ""; $("hb").innerHTML = ""; $("sol").hidden = true; $("sol").innerHTML = ""; $("nextq").hidden = true; $("show").hidden = false; $("check").disabled = false; $("ans").focus();
+  }
+  function reveal() {
+    $("sol").hidden = false; $("sol").innerHTML = "<b>Solution</b>";
+    cur[5].forEach(function (s, k) { var d = document.createElement("div"); d.textContent = (k + 1) + ". " + s; $("sol").appendChild(d); });
+    $("show").hidden = true; $("nextq").hidden = false; $("check").disabled = true; done = true;
+  }
+  function go() {
+    if (done || !cur) return;
+    var r = check($("ans").value, cur[2]);
+    if (r === null) { $("fb").innerHTML = '<span class="badc">Type a number, or a fraction like 3/4.</span>'; return; }
+    tries++;
+    if (r) {
+      $("fb").innerHTML = '<span class="ok">Correct' + (tries === 1 ? ", first try!" : "!") + "</span> Read the solution below to check your method.";
+      R.solved++; if (tries === 1) R.first++; save(); score(); reveal();
+    } else if (tries === 1) {
+      $("fb").innerHTML = '<span class="badc">Not quite.</span> Here is a hint:'; $("hb").innerHTML = ""; var h1 = document.createElement("div"); h1.className = "hintbox"; h1.textContent = "Hint 1: " + cur[3]; $("hb").appendChild(h1);
+    } else if (tries === 2) {
+      $("fb").innerHTML = '<span class="badc">Still not right.</span> One more hint, then try once more:'; var h = document.createElement("div"); h.className = "hintbox"; h.textContent = "Hint 2: " + cur[4]; $("hb").appendChild(h);
+    } else {
+      $("fb").innerHTML = '<span class="badc">That is three tries.</span> Here is the full solution so you can see the method.'; reveal();
+    }
+    $("ans").select();
+  }
+  $("newq").onclick = ask; $("nextq").onclick = ask; $("check").onclick = go; $("show").onclick = function () { if (!done) { $("fb").textContent = ""; reveal(); } };
+  $("ans").onkeydown = function (e) { if (e.key === "Enter") go(); };
+})();
+</script>
+</body></html>
