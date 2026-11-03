@@ -42,11 +42,6 @@ foreach ($file in $htmlFiles) {
     }
   }
 
-  # 2. Ensure semantic <header> exists on subpages with <div class="top">
-  if (-not ($content -match "<header\b") -and ($content -match '<div class="top">')) {
-    $content = [regex]::Replace($content, '(?s)(<div class="top">.*?</div>)', '<header class="site-subnav">$1</header>', 1)
-  }
-
   if ($content -ne $orig) {
     [IO.File]::WriteAllText($path, $content, $utf8)
     $updated++

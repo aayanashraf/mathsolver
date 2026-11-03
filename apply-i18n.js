@@ -32,11 +32,6 @@ function processHtmlFile(filePath) {
     }
   }
 
-  // 2. Ensure semantic <header> exists on subpages with <div class="top">
-  if (!/<header\b/i.test(content) && /<div class="top">/i.test(content)) {
-    content = content.replace(/(<div class="top">[\s\S]*?<\/div>)/i, '<header class="site-subnav">$1</header>');
-  }
-
   if (content !== orig) {
     fs.writeFileSync(filePath, content, 'utf8');
     updated++;
