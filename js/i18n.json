@@ -1,0 +1,253 @@
+{
+  "languages": {
+    "en": { "name": "English", "native": "English", "dir": "ltr" },
+    "ur": { "name": "Urdu", "native": "اردو", "dir": "rtl" },
+    "hi": { "name": "Hindi", "native": "हिन्दी", "dir": "ltr" },
+    "ro": { "name": "Roman Urdu", "native": "Roman Urdu", "dir": "ltr" },
+    "es": { "name": "Spanish", "native": "Español", "dir": "ltr" },
+    "ar": { "name": "Arabic", "native": "العربية", "dir": "rtl" },
+    "fr": { "name": "French", "native": "Français", "dir": "ltr" },
+    "de": { "name": "German", "native": "Deutsch", "dir": "ltr" },
+    "pt": { "name": "Portuguese", "native": "Português", "dir": "ltr" },
+    "tr": { "name": "Turkish", "native": "Türkçe", "dir": "ltr" }
+  },
+  "navigation": {
+    "Home": {
+      "ur": "ہوم", "hi": "होम", "ro": "Home", "es": "Inicio", "ar": "الرئيسية", "fr": "Accueil", "de": "Startseite", "pt": "Início", "tr": "Ana Sayfa"
+    },
+    "Calculators": {
+      "ur": "کیلکولیٹرز", "hi": "कैलकुलेटर", "ro": "Calculators", "es": "Calculadoras", "ar": "الحاسبات", "fr": "Calculatrices", "de": "Rechner", "pt": "Calculadoras", "tr": "Hesap Makineleri"
+    },
+    "Graph": {
+      "ur": "گراف", "hi": "ग्राफ", "ro": "Graph", "es": "Gráfico", "ar": "الرسم البياني", "fr": "Graphique", "de": "Graph", "pt": "Gráfico", "tr": "Grafik"
+    },
+    "Quadratic": {
+      "ur": "دو درجی", "hi": "द्विघात", "ro": "Quadratic", "es": "Cuadrática", "ar": "معادلة تربيعية", "fr": "Quadratique", "de": "Quadratisch", "pt": "Quadrática", "tr": "İkinci Dereceden"
+    },
+    "Tools": {
+      "ur": "اوزار", "hi": "उपकरण", "ro": "Auzār (Tools)", "es": "Herramientas", "ar": "الأدوات", "fr": "Outils", "de": "Werkzeuge", "pt": "Ferramentas", "tr": "Araçlar"
+    },
+    "Formulas": {
+      "ur": "فارمولے", "hi": "सूत्र", "ro": "Formulas", "es": "Fórmulas", "ar": "القوانين", "fr": "Formules", "de": "Formeln", "pt": "Fórmulas", "tr": "Formüller"
+    },
+    "Learning": {
+      "ur": "تعلیم", "hi": "अध्ययन", "ro": "Learning", "es": "Aprendizaje", "ar": "التعليم", "fr": "Apprentissage", "de": "Lernen", "pt": "Aprendizagem", "tr": "Öğrenme"
+    },
+    "Practice Quizzes": {
+      "ur": "مشقی کوئز", "hi": "अभ्यास क्विज़", "ro": "Practice Quizzes", "es": "Cuestionarios de Práctica", "ar": "اختبارات تدريبية", "fr": "Quiz d'entraînement", "de": "Übungsquiz", "pt": "Quizzes de Prática", "tr": "Alıştırma Testleri"
+    },
+    "Flashcards": {
+      "ur": "فلیش کارڈز", "hi": "फ्लैशकार्ड्स", "ro": "Flashcards", "es": "Tarjetas de Estudio", "ar": "بطاقات تعليمية", "fr": "Cartes mémoires", "de": "Karteikarten", "pt": "Cartões de Estudo", "tr": "Bilgi Kartları"
+    },
+    "Formula Library": {
+      "ur": "فارمولا لائبریری", "hi": "सूत्र लाइब्रेरी", "ro": "Formula Library", "es": "Biblioteca de Fórmulas", "ar": "مكتبة القوانين", "fr": "Bibliothèque de formules", "de": "Formelsammlung", "pt": "Biblioteca de Fórmulas", "tr": "Formül Kütüphanesi"
+    },
+    "Homework Mode": {
+      "ur": "ہوم ورک موڈ", "hi": "गृहकार्य मोड", "ro": "Homework Mode", "es": "Modo Tarea", "ar": "وضع الواجب المنزلي", "fr": "Mode devoirs", "de": "Hausaufgaben-Modus", "pt": "Modo Dever de Casa", "tr": "Ödev Modu"
+    },
+    "Resources": {
+      "ur": "وسائل", "hi": "संसाधन", "ro": "Zaraye (Resources)", "es": "Recursos", "ar": "المصادر", "fr": "Ressources", "de": "Ressourcen", "pt": "Recursos", "tr": "Kaynaklar"
+    },
+    "Exam Modes (SAT/FSc/JEE)": {
+      "ur": "امتحانی موڈز (SAT/FSc/JEE)", "hi": "परीक्षा मोड (SAT/FSc/JEE)", "ro": "Exam Modes (SAT/FSc/JEE)", "es": "Modos de Examen (SAT/FSc/JEE)", "ar": "أوضاع الامتحانات (SAT/FSc/JEE)", "fr": "Modes d'examen (SAT/FSc/JEE)", "de": "Prüfungsmodi (SAT/FSc/JEE)", "pt": "Modos de Exame (SAT/FSc/JEE)", "tr": "Sınav Modları (SAT/FSc/JEE)"
+    },
+    "Video Lessons": {
+      "ur": "ویڈیو اسباق", "hi": "वीडियो पाठ", "ro": "Video Lessons", "es": "Lecciones en Video", "ar": "دروس الفيديو", "fr": "Leçons vidéo", "de": "Videolektionen", "pt": "Aulas em Vídeo", "tr": "Video Dersler"
+    },
+    "Back to the solver": {
+      "ur": "سولور پر واپس جائیں", "hi": "सॉल्वर पर वापस जाएं", "ro": "Solver par wapas jayein", "es": "Volver al solucionador", "ar": "العودة إلى الحلّال", "fr": "Retour au résolveur", "de": "Zurück zum Löser", "pt": "Voltar ao solucionador", "tr": "Çözücüye dön"
+    },
+    "All calculators": {
+      "ur": "تمام کیلکولیٹرز", "hi": "सभी कैलकुलेटर", "ro": "Saare calculators", "es": "Todas las calculadoras", "ar": "جميع الحاسبات", "fr": "Toutes les calculatrices", "de": "Alle Rechner", "pt": "Todas as calculadoras", "tr": "Tüm hesap makineleri"
+    },
+    "Browse all calculators →": {
+      "ur": "تمام کیلکولیٹرز دیکھیں ←", "hi": "सभी कैलकुलेटर देखें →", "ro": "Saare calculators dekhein →", "es": "Ver todas las calculadoras →", "ar": "تصفح جميع الحاسبات ←", "fr": "Toutes les calculatrices →", "de": "Alle Rechner ansehen →", "pt": "Ver todas as calculadoras →", "tr": "Tüm hesap makinelerine göz at →"
+    },
+    "About": {
+      "ur": "ہمارے بارے میں", "hi": "हमारे बारे में", "ro": "About", "es": "Acerca de", "ar": "حول الموقع", "fr": "À propos", "de": "Über uns", "pt": "Sobre", "tr": "Hakkında"
+    },
+    "Contact": {
+      "ur": "رابطہ کریں", "hi": "संपर्क करें", "ro": "Rabta (Contact)", "es": "Contacto", "ar": "اتصل بنا", "fr": "Contact", "de": "Kontakt", "pt": "Contato", "tr": "İletişim"
+    },
+    "Privacy Policy": {
+      "ur": "پرائیویسی پالیسی", "hi": "गोपनीयता नीति", "ro": "Privacy Policy", "es": "Política de Privacidad", "ar": "سياسة الخصوصية", "fr": "Politique de confidentialité", "de": "Datenschutz", "pt": "Política de Privacidade", "tr": "Gizlilik Politikası"
+    },
+    "Terms of Service": {
+      "ur": "شرائط و ضوابط", "hi": "सेवा की शर्तें", "ro": "Terms of Service", "es": "Términos del Servicio", "ar": "شروط الخدمة", "fr": "Conditions d'utilisation", "de": "Nutzungsbedingungen", "pt": "Termos de Serviço", "tr": "Kullanım Şartları"
+    }
+  },
+  "buttons": {
+    "Solve step by step": {
+      "ur": "مرحلہ وار حل کریں", "hi": "चरण-दर-चरण हल करें", "ro": "Marhala-war hal karein", "es": "Resolver paso a paso", "ar": "حل خطوة بخطوة", "fr": "Résoudre étape par étape", "de": "Schritt für Schritt lösen", "pt": "Resolver passo a passo", "tr": "Adım adım çöz"
+    },
+    "Solve": {
+      "ur": "حل کریں", "hi": "हल करें", "ro": "Hal karein", "es": "Resolver", "ar": "حل", "fr": "Résoudre", "de": "Lösen", "pt": "Resolver", "tr": "Çöz"
+    },
+    "💡 Get Hint": {
+      "ur": "💡 اشارہ لیں", "hi": "💡 संकेत लें", "ro": "💡 Ishārah lein", "es": "💡 Obtener Pista", "ar": "💡 احصل على تلميح", "fr": "💡 Obtenir un indice", "de": "💡 Hinweis erhalten", "pt": "💡 Obter Dica", "tr": "💡 İpucu Al"
+    },
+    "Upload Photo / PDF": {
+      "ur": "تصویر / پی ڈی ایف اپلوڈ کریں", "hi": "फोटो / पीडीएफ अपलोड करें", "ro": "Photo / PDF upload karein", "es": "Subir Foto / PDF", "ar": "رفع صورة / PDF", "fr": "Télécharger Photo / PDF", "de": "Foto / PDF hochladen", "pt": "Enviar Foto / PDF", "tr": "Fotoğraf / PDF Yükle"
+    },
+    "📷 Photo (Upload Photo / PDF)": {
+      "ur": "📷 تصویر (فوٹو / PDF اپلوڈ کریں)", "hi": "📷 फोटो (फोटो / PDF अपलोड करें)", "ro": "📷 Photo (Photo / PDF upload karein)", "es": "📷 Foto (Subir Foto / PDF)", "ar": "📷 صورة (رفع صورة / PDF)", "fr": "📷 Photo (Télécharger Photo / PDF)", "de": "📷 Foto (Foto / PDF hochladen)", "pt": "📷 Foto (Enviar Foto / PDF)", "tr": "📷 Fotoğraf (Fotoğraf / PDF Yükle)"
+    },
+    "🎤 Speak": {
+      "ur": "🎤 بولیں", "hi": "🎤 बोलें", "ro": "🎤 Boliye", "es": "🎤 Hablar", "ar": "🎤 تحدث", "fr": "🎤 Parler", "de": "🎤 Sprechen", "pt": "🎤 Falar", "tr": "🎤 Konuş"
+    },
+    "＋ New problem": {
+      "ur": "＋ نیا سوال", "hi": "＋ नया प्रश्न", "ro": "＋ Naya sawāl", "es": "＋ Nuevo problema", "ar": "＋ مسألة جديدة", "fr": "＋ Nouveau problème", "de": "＋ Neue Aufgabe", "pt": "＋ Novo problema", "tr": "＋ Yeni soru"
+    },
+    "Calculate": {
+      "ur": "حساب لگائیں", "hi": "गणना करें", "ro": "Hisaab karein", "es": "Calcular", "ar": "احسب", "fr": "Calculer", "de": "Berechnen", "pt": "Calcular", "tr": "Hesapla"
+    },
+    "Generate Quiz": {
+      "ur": "کوئز بنائیں", "hi": "क्विज़ बनाएं", "ro": "Quiz banayein", "es": "Generar Cuestionario", "ar": "إنشاء اختبار", "fr": "Générer le quiz", "de": "Quiz erstellen", "pt": "Gerar Quiz", "tr": "Test Oluştur"
+    },
+    "Start Exam": {
+      "ur": "امتحان شروع کریں", "hi": "परीक्षा शुरू करें", "ro": "Imtehan shuru karein", "es": "Iniciar Examen", "ar": "بدء الامتحان", "fr": "Commencer l'examen", "de": "Prüfung starten", "pt": "Iniciar Exame", "tr": "Sınavı Başlat"
+    },
+    "Submit exam": {
+      "ur": "امتحان جمع کرائیں", "hi": "परीक्षा जमा करें", "ro": "Imtehan jama karein", "es": "Enviar examen", "ar": "تسليم الامتحان", "fr": "Soumettre l'examen", "de": "Prüfung abgeben", "pt": "Enviar exame", "tr": "Sınavı gönder"
+    },
+    "Check": {
+      "ur": "چیک کریں", "hi": "जांचें", "ro": "Check karein", "es": "Comprobar", "ar": "تحقق", "fr": "Vérifier", "de": "Prüfen", "pt": "Verificar", "tr": "Kontrol Et"
+    },
+    "Give me a problem": {
+      "ur": "مجھے سوال دیں", "hi": "मुझे प्रश्न दें", "ro": "Mujhe sawāl dein", "es": "Dame un problema", "ar": "أعطني مسألة", "fr": "Donnez-moi un problème", "de": "Gib mir eine Aufgabe", "pt": "Dê-me um problema", "tr": "Bana bir soru ver"
+    },
+    "Show me the solution": {
+      "ur": "مجھے حل دکھائیں", "hi": "समाधान दिखाएं", "ro": "Mujhe hal dikhayein", "es": "Muéstrame la solución", "ar": "أرني الحل", "fr": "Montrez-moi la solution", "de": "Zeige mir die Lösung", "pt": "Mostre-me a solução", "tr": "Çözümü göster"
+    },
+    "Next problem": {
+      "ur": "اگلا سوال", "hi": "अगला प्रश्न", "ro": "Agla sawāl", "es": "Siguiente problema", "ar": "المسألة التالية", "fr": "Problème suivant", "de": "Nächste Aufgabe", "pt": "Próximo problema", "tr": "Sonraki soru"
+    }
+  },
+  "placeholders": {
+    "Type your math problem, or tap Σ to add symbols…": {
+      "ur": "اپنا ریاضی کا سوال لکھیں، یا علامات کیلئے Σ دبائیں…",
+      "hi": "अपना गणितीय प्रश्न लिखें, या चिह्न जोड़ने के लिए Σ दबाएं…",
+      "ro": "Apna math sawāl likhein, ya Σ dabayein…",
+      "es": "Escribe tu problema matemático, o toca Σ para símbolos…",
+      "ar": "اكتب مسألتك الرياضية، أو اضغط Σ لإضافة الرموز…",
+      "fr": "Tapez votre problème de maths, ou appuyez sur Σ…",
+      "de": "Geben Sie Ihre Matheaufgabe ein oder tippen Sie auf Σ…",
+      "pt": "Digite seu problema de matemática ou toque em Σ…",
+      "tr": "Matematik probleminizi yazın veya sembol eklemek için Σ'ya dokunun…"
+    },
+    "Enter function, e.g. x^2 * sin(x)": {
+      "ur": "فنکشن درج کریں، مثلاً x^2 * sin(x)",
+      "hi": "फलन दर्ज करें, जैसे x^2 * sin(x)",
+      "ro": "Function likhein, maslan x^2 * sin(x)",
+      "es": "Introduce la función, ej. x^2 * sin(x)",
+      "ar": "أدخل الدالة، مثل x^2 * sin(x)",
+      "fr": "Entrez la fonction, ex. x^2 * sin(x)",
+      "de": "Funktion eingeben, z.B. x^2 * sin(x)",
+      "pt": "Insira a função, ex. x^2 * sin(x)",
+      "tr": "Fonksiyon girin, örn. x^2 * sin(x)"
+    },
+    "Enter matrix, e.g. [[1,2],[3,4]]": {
+      "ur": "میٹرکس درج کریں، مثلاً [[1,2],[3,4]]",
+      "hi": "मैट्रिक्स दर्ज करें, जैसे [[1,2],[3,4]]",
+      "ro": "Matrix likhein, maslan [[1,2],[3,4]]",
+      "es": "Introduce la matriz, ej. [[1,2],[3,4]]",
+      "ar": "أدخل المصفوفة، مثل [[1,2],[3,4]]",
+      "fr": "Entrez la matrice, ex. [[1,2],[3,4]]",
+      "de": "Matrix eingeben, z.B. [[1,2],[3,4]]",
+      "pt": "Insira a matriz, ex. [[1,2],[3,4]]",
+      "tr": "Matris girin, örn. [[1,2],[3,4]]"
+    },
+    "Your answer (number, or a fraction like 3/4)": {
+      "ur": "آپ کا جواب (نمبر، یا کسر جیسے 3/4)",
+      "hi": "आपका उत्तर (संख्या, या भिन्न जैसे 3/4)",
+      "ro": "Aap ka jawab (number, ya 3/4 jaisi fraction)",
+      "es": "Tu respuesta (número, o fracción como 3/4)",
+      "ar": "إجابتك (رقم، أو كسر مثل 3/4)",
+      "fr": "Votre réponse (nombre, ou fraction comme 3/4)",
+      "de": "Ihre Antwort (Zahl oder Bruch wie 3/4)",
+      "pt": "Sua resposta (número ou fração como 3/4)",
+      "tr": "Cevabınız (sayı veya 3/4 gibi bir kesir)"
+    }
+  },
+  "solver_and_socratic": {
+    "Full solution": {
+      "ur": "مکمل حل", "hi": "पूर्ण समाधान", "ro": "Mukammal Hal", "es": "Solución completa", "ar": "الحل الكامل", "fr": "Solution complète", "de": "Vollständige Lösung", "pt": "Solução completa", "tr": "Tam çözüm"
+    },
+    "Hints only": {
+      "ur": "صرف اشارے", "hi": "केवल संकेत", "ro": "Sirf Ishare", "es": "Solo pistas", "ar": "تلميحات فقط", "fr": "Indices seulement", "de": "Nur Hinweise", "pt": "Apenas dicas", "tr": "Yalnızca ipuçları"
+    },
+    "Socratic": {
+      "ur": "سقراطی موڈ", "hi": "सुकराती विधि", "ro": "Socratic (Rahnumai)", "es": "Socrático", "ar": "طريقة سقراط", "fr": "Socratique", "de": "Sokratisch", "pt": "Socrático", "tr": "Sokratik"
+    },
+    "Thinking…": {
+      "ur": "سوچ رہا ہے…", "hi": "विचार कर रहा है…", "ro": "Soch raha hai…", "es": "Pensando…", "ar": "جارٍ التفكير…", "fr": "Réflexion en cours…", "de": "Überlege…", "pt": "Pensando…", "tr": "Düşünüyor…"
+    },
+    "Could not reach the solver. Try again.": {
+      "ur": "سرور سے رابطہ نہ ہو سکا۔ دوبارہ کوشش کریں۔", "hi": "सर्वर से कनेक्ट नहीं हो सका। पुनः प्रयास करें।", "ro": "Solver se rabta nahi ho saka. Dobara koshish karein.", "es": "No se pudo conectar con el solucionador.", "ar": "تعذر الاتصال بالمحلل.", "fr": "Impossible de joindre le résolveur.", "de": "Löser nicht erreichbar.", "pt": "Não foi possível conectar ao solucionador.", "tr": "Çözücüye ulaşılamadı."
+    },
+    "Step": {
+      "ur": "مرحلہ", "hi": "चरण", "ro": "Marhala (Step)", "es": "Paso", "ar": "خطوة", "fr": "Étape", "de": "Schritt", "pt": "Passo", "tr": "Adım"
+    },
+    "Final Answer": {
+      "ur": "حتمی جواب", "hi": "अंतिम उत्तर", "ro": "Aakhri Jawab", "es": "Respuesta Final", "ar": "الإجابة النهائية", "fr": "Réponse finale", "de": "Endergebnis", "pt": "Resposta Final", "tr": "Nihai Cevap"
+    },
+    "Roots": {
+      "ur": "جذور (Roots)", "hi": "मूल (Roots)", "ro": "Roots", "es": "Raíces", "ar": "الجذور", "fr": "Racines", "de": "Nullstellen", "pt": "Raízes", "tr": "Kökler"
+    },
+    "Discriminant": {
+      "ur": "فرق کنندہ (Discriminant)", "hi": "विविक्तकर (Discriminant)", "ro": "Discriminant", "es": "Discriminante", "ar": "المميز", "fr": "Discriminant", "de": "Diskriminante", "pt": "Discriminante", "tr": "Diskriminant"
+    }
+  },
+  "exam_and_quizzes": {
+    "Question": {
+      "ur": "سوال", "hi": "प्रश्न", "ro": "Sawāl", "es": "Pregunta", "ar": "سؤال", "fr": "Question", "de": "Frage", "pt": "Pergunta", "tr": "Soru"
+    },
+    "of": {
+      "ur": "میں سے", "hi": "में से", "ro": "mein se", "es": "de", "ar": "من", "fr": "sur", "de": "von", "pt": "de", "tr": "üzerinden"
+    },
+    "Your score": {
+      "ur": "آپ کا اسکور", "hi": "आपका स्कोर", "ro": "Aap ka score", "es": "Tu puntuación", "ar": "درجتك", "fr": "Votre score", "de": "Deine Punktzahl", "pt": "Sua pontuação", "tr": "Puanınız"
+    },
+    "Correct.": {
+      "ur": "درست!", "hi": "सही!", "ro": "Sahi jawab!", "es": "¡Correcto!", "ar": "صحيح!", "fr": "Correct!", "de": "Richtig!", "pt": "Correto!", "tr": "Doğru!"
+    },
+    "Not quite.": {
+      "ur": "غلط، طریقہ دیکھیں۔", "hi": "गलत, नीचे विधि देखें।", "ro": "Ghalat, tareeqa dekhein.", "es": "No del todo.", "ar": "غير صحيح.", "fr": "Pas tout à fait.", "de": "Nicht ganz.", "pt": "Não exatamente.", "tr": "Tam olarak değil."
+    },
+    "Time remaining": {
+      "ur": "باقی وقت", "hi": "शेष समय", "ro": "Baqi waqt", "es": "Tiempo restante", "ar": "الوقت المتبقي", "fr": "Temps restant", "de": "Verbleibende Zeit", "pt": "Tempo restante", "tr": "Kalan süre"
+    },
+    "Time up!": {
+      "ur": "وقت ختم!", "hi": "समय समाप्त!", "ro": "Waqt khatam!", "es": "¡Tiempo agotado!", "ar": "انتهى الوقت!", "fr": "Temps écoulé!", "de": "Zeit abgelaufen!", "pt": "Tempo esgotado!", "tr": "Süre doldu!"
+    }
+  },
+  "advanced_calculators": {
+    "Derivative Calculator": {
+      "ur": "ڈیریویٹیو کیلکولیٹر", "hi": "अवकलन कैलकुलेटर", "ro": "Derivative Calculator", "es": "Calculadora de Derivadas", "ar": "حاسبة المشتقات", "fr": "Calculateur de dérivée", "de": "Ableitungsrechner", "pt": "Calculadora de Derivadas", "tr": "Türev Hesaplayıcı"
+    },
+    "Integral Calculator": {
+      "ur": "انٹیگرل کیلکولیٹر", "hi": "समाकलन कैलकुलेटर", "ro": "Integral Calculator", "es": "Calculadora de Integrales", "ar": "حاسبة التكامل", "fr": "Calculateur d'intégrale", "de": "Integralrechner", "pt": "Calculadora de Integrais", "tr": "İntegral Hesaplayıcı"
+    },
+    "Matrix Calculator": {
+      "ur": "میٹرکس کیلکولیٹر", "hi": "मैट्रिक्स कैलकुलेटर", "ro": "Matrix Calculator", "es": "Calculadora de Matrices", "ar": "حاسبة المصفوفات", "fr": "Calculateur de matrice", "de": "Matrix-Rechner", "pt": "Calculadora de Matrizes", "tr": "Matris Hesaplayıcı"
+    },
+    "Determinant Calculator": {
+      "ur": "مقطع (ڈیٹرمیننٹ) کیلکولیٹر", "hi": "सारणिक कैलकुलेटर", "ro": "Determinant Calculator", "es": "Calculadora de Determinantes", "ar": "حاسبة المحددات", "fr": "Calculateur de déterminant", "de": "Determinantenrechner", "pt": "Calculadora de Determinantes", "tr": "Determinant Hesaplayıcı"
+    },
+    "Laplace Transform Calculator": {
+      "ur": "لاپلاس ٹرانسفارم کیلکولیٹر", "hi": "लाप्लास रूपांतरण कैलकुलेटर", "ro": "Laplace Transform Calculator", "es": "Calculadora de Transformada de Laplace", "ar": "حاسبة تحويل لابلاس", "fr": "Calculateur de transformée de Laplace", "de": "Laplace-Transformationsrechner", "pt": "Calculadora de Transformada de Laplace", "tr": "Laplace Dönüşümü Hesaplayıcı"
+    },
+    "Fourier Series Calculator": {
+      "ur": "فوریر سیریز کیلکولیٹر", "hi": "फूरियर श्रृंखला कैलकुलेटर", "ro": "Fourier Series Calculator", "es": "Calculadora de Series de Fourier", "ar": "حاسبة سلسلة فورييه", "fr": "Calculateur de série de Fourier", "de": "Fourier-Reihen-Rechner", "pt": "Calculadora de Séries de Fourier", "tr": "Fourier Serisi Hesaplayıcı"
+    },
+    "Cramers Rule Calculator": {
+      "ur": "کریمرز رول کیلکولیٹر", "hi": "क्रेमर का नियम कैलकुलेटर", "ro": "Cramer's Rule Calculator", "es": "Calculadora de la Regla de Cramer", "ar": "حاسبة قاعدة كرامر", "fr": "Calculateur de la règle de Cramer", "de": "Cramersche-Regel-Rechner", "pt": "Calculadora da Regra de Cramer", "tr": "Cramer Kuralı Hesaplayıcı"
+    },
+    "Eigenvalue Calculator": {
+      "ur": "آئیگن ویلیو کیلکولیٹر", "hi": "आइगेनमान कैलकुलेटर", "ro": "Eigenvalue Calculator", "es": "Calculadora de Autovalores", "ar": "حاسبة القيم الذاتية", "fr": "Calculateur de valeurs propres", "de": "Eigenwert-Rechner", "pt": "Calculadora de Autovalores", "tr": "Özdeğer Hesaplayıcı"
+    },
+    "Taylor Series Calculator": {
+      "ur": "ٹیلر سیریز کیلکولیٹر", "hi": "टेलर श्रृंखला कैलकुलेटर", "ro": "Taylor Series Calculator", "es": "Calculadora de Series de Taylor", "ar": "حاسبة سلسلة تايلور", "fr": "Calculateur de série de Taylor", "de": "Taylor-Reihen-Rechner", "pt": "Calculadora de Séries de Taylor", "tr": "Taylor Serisi Hesaplayıcı"
+    }
+  }
+}
