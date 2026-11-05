@@ -17,11 +17,8 @@
     return q.trim();
   }
 
-  /* language picker */
-  var langSel = document.createElement("select");
-  ["English", "Urdu", "Hindi", "Roman Urdu", "Arabic", "Spanish", "French"].forEach(function (l) { var o = document.createElement("option"); o.textContent = l; langSel.appendChild(o); });
-  langSel.title = "Answer language"; langSel.style.cssText = "width:auto;margin-top:12px;display:block";
-  var chips = $("modes"); if (chips && chips.parentNode) chips.parentNode.insertBefore(langSel, chips.nextSibling);
+
+  /* Language is shared with the main website selector. */
 
   /* photo button */
   var note = document.createElement("div"); note.className = "hint"; out.parentNode.insertBefore(note, out);
@@ -29,7 +26,7 @@
   Array.prototype.forEach.call(document.querySelectorAll("#page-home button"), function (b) { if (/photo/i.test(b.textContent)) photoBtn = b; });
   if (photoBtn) {
     var f = document.createElement("input"); f.type = "file"; f.accept = "image/*"; f.hidden = true; document.body.appendChild(f);
-    photoBtn.disabled = false; photoBtn.removeAttribute("title"); photoBtn.textContent = "📷 Photo";
+    photoBtn.disabled = false; photoBtn.removeAttribute("title"); photoBtn.textContent = "ðŸ“· Photo";
     photoBtn.onclick = function () { f.click(); };
     f.onchange = function () {
       var file = f.files && f.files[0]; if (!file) return;
@@ -50,12 +47,12 @@
   async function ask(question, isFollow) {
     if (busy) return;
     busy = true; btn.disabled = true;
-    var wrap = document.createElement("div"); wrap.className = "step"; wrap.textContent = "Thinking…";
+    var wrap = document.createElement("div"); wrap.className = "step"; wrap.textContent = "Thinkingâ€¦";
     if (!isFollow) { out.innerHTML = ""; }
     out.appendChild(wrap);
     try {
       var r = await fetch("/api/solve", { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: question, mode: mode(), lang: langSel.value, history: isFollow ? history : [], image: isFollow ? null : image }) });
+        body: JSON.stringify({ question: question, mode: mode(), lang: (window.msiqLang && window.msiqLang.current() === "tr") ? "Turkish" : "English", history: isFollow ? history : [], image: isFollow ? null : image }) });
       var d = await r.json().catch(function () { return {}; });
       if (!r.ok) throw new Error(d.error || "Something went wrong. Please try again.");
       if (!isFollow) history = [];
@@ -71,7 +68,7 @@
   function addFollow() {
     var old = $("followBox"); if (old) old.remove();
     var d = document.createElement("div"); d.id = "followBox"; d.className = "row";
-    d.innerHTML = '<input id="followQ" placeholder="Did not get a step? Ask a follow-up…"><button class="btn fit" id="followGo" type="button">Ask</button>';
+    d.innerHTML = '<input id="followQ" placeholder="Did not get a step? Ask a follow-upâ€¦"><button class="btn fit" id="followGo" type="button">Ask</button>';
     out.appendChild(d);
     var go = function () { var v = $("followQ").value.trim(); if (!v) return; d.remove(); var u = document.createElement("div"); u.className = "hint"; u.textContent = "You: " + v; out.appendChild(u); ask(v, true); };
     $("followGo").onclick = go; $("followQ").onkeydown = function (e) { if (e.key === "Enter") go(); };

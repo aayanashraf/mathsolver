@@ -1,6 +1,6 @@
-/* MathSolveIQ AI solver. Runs on Vercel. The API key lives ONLY in Vercel environment variables. */
+﻿/* MathSolveIQ AI solver. Runs on Vercel. The API key lives ONLY in Vercel environment variables. */
 const MODEL_DEFAULT = "claude-sonnet-5-5";
-const LANGS = ["English", "Urdu", "Hindi", "Roman Urdu", "Arabic", "Spanish", "French"];
+const LANGS = ["English", "Turkish"];
 const BASE = [
   "You are MathSolveIQ, a patient maths tutor for students.",
   "Write maths in plain text such as x^2, sqrt(x), (a+b)/c. Do not use LaTeX.",
