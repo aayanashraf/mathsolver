@@ -226,7 +226,7 @@
     { id: "rate", label: "Markup (%)", value: 30 }
   ], function (v) {
     var c = number(v.cost, "cost"), r = number(v.rate, "markup");
-    if (c < 0 || r < 0) throw new Error("Cost and markup cannot be negative.");
+    if (c <= 0 || r < 0) throw new Error("Cost must be positive and markup cannot be negative.");
     var profit = c * r / 100;
     return step("Markup amount", "<b>" + fmt(profit) + "</b>") +
       step("Selling price", "<b>" + fmt(c + profit) + "</b>") +

@@ -1,0 +1,425 @@
+﻿/**
+ * MathSolveIQ Universal Client-Side Localization & Translation Engine v2
+ * Languages: English, Turkish
+ */
+(function () {
+  "use strict";
+
+  // ─── 1. Language Definitions ────────────────────────────────────────────────
+  var LANGUAGES = {
+    en: { name: "English", native: "English", dir: "ltr", google: "en" },
+    tr: { name: "Turkish", native: "Türkçe", dir: "ltr", google: "tr" }
+  };
+
+  // ─── 2. Dictionary ──────────────────────────────────────────────────────────
+  var DICTIONARY = {
+    "Home": {
+      tr:"Ana Sayfa", },
+    "Calculators": {
+      tr:"Hesap Makineleri",
+      },
+    "Graph": {
+      tr:"Grafik", },
+    "Quadratic": {
+      tr:"İkinci Dereceden",
+      },
+    "Tools": {
+      tr:"Araçlar", },
+    "Formulas": {
+      tr:"Formüller", },
+    "Learning": {
+      tr:"Öğrenme", },
+    "Practice Quizzes": {
+      tr:"Alıştırma Testleri", },
+    "Flashcards": {
+      tr:"Bilgi Kartları", },
+    "Formula Library": {
+      tr:"Formül Kütüphanesi", },
+    "Homework Mode": {
+      tr:"Ödev Modu", },
+    "Resources": {
+      tr:"Kaynaklar", },
+    "Exam Modes (SAT/FSc/JEE)": {
+      tr:"Sınav Modları (SAT/FSc/JEE)",
+      },
+    "Video Lessons": {
+      tr:"Video Dersler", },
+    "Back to the solver": {
+      tr:"Çözücüye dön", },
+    "All calculators": {
+      tr:"Tüm hesap makineleri", },
+    "Browse all calculators →": {
+      tr:"Tüm hesap makinelerine göz at →",
+      },
+    "About": {
+      tr:"Hakkında",
+      },
+    "Contact": {
+      tr:"İletişim",
+      },
+    "Privacy Policy": {
+      tr:"Gizlilik Politikası", },
+    "Terms of Service": {
+      tr:"Kullanım Şartları", },
+    "Free AI Math Helper": {
+      tr:"Ücretsiz Yapay Zeka Matematik Yardımcısı",
+      },
+    "Solve": {
+      tr:"Çöz", },
+    "Solve step by step": {
+      tr:"Adım adım çöz", },
+    "💡 Get Hint": {
+      tr:"💡 İpucu Al", },
+    "Get Hint": {
+      tr:"İpucu Al", },
+    "Upload Photo / PDF": {
+      tr:"Fotoğraf / PDF Yükle",
+      },
+    "🎤 Speak": {
+      tr:"🎤 Konuş",
+      },
+    "＋ New problem": {
+      tr:"＋ Yeni soru", },
+    "Plot": {
+      tr:"Grafiğe dök",
+      },
+    "Generate Quiz": {
+      tr:"Test Oluştur", },
+    "Start Exam": {
+      tr:"Sınavı Başlat", },
+    "Check": {
+      tr:"Kontrol Et",
+      },
+    "Next": {
+      tr:"Sonraki",
+      },
+    "Previous": {
+      tr:"Önceki",
+      },
+    "New quiz": {
+      tr:"Yeni test",
+      },
+    "Copy": {
+      tr:"Kopyala",
+      },
+    "Print sheet": {
+      tr:"Sayfayı yazdır", },
+    "Thinking…": {
+      tr:"Düşünüyor…", },
+    "Could not reach the solver. Try again.": {
+      tr:"Çözücüye ulaşılamadı. Tekrar deneyin.",
+      },
+    "Type your math problem, or tap Σ to add symbols…": {
+      tr:"Matematik probleminizi yazın veya sembol eklemek için Σ'ya dokunun…",
+      }
+  };
+
+  // ─── 3. Socratic Prompt Prefixes ────────────────────────────────────────────
+  var PROMPT_PREFIXES = {
+    hint: {
+      en: "Give hints only, one at a time. Do not reveal the final answer. Problem: ",
+      tr: "Yalnızca birer birer ipucu ver. Nihai cevabı açıklama. Problem: ",
+      },
+    socratic: {
+      en: "Act as a Socratic tutor: ask guiding questions, never give the answer. Problem: ",
+      tr: "Sokratik bir öğretmen gibi davran: yönlendirici sorular sor, asla cevabı verme. Problem: ",
+      }
+  };
+
+  // ─── 4. State ───────────────────────────────────────────────────────────────
+  var STORAGE_KEY = "msiq_lang";
+  var currentLang = localStorage.getItem(STORAGE_KEY) || "en";
+  if (!LANGUAGES[currentLang]) currentLang = "en";
+
+  // ─── 5. Google Translate Cookie ─────────────────────────────────────────────
+  function setGoogleTranslateCookie(lang) {
+    var target = (lang === "ro" || lang === "en") ? "en" : LANGUAGES[lang].google || lang;
+    var cookieVal = "/en/" + target;
+    document.cookie = "googtrans=" + cookieVal + "; path=/;";
+    var domain = window.location.hostname;
+    if (domain && domain !== "localhost" && domain !== "127.0.0.1") {
+      document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+      document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+    }
+  }
+
+  // ─── 6. DOM Dictionary Translation ──────────────────────────────────────────
+  function translateDOM(lang) {
+    var isRTL = (lang === "ur" || lang === "ar");
+    document.documentElement.setAttribute("lang", lang === "ro" ? "ur-Latn" : lang);
+    document.documentElement.setAttribute("dir", isRTL ? "rtl" : "ltr");
+
+    // Walk text nodes
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      // Skip the dropdown we injected so it doesn't get re-translated
+      if (node.parentElement && node.parentElement.closest && node.parentElement.closest("#msiq-lang-wrap")) continue;
+      var txt = node.nodeValue.trim();
+      if (!txt) continue;
+      if (DICTIONARY[txt] && DICTIONARY[txt][lang]) {
+        node.nodeValue = node.nodeValue.replace(txt, DICTIONARY[txt][lang]);
+      } else if (lang === "en") {
+        // Reverse lookup — restore English
+        for (var orig in DICTIONARY) {
+          for (var l in DICTIONARY[orig]) {
+            if (DICTIONARY[orig][l] === txt) {
+              node.nodeValue = node.nodeValue.replace(txt, orig);
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    // Input placeholders
+    document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(function (el) {
+      var p = el.getAttribute("placeholder");
+      if (!p) return;
+      if (DICTIONARY[p] && DICTIONARY[p][lang]) {
+        el.setAttribute("data-orig-ph", el.getAttribute("data-orig-ph") || p);
+        el.setAttribute("placeholder", DICTIONARY[p][lang]);
+      } else if (lang === "en" && el.getAttribute("data-orig-ph")) {
+        el.setAttribute("placeholder", el.getAttribute("data-orig-ph"));
+      }
+    });
+
+    // Buttons
+    document.querySelectorAll("button, a.btn, .chip").forEach(function (btn) {
+      if (btn.id === "msiq-lang-wrap" || (btn.closest && btn.closest("#msiq-lang-wrap"))) return;
+      var textNode = Array.from(btn.childNodes).find(function (n) { return n.nodeType === 3 && n.nodeValue.trim(); });
+      if (textNode) {
+        var t = textNode.nodeValue.trim();
+        if (DICTIONARY[t] && DICTIONARY[t][lang]) {
+          textNode.nodeValue = textNode.nodeValue.replace(t, DICTIONARY[t][lang]);
+        }
+      }
+    });
+
+    // Socratic / Hint chips
+    var chips = document.querySelectorAll("#modes .chip");
+    if (chips.length >= 3) {
+      chips[1].setAttribute("data-m", PROMPT_PREFIXES.hint[lang] || PROMPT_PREFIXES.hint.en);
+      chips[2].setAttribute("data-m", PROMPT_PREFIXES.socratic[lang] || PROMPT_PREFIXES.socratic.en);
+    }
+  }
+
+  // ─── 7. Google Translate Widget ──────────────────────────────────────────────
+  function triggerGoogleTranslate(lang, retries) {
+    retries = retries || 0;
+    if (retries > 20) return; // give up after ~6s
+    var target = (lang === "ro" || lang === "en") ? "en" : (LANGUAGES[lang] && LANGUAGES[lang].google ? LANGUAGES[lang].google : lang);
+    var combo = document.querySelector(".goog-te-combo");
+    if (combo) {
+      combo.value = target;
+      combo.dispatchEvent(new Event("change"));
+    } else {
+      setTimeout(function () { triggerGoogleTranslate(lang, retries + 1); }, 300);
+    }
+  }
+
+  function initGoogleTranslate() {
+    if (window._msiqGTEInit) return;
+    window._msiqGTEInit = true;
+
+    var container = document.getElementById("google_translate_element");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "google_translate_element";
+      container.style.display = "none";
+      document.body.appendChild(container);
+    }
+
+    window.googleTranslateElementInit = function () {
+      new window.google.translate.TranslateElement({
+        pageLanguage: "en",
+        includedLanguages: "en,tr",
+        autoDisplay: false
+      }, "google_translate_element");
+      // Re-apply stored language once widget is ready
+      if (currentLang !== "en") {
+        setTimeout(function () { triggerGoogleTranslate(currentLang); }, 600);
+      }
+    };
+
+    if (!document.getElementById("msiq-gte-script")) {
+      var s = document.createElement("script");
+      s.id = "msiq-gte-script";
+      s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      s.async = true;
+      document.head.appendChild(s);
+    }
+  }
+
+  // ─── 8. Apply Language ───────────────────────────────────────────────────────
+  function applyLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem(STORAGE_KEY, lang);
+    setGoogleTranslateCookie(lang);
+    translateDOM(lang);
+    triggerGoogleTranslate(lang);
+    // Update the select in case called programmatically
+    var sel = document.getElementById("msiq-lang-select");
+    if (sel && sel.value !== lang) sel.value = lang;
+  }
+
+  // ─── 9. Inject Styles ───────────────────────────────────────────────────────
+  function injectStyles() {
+    if (document.getElementById("msiq-lang-styles")) return;
+    var css = [
+      "/* === MathSolveIQ Language Selector === */",
+      "#msiq-lang-wrap {",
+      "  display: inline-flex; align-items: center; gap: 5px;",
+      "  background: var(--card, #fff); border: 1px solid var(--line, #e3e7ec);",
+      "  border-radius: 999px; padding: 4px 10px 4px 8px;",
+      "  color: var(--ink, #1a2233);",
+      "  box-shadow: 0 1px 4px rgba(0,0,0,0.08);",
+      "  cursor: pointer; transition: border-color .18s, box-shadow .18s;",
+      "  flex-shrink: 0; z-index: 9999;",
+      "}",
+      "#msiq-lang-wrap:hover, #msiq-lang-wrap:focus-within {",
+      "  border-color: var(--acc, #0f766e);",
+      "  box-shadow: 0 0 0 3px var(--acc2, rgba(15,118,110,.15));",
+      "}",
+      "#msiq-lang-wrap svg {",
+      "  width: 14px; height: 14px; stroke: var(--acc, #0f766e);",
+      "  fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;",
+      "  display: block; flex-shrink: 0;",
+      "}",
+      "#msiq-lang-select {",
+      "  background: transparent; border: none;",
+      "  color: var(--ink, #1a2233); font: 500 12px/1 system-ui, -apple-system, sans-serif;",
+      "  cursor: pointer; outline: none; max-width: 130px;",
+      "}",
+      "#msiq-lang-select option { background: var(--card, #fff); color: var(--ink, #1a2233); }",
+      /* Floating position for index.html */
+      "#msiq-lang-wrap.msiq-floating {",
+      "  position: fixed; top: 14px; right: 20px; z-index: 9999;",
+      "}",
+      "@media(max-width: 899px) {",
+      "  #msiq-lang-wrap.msiq-floating {",
+      "    top: 10px; right: 52px;",
+      "  }",
+      "  #msiq-lang-select { max-width: 100px; font-size: 11px; }",
+      "}",
+      /* Hide Google Translate UI clutter */
+      ".goog-te-banner-frame, .skiptranslate > iframe, #goog-gt-tt,",
+      ".goog-te-balloon-frame, .goog-tooltip, .goog-tooltip-table-cell { display: none !important; }",
+      "body { top: 0 !important; }",
+      ".goog-te-gadget { display: none !important; }",
+      /* RTL safety */
+      "[dir='rtl'] { text-align: right; }",
+      "[dir='rtl'] .math, [dir='rtl'] .step, [dir='rtl'] canvas,",
+      "[dir='rtl'] input[inputmode='decimal'], [dir='rtl'] .score {",
+      "  direction: ltr !important; unicode-bidi: embed !important; text-align: left;",
+      "}"
+    ].join("\n");
+    var style = document.createElement("style");
+    style.id = "msiq-lang-styles";
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+
+  // ─── 10. Build & Place the Dropdown ─────────────────────────────────────────
+  function injectDropdown() {
+    if (document.getElementById("msiq-lang-wrap")) return;
+
+    // Build the pill widget
+    var wrap = document.createElement("div");
+    wrap.id = "msiq-lang-wrap";
+
+    // Globe SVG icon
+    var svgNS = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    var c = document.createElementNS(svgNS, "circle");
+    c.setAttribute("cx", "12"); c.setAttribute("cy", "12"); c.setAttribute("r", "10");
+    var p1 = document.createElementNS(svgNS, "path");
+    p1.setAttribute("d", "M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z");
+    var p2 = document.createElementNS(svgNS, "path");
+    p2.setAttribute("d", "M2 12h20");
+    svg.appendChild(c); svg.appendChild(p1); svg.appendChild(p2);
+
+    // Select element
+    var select = document.createElement("select");
+    select.id = "msiq-lang-select";
+    select.setAttribute("aria-label", "Select language");
+
+    Object.keys(LANGUAGES).forEach(function (code) {
+      var opt = document.createElement("option");
+      opt.value = code;
+      opt.textContent = LANGUAGES[code].native + " (" + LANGUAGES[code].name + ")";
+      if (code === currentLang) opt.selected = true;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener("change", function () {
+      applyLanguage(this.value);
+    });
+
+    wrap.appendChild(svg);
+    wrap.appendChild(select);
+
+    // ── Placement Logic ──
+    // index.html has #page-home — use fixed floating pill (doesn't disturb sidebar)
+    var isIndex = !!document.getElementById("page-home");
+    var topBar  = document.querySelector(".top");
+
+    if (isIndex) {
+      wrap.classList.add("msiq-floating");
+      document.body.appendChild(wrap);
+    } else if (topBar) {
+      // Subpages: append into .top bar (flex row → goes to right)
+      topBar.appendChild(wrap);
+    } else {
+      // Fallback: floating
+      wrap.classList.add("msiq-floating");
+      document.body.appendChild(wrap);
+    }
+  }
+
+  // ─── 11. MutationObserver for dynamic content ────────────────────────────────
+  function setupObserver() {
+    var observer = new MutationObserver(function (mutations) {
+      if (currentLang === "en") return;
+      mutations.forEach(function (m) {
+        if (!m.addedNodes || !m.addedNodes.length) return;
+        m.addedNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.id === "msiq-lang-wrap") return; // skip our own widget
+          var tw = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+          var n;
+          while ((n = tw.nextNode())) {
+            var val = n.nodeValue.trim();
+            if (DICTIONARY[val] && DICTIONARY[val][currentLang]) {
+              n.nodeValue = n.nodeValue.replace(val, DICTIONARY[val][currentLang]);
+            }
+          }
+        });
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // ─── 12. Bootstrap ───────────────────────────────────────────────────────────
+  function init() {
+    injectStyles();
+    injectDropdown();
+    initGoogleTranslate();
+    if (currentLang !== "en") {
+      applyLanguage(currentLang);
+    }
+    setupObserver();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  // Expose so external code can call msiqLang.apply("ur") if needed
+  window.msiqLang = { apply: applyLanguage, current: function () { return currentLang; } };
+})();
+

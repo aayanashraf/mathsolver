@@ -218,13 +218,495 @@
         html += '<div><label for="' + f.id + '">' + f.label + '</label><input id="' + f.id + '" type="' + (f.type === "text" ? "text" : "text") + '" inputmode="' + (f.type === "text" ? "text" : "decimal") + '" value="' + esc(f.value === undefined ? "" : f.value) + '"></div>';
       }
     });
-    form.innerHTML = html + '</div><div class="row"><button class="btn fit" id="go" type="button">Calculate with steps</button></div>';
-    function run() {
-      var v = {}; spec.fields.forEach(function (f) { v[f.id] = document.getElementById(f.id).value; });
-      try { out.innerHTML = spec.solve(v); } catch (e) { out.innerHTML = '<span class="err">' + esc(e.message) + "</span>"; }
+    form.innerHTML = html + '</div><div class="row" style="display:flex;gap:10px;flex-wrap:wrap;"><button class="btn fit" id="go" type="button">Calculate with steps</button><button class="btn fit" id="msiq-share" type="button">Share calculation</button><button class="btn fit" id="msiq-copy-result" type="button">Copy result</button><button class="btn fit" id="msiq-reset-calculator" type="button">Reset calculator</button><button class="btn fit" id="msiq-download-pdf" type="button">Download PDF</button><button class="btn fit" id="msiq-step-toggle" type="button">Hide steps</button><button class="btn fit" id="msiq-theme-toggle" type="button">Switch theme</button></div>';
+    // msiq-calculator-theme-toggle-v1: persistent dark/light theme.
+    var themeStorageKey = "msiq_calc_theme_preference_v1";
+    var themeButton = document.getElementById("msiq-theme-toggle");
+    var currentTheme = "light";
+
+    try {
+      var savedTheme = localStorage.getItem(themeStorageKey);
+      currentTheme = savedTheme === "dark" || savedTheme === "light"
+        ? savedTheme
+        : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch (e) {
+      currentTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
-    document.getElementById("go").onclick = run;
-    form.addEventListener("keydown", function (e) { if (e.key === "Enter") run(); });
-    run();
+
+    function applyCalculatorTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute("data-theme", theme);
+      themeButton.textContent = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+      themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+      themeButton.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+      try { localStorage.setItem(themeStorageKey, theme); } catch (e) {}
+    }
+
+    applyCalculatorTheme(currentTheme);
+
+    themeButton.addEventListener("click", function () {
+      applyCalculatorTheme(currentTheme === "dark" ? "light" : "dark");
+    });
+    // msiq-calculation-history: local calculation history and reuse.
+    var historyKey = "msiq_calc_history_" + slug;
+    var historyPanel = document.createElement("section");
+    historyPanel.className = "card msiq-calculation-history";
+    historyPanel.style.cssText = "margin-top:18px;padding:18px;";
+    historyPanel.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">' +
+      '<b>Recent Calculations</b>' +
+      '<button type="button" class="btn" data-history-clear style="padding:7px 12px;">Clear history</button>' +
+      '</div><div data-history-list style="margin-top:12px;"></div>';
+
+    if (out.parentNode) out.parentNode.insertBefore(historyPanel, out.nextSibling);
+
+    var historyList = historyPanel.querySelector("[data-history-list]");
+
+    function readHistory() {
+      try {
+        var data = JSON.parse(localStorage.getItem(historyKey) || "[]");
+        return Array.isArray(data) ? data : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderHistory() {
+      var entries = readHistory();
+      historyList.innerHTML = "";
+
+      if (!entries.length) {
+        var empty = document.createElement("p");
+        empty.textContent = "Your calculations will appear here.";
+        empty.style.cssText = "color:var(--mute);font-size:14px;";
+        historyList.appendChild(empty);
+        return;
+      }
+
+      entries.forEach(function (entry, index) {
+        var item = document.createElement("div");
+        item.style.cssText = "padding:12px 0;border-top:1px solid var(--line,#ddd);";
+
+        var details = document.createElement("div");
+        details.style.cssText = "font-size:13px;margin-bottom:8px;";
+
+        var inputs = Object.keys(entry.values || {}).map(function (key) {
+          return key + ": " + entry.values[key];
+        }).join(" · ");
+
+        var heading = document.createElement("b");
+        heading.textContent = entry.result || "Calculation";
+        details.appendChild(heading);
+
+        var info = document.createElement("div");
+        info.textContent = inputs;
+        info.style.cssText = "color:var(--mute);margin-top:5px;overflow-wrap:anywhere;";
+        details.appendChild(info);
+
+        var date = document.createElement("div");
+        date.textContent = entry.time ? new Date(entry.time).toLocaleString() : "";
+        date.style.cssText = "color:var(--mute);font-size:11px;margin-top:4px;";
+        details.appendChild(date);
+
+        var actions = document.createElement("div");
+        actions.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;";
+
+        var reuse = document.createElement("button");
+        reuse.type = "button";
+        reuse.className = "btn";
+        reuse.textContent = "Use again";
+        reuse.style.cssText = "padding:7px 12px;";
+        reuse.addEventListener("click", function () {
+          spec.fields.forEach(function (field) {
+            var input = document.getElementById(field.id);
+            if (input && entry.values && Object.prototype.hasOwnProperty.call(entry.values, field.id)) {
+              input.value = entry.values[field.id];
+            }
+          });
+          persistCalculatorInputs();
+          run(false);
+          form.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+
+        var remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "btn";
+        remove.textContent = "Delete";
+        remove.style.cssText = "padding:7px 12px;";
+        remove.addEventListener("click", function () {
+          var current = readHistory();
+          current.splice(index, 1);
+          try { localStorage.setItem(historyKey, JSON.stringify(current)); } catch (e) {}
+          renderHistory();
+        });
+
+        actions.appendChild(reuse);
+        actions.appendChild(remove);
+        item.appendChild(details);
+        item.appendChild(actions);
+        historyList.appendChild(item);
+      });
+    }
+
+    function saveHistory(values) {
+      try {
+        var entries = readHistory();
+        var resultText = (out.innerText || out.textContent || "Calculation").trim();
+        entries.unshift({
+          values: values,
+          result: resultText.slice(0, 180),
+          time: Date.now()
+        });
+        localStorage.setItem(historyKey, JSON.stringify(entries.slice(0, 20)));
+        renderHistory();
+      } catch (e) {}
+    }
+
+    historyPanel.querySelector("[data-history-clear]").addEventListener("click", function () {
+      try { localStorage.removeItem(historyKey); } catch (e) {}
+      renderHistory();
+    });
+
+    // msiq-field-error-highlighting-v1: inline field validation feedback.
+    function clearFieldError(fieldInput) {
+      if (!fieldInput) return;
+      fieldInput.removeAttribute("aria-invalid");
+      fieldInput.classList.remove("msiq-input-invalid");
+      var message = fieldInput.parentNode.querySelector(".msiq-field-error");
+      if (message) message.remove();
+    }
+
+    function showFieldError(fieldInput, message) {
+      if (!fieldInput) return;
+      clearFieldError(fieldInput);
+      fieldInput.setAttribute("aria-invalid", "true");
+      fieldInput.classList.add("msiq-input-invalid");
+
+      var error = document.createElement("small");
+      error.className = "msiq-field-error";
+      error.setAttribute("role", "alert");
+      error.textContent = message;
+      fieldInput.insertAdjacentElement("afterend", error);
+    }
+
+    spec.fields.forEach(function (field) {
+      var fieldInput = document.getElementById(field.id);
+      if (!fieldInput) return;
+      fieldInput.addEventListener("input", function () {
+        clearFieldError(fieldInput);
+      });
+      fieldInput.addEventListener("change", function () {
+        clearFieldError(fieldInput);
+      });
+    });
+    function run(shouldSave) {
+      var v = {};
+      spec.fields.forEach(function (f) {
+        var input = document.getElementById(f.id);
+        v[f.id] = input ? input.value : "";
+      });
+
+      try {
+        var errors = [];
+
+        spec.fields.forEach(function (f) {
+          if (f.type === "text" || f.type === "select") return;
+
+          var fieldInput = document.getElementById(f.id);
+          var raw = String(v[f.id] == null ? "" : v[f.id]).trim();
+
+          if (raw === "") {
+            var requiredMessage = (f.label || f.id) + " is required.";
+            errors.push(requiredMessage);
+            showFieldError(fieldInput, requiredMessage);
+            return;
+          }
+
+          var numericValue = Number(raw);
+
+          if (!Number.isFinite(numericValue)) {
+            var numericMessage = (f.label || f.id) + " must be a valid number.";
+            errors.push(numericMessage);
+            showFieldError(fieldInput, numericMessage);
+          }
+        });
+
+        if (errors.length) {
+          out.innerHTML = '<span class="err">' + esc(errors.join(" ")) + "</span>";
+          return;
+        }
+
+        var result = spec.solve(v);
+
+        if (typeof result !== "string" || !result.trim()) {
+          throw new Error("Unable to calculate. Please check your inputs.");
+        }
+
+        out.innerHTML = result;
+        // msiq-result-animation-v1
+        out.classList.remove("msiq-result-animated");
+        void out.offsetWidth;
+        out.classList.add("msiq-result-animated");
+
+        updateMsiqStepVisibility();
+        if (shouldSave) saveHistory(v);
+      } catch (e) {
+        out.innerHTML = '<span class="err">' + esc(e.message || "Invalid input. Please check your values.") + "</span>";
+      }
+    }
+
+    // msiq-calculator-autosave-v1: save inputs separately for each calculator.
+    var inputStorageKey = "msiq_calc_inputs_v1_" + slug;
+
+    function persistCalculatorInputs() {
+      try {
+        var savedValues = {};
+        spec.fields.forEach(function (f) {
+          var fieldInput = document.getElementById(f.id);
+          if (fieldInput) savedValues[f.id] = fieldInput.value;
+        });
+        localStorage.setItem(inputStorageKey, JSON.stringify(savedValues));
+      } catch (e) {}
+    }
+
+    try {
+      var savedInputs = JSON.parse(localStorage.getItem(inputStorageKey) || "{}");
+      if (savedInputs && typeof savedInputs === "object" && !Array.isArray(savedInputs)) {
+        spec.fields.forEach(function (f) {
+          var fieldInput = document.getElementById(f.id);
+          if (fieldInput && Object.prototype.hasOwnProperty.call(savedInputs, f.id)) {
+            fieldInput.value = savedInputs[f.id];
+          }
+        });
+      }
+    } catch (e) {}
+
+    spec.fields.forEach(function (f) {
+      var fieldInput = document.getElementById(f.id);
+      if (!fieldInput) return;
+      fieldInput.addEventListener("input", persistCalculatorInputs);
+      fieldInput.addEventListener("change", persistCalculatorInputs);
+    });
+    // msiq-calculation-sharing: restore and share calculator inputs through URL.
+    try {
+      var sharedParams = new URLSearchParams(window.location.search);
+      spec.fields.forEach(function (f) {
+        var key = "msiq_" + f.id;
+        if (sharedParams.has(key)) {
+          var fieldInput = document.getElementById(f.id);
+          if (fieldInput) fieldInput.value = sharedParams.get(key);
+        }
+      });
+    } catch (e) {}
+
+    // Shared URL values override locally saved values.
+    persistCalculatorInputs();
+
+    document.getElementById("msiq-share").addEventListener("click", function () {
+      var shareButton = this;
+      try {
+        var shareUrl = new URL(window.location.href);
+        Array.from(shareUrl.searchParams.keys()).forEach(function (key) {
+          if (key.indexOf("msiq_") === 0) shareUrl.searchParams.delete(key);
+        });
+
+        spec.fields.forEach(function (f) {
+          var fieldInput = document.getElementById(f.id);
+          if (fieldInput && fieldInput.value.trim() !== "") {
+            shareUrl.searchParams.set("msiq_" + f.id, fieldInput.value);
+          }
+        });
+
+        var link = shareUrl.toString();
+
+        function copied() {
+          shareButton.textContent = "Link copied!";
+          setTimeout(function () {
+            shareButton.textContent = "Share calculation";
+          }, 2200);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(link).then(copied).catch(function () {
+            window.prompt("Copy your calculation link:", link);
+          });
+        } else {
+          window.prompt("Copy your calculation link:", link);
+        }
+      } catch (e) {
+        shareButton.textContent = "Unable to create link";
+      }
+    });
+
+    document.getElementById("msiq-copy-result").addEventListener("click", function () {
+      var button = this;
+      var resultText = (out.innerText || out.textContent || "").trim();
+
+      if (!resultText) {
+        button.textContent = "No result yet";
+        return;
+      }
+
+      function copied() {
+        button.textContent = "Copied!";
+        setTimeout(function () {
+          button.textContent = "Copy result";
+        }, 2000);
+      }
+
+      function fallbackCopy() {
+        var area = document.createElement("textarea");
+        area.value = resultText;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+
+        try {
+          if (document.execCommand("copy")) copied();
+          else button.textContent = "Copy failed";
+        } catch (e) {
+          button.textContent = "Copy failed";
+        }
+
+        area.remove();
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(resultText).then(copied).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+    });
+    document.getElementById("msiq-reset-calculator").addEventListener("click", function () {
+      spec.fields.forEach(function (f) {
+        var fieldInput = document.getElementById(f.id);
+        if (!fieldInput) return;
+
+        if (f.type === "select") {
+          fieldInput.selectedIndex = 0;
+        } else {
+          fieldInput.value = f.value === undefined ? "" : f.value;
+        }
+      });
+
+      try { localStorage.removeItem(inputStorageKey); } catch (e) {}
+      run(false);
+    });
+    // msiq-download-pdf: create a clean printable calculation report.
+    document.getElementById("msiq-download-pdf").addEventListener("click", function () {
+      var button = this;
+      var resultText = (out.innerText || out.textContent || "").trim();
+
+      if (!resultText) {
+        button.textContent = "Calculate first";
+        return;
+      }
+
+      var printWindow = window.open("", "_blank");
+
+      if (!printWindow) {
+        button.textContent = "Allow pop-ups";
+        return;
+      }
+
+      function safeText(value) {
+        return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+          }[ch];
+        });
+      }
+
+      var heading = document.querySelector("h1");
+      var title = heading ? heading.textContent.trim() : "Calculation Report";
+
+      var inputRows = spec.fields.map(function (f) {
+        var fieldInput = document.getElementById(f.id);
+        var value = fieldInput ? fieldInput.value : "";
+        return "<tr><th>" + safeText(f.label || f.id) +
+          "</th><td>" + safeText(value) + "</td></tr>";
+      }).join("");
+
+      var resultClone = out.cloneNode(true);
+      resultClone.querySelectorAll(".step").forEach(function (element) {
+        element.style.removeProperty("display");
+      });
+      resultClone.querySelectorAll("button, script").forEach(function (el) {
+        el.remove();
+      });
+
+      var report = '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
+        '<title>' + safeText(title) + ' - Calculation Report</title>' +
+        '<style>' +
+        'body{font-family:Arial,sans-serif;color:#222;padding:32px;max-width:850px;margin:auto;line-height:1.6}' +
+        'h1{font-size:25px;border-bottom:2px solid #ddd;padding-bottom:12px}' +
+        'h2{font-size:18px;margin-top:28px}' +
+        'table{width:100%;border-collapse:collapse;margin:15px 0}' +
+        'th,td{text-align:left;padding:10px;border:1px solid #ddd;overflow-wrap:anywhere}' +
+        'th{width:35%;background:#f5f5f5}' +
+        '.result{padding:16px;border:1px solid #ddd;border-radius:8px}' +
+        '.result .err{color:#b00020}' +
+        '.result .step{margin:8px 0}' +
+        '@media print{body{padding:0}.result{break-inside:avoid}}' +
+        '</style></head><body>' +
+        '<h1>' + safeText(title) + '</h1>' +
+        '<p>Calculation Report</p>' +
+        '<h2>Input Values</h2><table>' + inputRows + '</table>' +
+        '<h2>Result and Solution Steps</h2>' +
+        '<div class="result">' + resultClone.innerHTML + '</div>' +
+        '<p style="margin-top:30px;font-size:11px;color:#777">Generated by MathSolveIQ</p>' +
+        '</body></html>';
+
+      printWindow.onload = function () {
+        printWindow.focus();
+        printWindow.print();
+      };
+
+      printWindow.document.open();
+      printWindow.document.write(report);
+      printWindow.document.close();
+    });
+    // msiq-step-toggle: show or hide detailed calculation steps.
+    var msiqStepsHidden = false;
+    var msiqStepButton = document.getElementById("msiq-step-toggle");
+
+    function updateMsiqStepVisibility() {
+      var stepElements = out.querySelectorAll(".step");
+
+      stepElements.forEach(function (element) {
+        element.style.display = msiqStepsHidden ? "none" : "";
+      });
+
+      msiqStepButton.disabled = stepElements.length === 0;
+      msiqStepButton.textContent = msiqStepsHidden ? "Show steps" : "Hide steps";
+    }
+
+    msiqStepButton.addEventListener("click", function () {
+      msiqStepsHidden = !msiqStepsHidden;
+      updateMsiqStepVisibility();
+    });
+    document.getElementById("go").onclick = function () { run(true); };
+
+    // msiq-calculator-keyboard-shortcuts-v1
+    form.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        document.getElementById("msiq-reset-calculator").click();
+        return;
+      }
+
+      if (e.key === "Enter" && (e.ctrlKey || !e.ctrlKey)) {
+        e.preventDefault();
+        run(true);
+      }
+    });
+
+    renderHistory();
+    run(false);
   };
 })();

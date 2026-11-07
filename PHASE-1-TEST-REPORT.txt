@@ -1,0 +1,31 @@
+MathSolveIQ - Phase 1 Test Report
+Date: 2026-11-06
+
+SOURCE SCOPE
+- Uploaded audit ZIP: mathsolveiq-audit(1).zip
+- 123 HTML files inspected (122 calculator pages + index.html)
+- 6 calculator engines inspected: calc.js, calc2.js, calc3.js, calc5.js, calc6.js, calc7.js
+
+AUTOMATED RESULTS
+- JavaScript syntax: 6/6 engines PASS
+- Calculator registry: 122 calculators found
+- Default-input execution: 122/122 PASS after using each select field's first option
+- Numeric boundary smoke tests: zero, negative, decimal and blank values were tried across numeric fields; no NaN/Infinity output was produced
+- HTML calculator initialization: 122/122 pages map to a registered calculator slug
+- Required form/result elements: 122/122 present
+- Duplicate HTML IDs: none found in the 123 HTML files
+- Script asset references: 13 distinct JS filenames referenced and present in the uploaded archive
+
+CONFIRMED EDGE CASES AND FIXES
+1. fuel-economy: distance = 0 caused an invalid division path. Fixed to require distance > 0 and fuel used > 0.
+2. markup-calculator: cost = 0 caused an undefined profit-margin calculation. Fixed to require cost > 0; markup must remain non-negative.
+
+LIMITATIONS / STILL REQUIRED
+- These are source-level and function-level tests, not full browser automation.
+- Actual click/tap behavior, responsive layout, language switching, photo/PDF flows, and live deployment behavior still need browser/device testing.
+- The uploaded ZIP flattened the original folder structure, so this report validates asset names and source mappings, not the original directory layout on disk.
+- Formula correctness for every possible input is not mathematically proven by smoke tests; high-impact formulas still deserve independent reference-value test cases.
+
+PATCH PACKAGE
+- js/calc6.js
+- js/calc7.js

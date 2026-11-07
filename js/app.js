@@ -41,7 +41,7 @@ function compile(src){
 
 /* ---------- Graph ---------- */
 const cols=["#0f766e","#d9480f","#6741d9","#c2255c"];
-let view={cx:0,cy:0,s:50},fnsv=["x^2-2","sin(x)"];
+let view={cx:0,cy:0,s:50},fnsv=["x^2-2","sin(x)"],graphOverlay=null;
 function renderInputs(){
   $("fns").innerHTML="";
   fnsv.forEach((f,i)=>{
@@ -73,6 +73,27 @@ function draw(){
     }
     g.stroke();
   });
+  drawGraphOverlay(g,W,H,X,Y);
+}
+function drawGraphOverlay(g,W,H,X,Y){
+  if(!graphOverlay)return;
+  const ink=getComputedStyle(document.documentElement).getPropertyValue("--ink").trim();
+  if(graphOverlay.type==="tangent"){
+    const {x,y,slope}=graphOverlay;
+    g.save();g.strokeStyle="#e11d48";g.lineWidth=2.5;g.setLineDash([8,5]);g.beginPath();
+    g.moveTo(0,Y(y+slope*((0-W/2)/view.s+view.cx-x)));
+    g.lineTo(W,Y(y+slope*((W-W/2)/view.s+view.cx-x)));g.stroke();g.setLineDash([]);
+    g.fillStyle="#e11d48";g.beginPath();g.arc(X(x),Y(y),6,0,Math.PI*2);g.fill();g.restore();
+  }else if(graphOverlay.type==="roots"){
+    g.save();g.fillStyle="#e11d48";graphOverlay.points.forEach(p=>{g.beginPath();g.arc(X(p),Y(0),6,0,Math.PI*2);g.fill()});g.restore();
+  }else if(graphOverlay.type==="integral"){
+    const {a,b,fn}=graphOverlay,lo=Math.min(a,b),hi=Math.max(a,b);
+    g.save();g.fillStyle="rgba(20,184,166,.20)";g.beginPath();g.moveTo(X(lo),Y(0));
+    const count=240;for(let i=0;i<=count;i++){const x=lo+(hi-lo)*i/count;let y;try{y=fn(x)}catch(e){y=NaN}if(Number.isFinite(y))g.lineTo(X(x),Y(y));}
+    g.lineTo(X(hi),Y(0));g.closePath();g.fill();g.restore();
+  }else if(graphOverlay.type==="critical"){
+    g.save();g.fillStyle="#d97706";graphOverlay.points.forEach(p=>{g.beginPath();g.arc(X(p.x),Y(p.y),6,0,Math.PI*2);g.fill()});g.restore();
+  }
 }
 $("addf").onclick=()=>{if(fnsv.length<4){fnsv.push("");renderInputs()}};
 $("plot").onclick=draw;$("rst").onclick=()=>{view={cx:0,cy:0,s:50};draw()};
@@ -82,6 +103,43 @@ cv.onpointermove=e=>{if(!drag)return;const k=cv.width/cv.getBoundingClientRect()
 cv.onpointerup=()=>{drag=null};
 cv.onwheel=e=>{e.preventDefault();view.s*=e.deltaY<0?1.12:1/1.12;draw()};
 renderInputs();
+
+/* ---------- Advanced graph analysis ---------- */
+function graphFunction(){const src=fnsv[0]||"";return compile(src)}
+function graphValue(f,x){try{const y=f(x);return Number.isFinite(y)&&Math.abs(y)<1e10?y:NaN}catch(e){return NaN}}
+function graphDerivative(f,x){const h=1e-5*Math.max(1,Math.abs(x));return (graphValue(f,x+h)-graphValue(f,x-h))/(2*h)}
+function graphRoots(f,a,b){const roots=[],steps=1200,dx=(b-a)/steps;let x0=a,y0=graphValue(f,x0);
+ for(let i=1;i<=steps;i++){const x1=a+i*dx,y1=graphValue(f,x1);if(Number.isFinite(y0)&&Number.isFinite(y1)){
+  if(y0===0)roots.push(x0);else if(y0*y1<0){let l=x0,r=x1,fl=y0;for(let k=0;k<55;k++){const m=(l+r)/2,fm=graphValue(f,m);if(!Number.isFinite(fm))break;if(fl*fm<=0)r=m;else{l=m;fl=fm}}roots.push((l+r)/2)}
+ }x0=x1;y0=y1;}
+ return roots.filter((x,i)=>i===0||Math.abs(x-roots[i-1])>1e-4);
+}
+function graphIntegrate(f,a,b){const n=2000,h=(b-a)/n;let sum=graphValue(f,a)+graphValue(f,b);for(let i=1;i<n;i++){const y=graphValue(f,a+i*h);if(!Number.isFinite(y))return NaN;sum+=(i%2?4:2)*y;}return sum*h/3}
+$("graphAnalyze").onclick=()=>{
+ const f=graphFunction(),out=$("graphResult"),action=$("graphAction").value;
+ const a=Number($("graphMin").value),b=Number($("graphMax").value),x=Number($("graphPoint").value);
+ if(!f){out.innerHTML='<span class="err">Enter a valid first function before analyzing.</span>';return}
+ if(action!=="tangent"&&(!Number.isFinite(a)||!Number.isFinite(b)||a===b)){out.innerHTML='<span class="err">Enter two different, valid interval bounds.</span>';return}
+ graphOverlay=null;
+ if(action==="roots"){
+  const roots=graphRoots(f,Math.min(a,b),Math.max(a,b));graphOverlay={type:"roots",points:roots};
+  out.innerHTML=roots.length?'<b>Roots found:</b> '+roots.map(v=>'x ≈ '+n(v)).join(' · '):'No x-intercepts detected in this interval.';
+ }else if(action==="tangent"){
+  if(!Number.isFinite(x)){out.innerHTML='<span class="err">Enter a valid x-coordinate.</span>';return}
+  const y=graphValue(f,x),slope=graphDerivative(f,x);if(!Number.isFinite(y)||!Number.isFinite(slope)){out.innerHTML='<span class="err">The function is not defined at this x-coordinate.</span>';return}
+  graphOverlay={type:"tangent",x,y,slope};out.innerHTML='<b>At x = '+n(x)+'</b><br>f(x) ≈ '+n(y)+'<br>Derivative / tangent slope ≈ '+n(slope)+'<br>Tangent: y = '+n(slope)+'(x − '+n(x)+') + '+n(y);
+ }else if(action==="integral"){
+  const val=graphIntegrate(f,a,b);if(!Number.isFinite(val)){out.innerHTML='<span class="err">Could not calculate the integral across this interval. Check for discontinuities.</span>';return}
+  graphOverlay={type:"integral",a,b,fn:f};out.innerHTML='<b>Definite integral</b><br>∫ from '+n(a)+' to '+n(b)+' f(x) dx ≈ <b>'+n(val)+'</b><br><span class="hint">This is signed area; regions below the x-axis count as negative.</span>';
+ }else{
+  const lo=Math.min(a,b),hi=Math.max(a,b),critical=[],steps=900,dx=(hi-lo)/steps;let x0=lo,d0=graphDerivative(f,x0);
+  for(let i=1;i<=steps;i++){const x1=lo+i*dx,d1=graphDerivative(f,x1);if(Number.isFinite(d0)&&Number.isFinite(d1)&&d0*d1<0){let l=x0,r=x1,dl=d0;for(let k=0;k<40;k++){const m=(l+r)/2,dm=graphDerivative(f,m);if(!Number.isFinite(dm))break;if(dl*dm<=0)r=m;else{l=m;dl=dm}}const xx=(l+r)/2,yy=graphValue(f,xx);if(Number.isFinite(yy)&&(!critical.length||Math.abs(xx-critical[critical.length-1].x)>1e-3))critical.push({x:xx,y:yy})}x0=x1;d0=d1;}
+  graphOverlay={type:"critical",points:critical};out.innerHTML=critical.length?'<b>Possible turning points:</b><br>'+critical.map(p=>'x ≈ '+n(p.x)+', y ≈ '+n(p.y)).join('<br>'):'No turning points detected in this interval.';
+ }
+ draw();
+};
+$("graphAction").onchange=()=>{const tangent=$("graphAction").value==="tangent";$("graphPoint").disabled=!tangent};
+$("graphAction").dispatchEvent(new Event("change"));
 
 /* ---------- Quadratic ---------- */
 $("qgo").onclick=()=>{

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Math Practice - MathSolveIQ</title>
+<meta name="description" content="Personalized math practice that recommends topics based on your quiz results and tracks your progress on this device.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/smart-practice.html">
+<link rel="icon" href="/images/favicon.svg?v=2" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/glass-3d.css">
+<link rel="stylesheet" href="/css/theme-overrides.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<script defer src="/js/pwa.js"></script>
+<script defer src="/js/i18n.js"></script>
+<style>
+body{padding-left:0}.wrap{max-width:850px;margin:0 auto;padding:24px 16px 64px}
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.top a{color:var(--acc);text-decoration:none;font-weight:600}
+h1{font:700 clamp(28px,5vw,38px)/1.15 Georgia,serif;margin:10px 0}
+.lead{color:var(--mute);margin-bottom:22px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0}
+.panel h2{font-size:19px;margin:0 0 12px}
+.recommend{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.recommend strong{font-size:22px;color:var(--acc)}
+button,select{font:inherit}
+.action{border:0;border-radius:10px;padding:11px 16px;background:var(--acc);color:white;font-weight:700;cursor:pointer}
+.secondary{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:transparent;color:var(--ink);cursor:pointer}
+.controls{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:end}
+label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.progress-row{margin:14px 0}.progress-label{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.track{height:8px;border-radius:20px;background:var(--line);overflow:hidden;margin:6px 0}
+.track i{display:block;height:100%;background:var(--acc);border-radius:20px}
+.progress-row small,.muted{color:var(--mute)}
+.session-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--mute);font-size:14px}
+.bar{height:8px;border-radius:20px;background:var(--line);overflow:hidden;margin:12px 0 22px}
+.bar i{display:block;height:100%;width:0;background:var(--acc)}
+.question{font-size:22px;font-weight:700;margin:14px 0}
+.option{display:block;width:100%;text-align:left;padding:13px 15px;margin:9px 0;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);cursor:pointer}
+.option:disabled{cursor:default;opacity:1}.option.correct{border-color:#15945a;background:rgba(21,148,90,.12)}.option.incorrect{border-color:#dc5656;background:rgba(220,86,86,.1)}
+.feedback{padding:14px;border-radius:11px;background:var(--acc2);margin-top:14px;line-height:1.6}
+.score{font:700 44px/1 Georgia,serif;color:var(--acc);margin:12px 0}
+.review-item{padding:12px 0;border-bottom:1px solid var(--line)}.review-item p{margin:5px 0}.review-item small{color:var(--mute)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+[hidden]{display:none!important}
+@media(max-width:540px){.controls{grid-template-columns:1fr}.panel{padding:16px}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+ <div class="top"><a href="/index.html">MathSolveIQ</a><a href="/quiz.html">← Regular quizzes</a></div>
+ <h1>Smart Practice</h1>
+ <p class="lead">Practice by topic, get instant explanations, and let your results guide what to study next. Your progress is saved only in this browser.</p>
+
+ <section class="panel" id="dashboard">
+  <div class="recommend">
+   <div><p class="muted">Recommended focus topic</p><strong id="recommendedTopic">Algebra</strong><p id="recommendationText" class="muted"></p></div>
+   <button class="action" id="startRecommended" type="button">Practice recommended topic</button>
+  </div>
+  <div class="controls" style="margin-top:18px">
+   <div><label for="topic">Choose a topic</label><select id="topic"></select></div>
+   <div><label for="count">Questions</label><select id="count"><option value="5">5 questions</option><option value="6">All 6 questions</option></select></div>
+  </div>
+  <div class="actions"><button class="secondary" id="startSelected" type="button">Start selected topic</button></div>
+ </section>
+
+ <section class="panel" id="progressPanel">
+  <h2>Your topic progress</h2>
+  <div id="topicProgress"></div>
+  <button class="secondary" id="resetProgress" type="button">Reset progress on this device</button>
+ </section>
+
+ <section class="panel" id="session" hidden>
+  <div class="session-head"><span id="questionCount"></span><span>Choose one answer</span></div>
+  <div class="bar"><i id="progressFill"></i></div>
+  <div class="question" id="question"></div>
+  <div id="options"></div>
+  <div class="feedback" id="feedback" hidden></div>
+  <div class="actions"><button class="action" id="next" type="button" hidden>Next question</button></div>
+ </section>
+
+ <section class="panel" id="result" hidden>
+  <p class="muted">Practice result</p><div class="score" id="resultScore"></div>
+  <p id="resultMessage"></p>
+  <h2 id="reviewTitle" hidden style="margin-top:22px">Review the questions you missed</h2>
+  <div id="review"></div>
+  <div class="actions"><button class="action" id="retryWrong" type="button" hidden>Retry missed questions</button><button class="secondary" id="backDashboard" type="button">Back to progress</button></div>
+ </section>
+ <footer><p>MathSolveIQ · Smart Practice</p></footer>
+</main>
+<script defer src="/js/smart-practice.js"></script>
+</body>
+</html>

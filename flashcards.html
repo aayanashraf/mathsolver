@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Math Flashcards – MathSolveIQ</title>
+<title>Math Flashcards â€“ MathSolveIQ</title>
 <meta name="description" content="Free math flashcards with spaced repetition: algebra, trigonometry, calculus, geometry, statistics, exponents and logs. Add your own cards.">
 <link rel="canonical" href="https://mathsolveiq.vercel.app/flashcards.html">
 <link rel="icon" href="images/favicon.svg?v=2" type="image/svg+xml">
@@ -19,9 +19,11 @@ label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}[hidden]{displ
 @media(prefers-color-scheme:dark){.no{background:#450a0a!important;color:#fecaca!important}}
 </style><script defer src="/js/i18n.js"></script>
 <link rel="stylesheet" href="/css/glass-3d.css">
+<script defer src="/js/pwa.js"></script>
+  <link rel="stylesheet" href="/css/theme-overrides.css">
 </head><body>
 <div class="doc">
- <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">â† Back to the solver</a></div>
  <h1>Math Flashcards</h1>
  <p class="lead">Flip a card, say whether you knew it, and the cards you miss come back sooner. This is spaced repetition, and it is one of the best ways to remember formulas.</p>
 
@@ -52,7 +54,7 @@ label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}[hidden]{displ
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
     </div>
-    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
+    <p>Â© MathSolveIQ Â· Free AI Math Solver & Calculators</p>
   </footer>
 </div>
 <script src="js/studydata.js"></script>
@@ -118,7 +120,7 @@ label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}[hidden]{displ
     var box = $("mylist"); box.innerHTML = "";
     S.mine.forEach(function (c, i) {
       var d = document.createElement("div"), t = document.createElement("span"), x = document.createElement("button");
-      t.textContent = c[0] + "  →  " + c[1]; x.textContent = "Delete"; x.type = "button";
+      t.textContent = c[0] + "  â†’  " + c[1]; x.textContent = "Delete"; x.type = "button";
       x.onclick = function () { S.mine.splice(i, 1); save(); drawMine(); stats(); }; d.appendChild(t); d.appendChild(x); box.appendChild(d);
     });
   }
@@ -130,3 +132,4 @@ label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}[hidden]{displ
 })();
 </script>
 </body></html>
+

@@ -1,0 +1,619 @@
+/**
+ * MathSolveIQ Universal Client-Side Localization & Translation Engine v2
+ * Languages: English, Urdu, Hindi, Roman Urdu, Turkish, Spanish, Arabic,
+ *            French, German, Portuguese, Bengali, Punjabi, Chinese (Simplified)
+ */
+(function () {
+  "use strict";
+
+  // â”€â”€â”€ 1. Language Definitions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    var LANGUAGES = {
+    en: { name: "English", native: "English", dir: "ltr", google: "en" },
+    tr: { name: "Turkish", native: "Türkçe", dir: "ltr", google: "tr" }
+  };
+
+  // â”€â”€â”€ 2. Dictionary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  var DICTIONARY = {
+    "Home": {
+      ur:"ÛÙˆÙ…", hi:"à¤¹à¥‹à¤®", ro:"Home", tr:"Ana Sayfa", es:"Inicio",
+      ar:"Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©", fr:"Accueil", de:"Startseite", pt:"InÃ­cio",
+      bn:"à¦¹à§‹à¦®", pa:"à¨¹à©‹à¨®", zh:"ä¸»é¡µ"
+    },
+    "Calculators": {
+      ur:"Ú©ÛŒÙ„Ú©ÙˆÙ„ÛŒÙ¹Ø±Ø²", hi:"à¤•à¥ˆà¤²à¤•à¥à¤²à¥‡à¤Ÿà¤°", ro:"Calculators", tr:"Hesap Makineleri",
+      es:"Calculadoras", ar:"Ø§Ù„Ø­Ø§Ø³Ø¨Ø§Øª", fr:"Calculatrices", de:"Rechner",
+      pt:"Calculadoras", bn:"à¦•à§à¦¯à¦¾à¦²à¦•à§à¦²à§‡à¦Ÿà¦°", pa:"à¨•à©ˆà¨²à¨•à©à¨²à©‡à¨Ÿà¨°", zh:"è®¡ç®—å™¨"
+    },
+    "Graph": {
+      ur:"Ú¯Ø±Ø§Ù", hi:"à¤—à¥à¤°à¤¾à¤«", ro:"Graph", tr:"Grafik", es:"GrÃ¡fico",
+      ar:"Ø§Ù„Ø±Ø³Ù… Ø§Ù„Ø¨ÙŠØ§Ù†ÙŠ", fr:"Graphique", de:"Graph", pt:"GrÃ¡fico",
+      bn:"à¦—à§à¦°à¦¾à¦«", pa:"à¨—à©à¨°à¨¾à¨«", zh:"å›¾è¡¨"
+    },
+    "Quadratic": {
+      ur:"Ø¯Ùˆ Ø¯Ø±Ø¬ÛŒ", hi:"à¤¦à¥à¤µà¤¿à¤˜à¤¾à¤¤", ro:"Quadratic", tr:"Ä°kinci Dereceden",
+      es:"CuadrÃ¡tica", ar:"Ù…Ø¹Ø§Ø¯Ù„Ø© ØªØ±Ø¨ÙŠØ¹ÙŠØ©", fr:"Quadratique", de:"Quadratisch",
+      pt:"QuadrÃ¡tica", bn:"à¦¦à§à¦¬à¦¿à¦˜à¦¾à¦¤", pa:"à¨µà¨°à¨—à©€", zh:"äºŒæ¬¡æ–¹ç¨‹"
+    },
+    "Tools": {
+      ur:"Ø§ÙˆØ²Ø§Ø±", hi:"à¤‰à¤ªà¤•à¤°à¤£", ro:"Tools", tr:"AraÃ§lar", es:"Herramientas",
+      ar:"Ø§Ù„Ø£Ø¯ÙˆØ§Øª", fr:"Outils", de:"Werkzeuge", pt:"Ferramentas",
+      bn:"à¦¸à¦°à¦žà§à¦œà¦¾à¦®", pa:"à¨¸à©°à¨¦", zh:"å·¥å…·"
+    },
+    "Formulas": {
+      ur:"ÙØ§Ø±Ù…ÙˆÙ„Û’", hi:"à¤¸à¥‚à¤¤à¥à¤°", ro:"Formulas", tr:"FormÃ¼ller", es:"FÃ³rmulas",
+      ar:"Ø§Ù„Ù‚ÙˆØ§Ù†ÙŠÙ†", fr:"Formules", de:"Formeln", pt:"FÃ³rmulas",
+      bn:"à¦¸à§‚à¦¤à§à¦°", pa:"à¨«à¨¾à¨°à¨®à©‚à¨²à©‡", zh:"å…¬å¼"
+    },
+    "Learning": {
+      ur:"ØªØ¹Ù„ÛŒÙ…", hi:"à¤…à¤§à¥à¤¯à¤¯à¤¨", ro:"Learning", tr:"Ã–ÄŸrenme", es:"Aprendizaje",
+      ar:"Ø§Ù„ØªØ¹Ù„ÙŠÙ…", fr:"Apprentissage", de:"Lernen", pt:"Aprendizagem",
+      bn:"à¦¶à¦¿à¦•à§à¦·à¦¾", pa:"à¨¸à¨¿à©±à¨–à¨£à¨¾", zh:"å­¦ä¹ "
+    },
+    "Practice Quizzes": {
+      ur:"Ù…Ø´Ù‚ÛŒ Ú©ÙˆØ¦Ø²", hi:"à¤…à¤­à¥à¤¯à¤¾à¤¸ à¤•à¥à¤µà¤¿à¤œà¤¼", ro:"Practice Quizzes",
+      tr:"AlÄ±ÅŸtÄ±rma Testleri", es:"Cuestionarios de PrÃ¡ctica",
+      ar:"Ø§Ø®ØªØ¨Ø§Ø±Ø§Øª ØªØ¯Ø±ÙŠØ¨ÙŠØ©", fr:"Quiz d'entraÃ®nement", de:"Ãœbungsquiz",
+      pt:"Quizzes de PrÃ¡tica", bn:"à¦…à¦¨à§à¦¶à§€à¦²à¦¨ à¦•à§à¦‡à¦œ", pa:"à¨…à¨­à¨¿à¨†à¨¸ à¨•à©à¨‡à¨œà¨¼", zh:"ç»ƒä¹ æµ‹éªŒ"
+    },
+    "Flashcards": {
+      ur:"ÙÙ„ÛŒØ´ Ú©Ø§Ø±ÚˆØ²", hi:"à¤«à¥à¤²à¥ˆà¤¶à¤•à¤¾à¤°à¥à¤¡à¥à¤¸", ro:"Flashcards",
+      tr:"Bilgi KartlarÄ±", es:"Tarjetas de Estudio",
+      ar:"Ø¨Ø·Ø§Ù‚Ø§Øª ØªØ¹Ù„ÙŠÙ…ÙŠØ©", fr:"Cartes mÃ©moires", de:"Karteikarten",
+      pt:"CartÃµes de Estudo", bn:"à¦«à§à¦²à§à¦¯à¦¾à¦¶à¦•à¦¾à¦°à§à¦¡", pa:"à¨«à¨²à©ˆà¨¸à¨¼à¨•à¨¾à¨°à¨¡", zh:"æŠ½è®¤å¡"
+    },
+    "Formula Library": {
+      ur:"ÙØ§Ø±Ù…ÙˆÙ„Ø§ Ù„Ø§Ø¦Ø¨Ø±ÛŒØ±ÛŒ", hi:"à¤¸à¥‚à¤¤à¥à¤° à¤²à¤¾à¤‡à¤¬à¥à¤°à¥‡à¤°à¥€", ro:"Formula Library",
+      tr:"FormÃ¼l KÃ¼tÃ¼phanesi", es:"Biblioteca de FÃ³rmulas",
+      ar:"Ù…ÙƒØªØ¨Ø© Ø§Ù„Ù‚ÙˆØ§Ù†ÙŠÙ†", fr:"BibliothÃ¨que de formules", de:"Formelsammlung",
+      pt:"Biblioteca de FÃ³rmulas", bn:"à¦¸à§‚à¦¤à§à¦° à¦²à¦¾à¦‡à¦¬à§à¦°à§‡à¦°à¦¿", pa:"à¨«à¨¾à¨°à¨®à©‚à¨²à¨¾ à¨²à¨¾à¨‡à¨¬à©à¨°à©‡à¨°à©€", zh:"å…¬å¼åº“"
+    },
+    "Homework Mode": {
+      ur:"ÛÙˆÙ… ÙˆØ±Ú© Ù…ÙˆÚˆ", hi:"à¤—à¥ƒà¤¹à¤•à¤¾à¤°à¥à¤¯ à¤®à¥‹à¤¡", ro:"Homework Mode",
+      tr:"Ã–dev Modu", es:"Modo Tarea",
+      ar:"ÙˆØ¶Ø¹ Ø§Ù„ÙˆØ§Ø¬Ø¨ Ø§Ù„Ù…Ù†Ø²Ù„ÙŠ", fr:"Mode devoirs", de:"Hausaufgaben-Modus",
+      pt:"Modo Dever de Casa", bn:"à¦¹à§‹à¦®à¦“à¦¯à¦¼à¦¾à¦°à§à¦• à¦®à§‹à¦¡", pa:"à¨¹à©‹à¨®à¨µà¨°à¨• à¨®à©‹à¨¡", zh:"ä½œä¸šæ¨¡å¼"
+    },
+    "Resources": {
+      ur:"ÙˆØ³Ø§Ø¦Ù„", hi:"à¤¸à¤‚à¤¸à¤¾à¤§à¤¨", ro:"Resources", tr:"Kaynaklar", es:"Recursos",
+      ar:"Ø§Ù„Ù…ØµØ§Ø¯Ø±", fr:"Ressources", de:"Ressourcen", pt:"Recursos",
+      bn:"à¦°à¦¿à¦¸à§‹à¦°à§à¦¸", pa:"à¨¸à¨°à©‹à¨¤", zh:"èµ„æº"
+    },
+    "Exam Modes (SAT/FSc/JEE)": {
+      ur:"Ø§Ù…ØªØ­Ø§Ù†ÛŒ Ù…ÙˆÚˆØ² (SAT/FSc/JEE)", hi:"à¤ªà¤°à¥€à¤•à¥à¤·à¤¾ à¤®à¥‹à¤¡ (SAT/FSc/JEE)",
+      ro:"Exam Modes (SAT/FSc/JEE)", tr:"SÄ±nav ModlarÄ± (SAT/FSc/JEE)",
+      es:"Modos de Examen (SAT/FSc/JEE)", ar:"Ø£ÙˆØ¶Ø§Ø¹ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª (SAT/FSc/JEE)",
+      fr:"Modes d'examen (SAT/FSc/JEE)", de:"PrÃ¼fungsmodi (SAT/FSc/JEE)",
+      pt:"Modos de Exame (SAT/FSc/JEE)", bn:"à¦ªà¦°à§€à¦•à§à¦·à¦¾ à¦®à§‹à¦¡ (SAT/FSc/JEE)",
+      pa:"à¨ªà©à¨°à©€à¨–à¨¿à¨† à¨®à©‹à¨¡ (SAT/FSc/JEE)", zh:"è€ƒè¯•æ¨¡å¼ (SAT/FSc/JEE)"
+    },
+    "Video Lessons": {
+      ur:"ÙˆÛŒÚˆÛŒÙˆ Ø§Ø³Ø¨Ø§Ù‚", hi:"à¤µà¥€à¤¡à¤¿à¤¯à¥‹ à¤ªà¤¾à¤ ", ro:"Video Lessons",
+      tr:"Video Dersler", es:"Lecciones en Video",
+      ar:"Ø¯Ø±ÙˆØ³ Ø§Ù„ÙÙŠØ¯ÙŠÙˆ", fr:"LeÃ§ons vidÃ©o", de:"Videolektionen",
+      pt:"Aulas em VÃ­deo", bn:"à¦­à¦¿à¦¡à¦¿à¦“ à¦ªà¦¾à¦ ", pa:"à¨µà©€à¨¡à©€à¨“ à¨¸à¨¬à¨•", zh:"è§†é¢‘è¯¾ç¨‹"
+    },
+    "Back to the solver": {
+      ur:"Ø³ÙˆÙ„ÙˆØ± Ù¾Ø± ÙˆØ§Ù¾Ø³ Ø¬Ø§Ø¦ÛŒÚº", hi:"à¤¸à¥‰à¤²à¥à¤µà¤° à¤ªà¤° à¤µà¤¾à¤ªà¤¸ à¤œà¤¾à¤à¤‚", ro:"Solver par wapas jayein",
+      tr:"Ã‡Ã¶zÃ¼cÃ¼ye dÃ¶n", es:"Volver al solucionador",
+      ar:"Ø§Ù„Ø¹ÙˆØ¯Ø© Ø¥Ù„Ù‰ Ø§Ù„Ø­Ù„Ù‘Ø§Ù„", fr:"Retour au rÃ©solveur", de:"ZurÃ¼ck zum LÃ¶ser",
+      pt:"Voltar ao solucionador", bn:"à¦¸à¦²à¦­à¦¾à¦°à§‡ à¦«à¦¿à¦°à§‡ à¦¯à¦¾à¦¨", pa:"à¨¸à©‹à¨²à¨µà¨° à¨¤à©‡ à¨µà¨¾à¨ªà¨¸ à¨œà¨¾à¨“", zh:"è¿”å›žæ±‚è§£å™¨"
+    },
+    "All calculators": {
+      ur:"ØªÙ…Ø§Ù… Ú©ÛŒÙ„Ú©ÙˆÙ„ÛŒÙ¹Ø±Ø²", hi:"à¤¸à¤­à¥€ à¤•à¥ˆà¤²à¤•à¥à¤²à¥‡à¤Ÿà¤°", ro:"Saare calculators",
+      tr:"TÃ¼m hesap makineleri", es:"Todas las calculadoras",
+      ar:"Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ø§Ø³Ø¨Ø§Øª", fr:"Toutes les calculatrices", de:"Alle Rechner",
+      pt:"Todas as calculadoras", bn:"à¦¸à¦¬ à¦•à§à¦¯à¦¾à¦²à¦•à§à¦²à§‡à¦Ÿà¦°", pa:"à¨¸à¨¾à¨°à©‡ à¨•à©ˆà¨²à¨•à©à¨²à©‡à¨Ÿà¨°", zh:"å…¨éƒ¨è®¡ç®—å™¨"
+    },
+    "Browse all calculators â†’": {
+      ur:"ØªÙ…Ø§Ù… Ú©ÛŒÙ„Ú©ÙˆÙ„ÛŒÙ¹Ø±Ø² Ø¯ÛŒÚ©Ú¾ÛŒÚº â†", hi:"à¤¸à¤­à¥€ à¤•à¥ˆà¤²à¤•à¥à¤²à¥‡à¤Ÿà¤° à¤¦à¥‡à¤–à¥‡à¤‚ â†’",
+      ro:"Saare calculators dekhein â†’", tr:"TÃ¼m hesap makinelerine gÃ¶z at â†’",
+      es:"Ver todas las calculadoras â†’", ar:"ØªØµÙØ­ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ø§Ø³Ø¨Ø§Øª â†",
+      fr:"Toutes les calculatrices â†’", de:"Alle Rechner ansehen â†’",
+      pt:"Ver todas as calculadoras â†’", bn:"à¦¸à¦¬ à¦•à§à¦¯à¦¾à¦²à¦•à§à¦²à§‡à¦Ÿà¦° à¦¦à§‡à¦–à§à¦¨ â†’",
+      pa:"à¨¸à¨¾à¨°à©‡ à¨•à©ˆà¨²à¨•à©à¨²à©‡à¨Ÿà¨° à¨¦à©‡à¨–à©‹ â†’", zh:"æµè§ˆæ‰€æœ‰è®¡ç®—å™¨ â†’"
+    },
+    "About": {
+      ur:"ÛÙ…Ø§Ø±Û’ Ø¨Ø§Ø±Û’ Ù…ÛŒÚº", hi:"à¤¹à¤®à¤¾à¤°à¥‡ à¤¬à¤¾à¤°à¥‡ à¤®à¥‡à¤‚", ro:"About", tr:"HakkÄ±nda",
+      es:"Acerca de", ar:"Ø­ÙˆÙ„ Ø§Ù„Ù…ÙˆÙ‚Ø¹", fr:"Ã€ propos", de:"Ãœber uns",
+      pt:"Sobre", bn:"à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¸à¦®à§à¦ªà¦°à§à¦•à§‡", pa:"à¨¸à¨¾à¨¡à©‡ à¨¬à¨¾à¨°à©‡", zh:"å…³äºŽ"
+    },
+    "Contact": {
+      ur:"Ø±Ø§Ø¨Ø·Û Ú©Ø±ÛŒÚº", hi:"à¤¸à¤‚à¤ªà¤°à¥à¤• à¤•à¤°à¥‡à¤‚", ro:"Contact", tr:"Ä°letiÅŸim",
+      es:"Contacto", ar:"Ø§ØªØµÙ„ Ø¨Ù†Ø§", fr:"Contact", de:"Kontakt",
+      pt:"Contato", bn:"à¦¯à§‹à¦—à¦¾à¦¯à§‹à¦—", pa:"à¨¸à©°à¨ªà¨°à¨•", zh:"è”ç³»æˆ‘ä»¬"
+    },
+    "Privacy Policy": {
+      ur:"Ù¾Ø±Ø§Ø¦ÛŒÙˆÛŒØ³ÛŒ Ù¾Ø§Ù„ÛŒØ³ÛŒ", hi:"à¤—à¥‹à¤ªà¤¨à¥€à¤¯à¤¤à¤¾ à¤¨à¥€à¤¤à¤¿", ro:"Privacy Policy",
+      tr:"Gizlilik PolitikasÄ±", es:"PolÃ­tica de Privacidad",
+      ar:"Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ©", fr:"Politique de confidentialitÃ©", de:"Datenschutz",
+      pt:"PolÃ­tica de Privacidade", bn:"à¦—à§‹à¦ªà¦¨à§€à¦¯à¦¼à¦¤à¦¾ à¦¨à§€à¦¤à¦¿", pa:"à¨ªà©à¨°à¨¾à¨ˆà¨µà©‡à¨¸à©€ à¨¨à©€à¨¤à©€", zh:"éšç§æ”¿ç­–"
+    },
+    "Terms of Service": {
+      ur:"Ø´Ø±Ø§Ø¦Ø· Ùˆ Ø¶ÙˆØ§Ø¨Ø·", hi:"à¤¸à¥‡à¤µà¤¾ à¤•à¥€ à¤¶à¤°à¥à¤¤à¥‡à¤‚", ro:"Terms of Service",
+      tr:"KullanÄ±m ÅžartlarÄ±", es:"TÃ©rminos del Servicio",
+      ar:"Ø´Ø±ÙˆØ· Ø§Ù„Ø®Ø¯Ù…Ø©", fr:"Conditions d'utilisation", de:"Nutzungsbedingungen",
+      pt:"Termos de ServiÃ§o", bn:"à¦¸à§‡à¦¬à¦¾à¦° à¦¶à¦°à§à¦¤à¦¾à¦¬à¦²à§€", pa:"à¨¸à©‡à¨µà¨¾ à¨¦à©€à¨†à¨‚ à¨¸à¨¼à¨°à¨¤à¨¾à¨‚", zh:"æœåŠ¡æ¡æ¬¾"
+    },
+    "Free AI Math Helper": {
+      ur:"Ù…ÙØª AI Ø±ÛŒØ§Ø¶ÛŒ Ù…Ø¯Ø¯Ú¯Ø§Ø±", hi:"à¤¨à¤¿à¤ƒà¤¶à¥à¤²à¥à¤• AI à¤—à¤£à¤¿à¤¤ à¤¸à¤¹à¤¾à¤¯à¤•",
+      ro:"Muft AI Math Madadgar", tr:"Ãœcretsiz Yapay Zeka Matematik YardÄ±mcÄ±sÄ±",
+      es:"Ayudante MatemÃ¡tico IA Gratuito", ar:"Ù…Ø³Ø§Ø¹Ø¯ Ø§Ù„Ø±ÙŠØ§Ø¶ÙŠØ§Øª Ø§Ù„Ø°ÙƒÙŠ Ø§Ù„Ù…Ø¬Ø§Ù†ÙŠ",
+      fr:"Assistant MathÃ©matique IA Gratuit", de:"Kostenloser KI-MathelÃ¶ser",
+      pt:"Assistente MatemÃ¡tico IA Gratuito", bn:"à¦¬à¦¿à¦¨à¦¾à¦®à§‚à¦²à§à¦¯à§‡ AI à¦—à¦£à¦¿à¦¤ à¦¸à¦¹à¦¾à¦¯à¦¼à¦•",
+      pa:"à¨®à©à¨«à¨¼à¨¤ AI à¨—à¨£à¨¿à¨¤ à¨¸à¨¹à¨¾à¨‡à¨•", zh:"å…è´¹AIæ•°å­¦åŠ©æ‰‹"
+    },
+    "Solve": {
+      ur:"Ø­Ù„ Ú©Ø±ÛŒÚº", hi:"à¤¹à¤² à¤•à¤°à¥‡à¤‚", ro:"Hal karein", tr:"Ã‡Ã¶z", es:"Resolver",
+      ar:"Ø­Ù„", fr:"RÃ©soudre", de:"LÃ¶sen", pt:"Resolver",
+      bn:"à¦¸à¦®à¦¾à¦§à¦¾à¦¨ à¦•à¦°à§à¦¨", pa:"à¨¹à©±à¨² à¨•à¨°à©‹", zh:"è§£ç­”"
+    },
+    "Solve step by step": {
+      ur:"Ù…Ø±Ø­Ù„Û ÙˆØ§Ø± Ø­Ù„ Ú©Ø±ÛŒÚº", hi:"à¤šà¤°à¤£-à¤¦à¤°-à¤šà¤°à¤£ à¤¹à¤² à¤•à¤°à¥‡à¤‚", ro:"Marhala-war hal karein",
+      tr:"AdÄ±m adÄ±m Ã§Ã¶z", es:"Resolver paso a paso",
+      ar:"Ø­Ù„ Ø®Ø·ÙˆØ© Ø¨Ø®Ø·ÙˆØ©", fr:"RÃ©soudre Ã©tape par Ã©tape", de:"Schritt fÃ¼r Schritt lÃ¶sen",
+      pt:"Resolver paso a paso", bn:"à¦§à¦¾à¦ªà§‡ à¦§à¦¾à¦ªà§‡ à¦¸à¦®à¦¾à¦§à¦¾à¦¨", pa:"à¨•à¨¦à¨® à¨¦à¨° à¨•à¨¦à¨® à¨¹à©±à¨² à¨•à¨°à©‹", zh:"é€æ­¥è§£ç­”"
+    },
+    "ðŸ’¡ Get Hint": {
+      ur:"ðŸ’¡ Ø§Ø´Ø§Ø±Û Ù„ÛŒÚº", hi:"ðŸ’¡ à¤¸à¤‚à¤•à¥‡à¤¤ à¤²à¥‡à¤‚", ro:"ðŸ’¡ IshÄrah lein",
+      tr:"ðŸ’¡ Ä°pucu Al", es:"ðŸ’¡ Obtener Pista",
+      ar:"ðŸ’¡ Ø§Ø­ØµÙ„ Ø¹Ù„Ù‰ ØªÙ„Ù…ÙŠØ­", fr:"ðŸ’¡ Obtenir un indice", de:"ðŸ’¡ Hinweis erhalten",
+      pt:"ðŸ’¡ Obter Dica", bn:"ðŸ’¡ à¦‡à¦™à§à¦—à¦¿à¦¤ à¦¨à¦¿à¦¨", pa:"ðŸ’¡ à¨¸à©°à¨•à©‡à¨¤ à¨²à¨“", zh:"ðŸ’¡ èŽ·å–æç¤º"
+    },
+    "Get Hint": {
+      ur:"Ø§Ø´Ø§Ø±Û Ù„ÛŒÚº", hi:"à¤¸à¤‚à¤•à¥‡à¤¤ à¤²à¥‡à¤‚", ro:"IshÄrah lein",
+      tr:"Ä°pucu Al", es:"Obtener Pista",
+      ar:"Ø§Ø­ØµÙ„ Ø¹Ù„Ù‰ ØªÙ„Ù…ÙŠØ­", fr:"Obtenir un indice", de:"Hinweis erhalten",
+      pt:"Obter Dica", bn:"à¦‡à¦™à§à¦—à¦¿à¦¤ à¦¨à¦¿à¦¨", pa:"à¨¸à©°à¨•à©‡à¨¤ à¨²à¨“", zh:"èŽ·å–æç¤º"
+    },
+    "Upload Photo / PDF": {
+      ur:"ØªØµÙˆÛŒØ± / Ù¾ÛŒ ÚˆÛŒ Ø§ÛŒÙ Ø§Ù¾Ù„ÙˆÚˆ Ú©Ø±ÛŒÚº", hi:"à¤«à¥‹à¤Ÿà¥‹ / à¤ªà¥€à¤¡à¥€à¤à¤« à¤…à¤ªà¤²à¥‹à¤¡ à¤•à¤°à¥‡à¤‚",
+      ro:"Photo / PDF upload karein", tr:"FotoÄŸraf / PDF YÃ¼kle",
+      es:"Subir Foto / PDF", ar:"Ø±ÙØ¹ ØµÙˆØ±Ø© / PDF", fr:"TÃ©lÃ©charger Photo / PDF",
+      de:"Foto / PDF hochladen", pt:"Enviar Foto / PDF",
+      bn:"à¦›à¦¬à¦¿ / PDF à¦†à¦ªà¦²à§‹à¦¡ à¦•à¦°à§à¦¨", pa:"à¨«à©‹à¨Ÿà©‹ / PDF à¨…à©±à¨ªà¨²à©‹à¨¡ à¨•à¨°à©‹", zh:"ä¸Šä¼ ç…§ç‰‡/PDF"
+    },
+    "ðŸŽ¤ Speak": {
+      ur:"ðŸŽ¤ Ø¨ÙˆÙ„ÛŒÚº", hi:"ðŸŽ¤ à¤¬à¥‹à¤²à¥‡à¤‚", ro:"ðŸŽ¤ Boliye", tr:"ðŸŽ¤ KonuÅŸ",
+      es:"ðŸŽ¤ Hablar", ar:"ðŸŽ¤ ØªØ­Ø¯Ø«", fr:"ðŸŽ¤ Parler", de:"ðŸŽ¤ Sprechen",
+      pt:"ðŸŽ¤ Falar", bn:"ðŸŽ¤ à¦¬à¦²à§à¦¨", pa:"ðŸŽ¤ à¨¬à©‹à¨²à©‹", zh:"ðŸŽ¤ è¯´è¯"
+    },
+    "ï¼‹ New problem": {
+      ur:"ï¼‹ Ù†ÛŒØ§ Ø³ÙˆØ§Ù„", hi:"ï¼‹ à¤¨à¤¯à¤¾ à¤ªà¥à¤°à¤¶à¥à¤¨", ro:"ï¼‹ Naya sawÄl",
+      tr:"ï¼‹ Yeni soru", es:"ï¼‹ Nuevo problema",
+      ar:"ï¼‹ Ù…Ø³Ø£Ù„Ø© Ø¬Ø¯ÙŠØ¯Ø©", fr:"ï¼‹ Nouveau problÃ¨me", de:"ï¼‹ Neue Aufgabe",
+      pt:"ï¼‹ Novo problema", bn:"ï¼‹ à¦¨à¦¤à§à¦¨ à¦¸à¦®à¦¸à§à¦¯à¦¾", pa:"ï¼‹ à¨¨à¨µà©€à¨‚ à¨¸à¨®à©±à¨¸à¨¿à¨†", zh:"ï¼‹ æ–°é—®é¢˜"
+    },
+    "Plot": {
+      ur:"Ù¾Ù„Ø§Ù¹ Ú©Ø±ÛŒÚº", hi:"à¤ªà¥à¤²à¥‰à¤Ÿ à¤•à¤°à¥‡à¤‚", ro:"Plot karein", tr:"GrafiÄŸe dÃ¶k",
+      es:"Graficar", ar:"Ø±Ø³Ù… Ø¨ÙŠØ§Ù†ÙŠ", fr:"Tracer", de:"Zeichnen",
+      pt:"Plotar", bn:"à¦ªà§à¦²à¦Ÿ à¦•à¦°à§à¦¨", pa:"à¨ªà¨²à¨¾à¨Ÿ à¨•à¨°à©‹", zh:"ç»˜å›¾"
+    },
+    "Generate Quiz": {
+      ur:"Ú©ÙˆØ¦Ø² Ø¨Ù†Ø§Ø¦ÛŒÚº", hi:"à¤•à¥à¤µà¤¿à¤œà¤¼ à¤¬à¤¨à¤¾à¤à¤‚", ro:"Quiz banayein",
+      tr:"Test OluÅŸtur", es:"Generar Cuestionario",
+      ar:"Ø¥Ù†Ø´Ø§Ø¡ Ø§Ø®ØªØ¨Ø§Ø±", fr:"GÃ©nÃ©rer le quiz", de:"Quiz erstellen",
+      pt:"Gerar Quiz", bn:"à¦•à§à¦‡à¦œ à¦¤à§ˆà¦°à¦¿ à¦•à¦°à§à¦¨", pa:"à¨•à©à¨‡à¨œà¨¼ à¨¬à¨£à¨¾à¨“", zh:"ç”Ÿæˆæµ‹éªŒ"
+    },
+    "Start Exam": {
+      ur:"Ø§Ù…ØªØ­Ø§Ù† Ø´Ø±ÙˆØ¹ Ú©Ø±ÛŒÚº", hi:"à¤ªà¤°à¥€à¤•à¥à¤·à¤¾ à¤¶à¥à¤°à¥‚ à¤•à¤°à¥‡à¤‚", ro:"Imtehan shuru karein",
+      tr:"SÄ±navÄ± BaÅŸlat", es:"Iniciar Examen",
+      ar:"Ø¨Ø¯Ø¡ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†", fr:"Commencer l'examen", de:"PrÃ¼fung starten",
+      pt:"Iniciar Exame", bn:"à¦ªà¦°à§€à¦•à§à¦·à¦¾ à¦¶à§à¦°à§ à¦•à¦°à§à¦¨", pa:"à¨ªà©à¨°à©€à¨–à¨¿à¨† à¨¸à¨¼à©à¨°à©‚ à¨•à¨°à©‹", zh:"å¼€å§‹è€ƒè¯•"
+    },
+    "Check": {
+      ur:"Ú†ÛŒÚ© Ú©Ø±ÛŒÚº", hi:"à¤œà¤¾à¤‚à¤šà¥‡à¤‚", ro:"Check karein", tr:"Kontrol Et",
+      es:"Comprobar", ar:"ØªØ­Ù‚Ù‚", fr:"VÃ©rifier", de:"PrÃ¼fen",
+      pt:"Verificar", bn:"à¦¯à¦¾à¦šà¦¾à¦‡ à¦•à¦°à§à¦¨", pa:"à¨œà¨¾à¨‚à¨š à¨•à¨°à©‹", zh:"æ£€æŸ¥"
+    },
+    "Next": {
+      ur:"Ø§Ú¯Ù„Ø§", hi:"à¤…à¤—à¤²à¤¾", ro:"Agla", tr:"Sonraki",
+      es:"Siguiente", ar:"Ø§Ù„ØªØ§Ù„ÙŠ", fr:"Suivant", de:"Weiter",
+      pt:"PrÃ³ximo", bn:"à¦ªà¦°à¦¬à¦°à§à¦¤à§€", pa:"à¨…à¨—à¨²à¨¾", zh:"ä¸‹ä¸€ä¸ª"
+    },
+    "Previous": {
+      ur:"Ù¾Ú†Ú¾Ù„Ø§", hi:"à¤ªà¤¿à¤›à¤²à¤¾", ro:"Pichla", tr:"Ã–nceki",
+      es:"Anterior", ar:"Ø§Ù„Ø³Ø§Ø¨Ù‚", fr:"PrÃ©cÃ©dent", de:"ZurÃ¼ck",
+      pt:"Anterior", bn:"à¦ªà§‚à¦°à§à¦¬à¦¬à¦°à§à¦¤à§€", pa:"à¨ªà¨¿à¨›à¨²à¨¾", zh:"ä¸Šä¸€ä¸ª"
+    },
+    "New quiz": {
+      ur:"Ù†ÛŒØ§ Ú©ÙˆØ¦Ø²", hi:"à¤¨à¤¯à¤¾ à¤•à¥à¤µà¤¿à¤œà¤¼", ro:"Naya quiz", tr:"Yeni test",
+      es:"Nuevo cuestionario", ar:"Ø§Ø®ØªØ¨Ø§Ø± Ø¬Ø¯ÙŠØ¯", fr:"Nouveau quiz", de:"Neues Quiz",
+      pt:"Novo quiz", bn:"à¦¨à¦¤à§à¦¨ à¦•à§à¦‡à¦œ", pa:"à¨¨à¨µà¨¾à¨‚ à¨•à©à¨‡à¨œà¨¼", zh:"æ–°æµ‹éªŒ"
+    },
+    "Copy": {
+      ur:"Ú©Ø§Ù¾ÛŒ Ú©Ø±ÛŒÚº", hi:"à¤•à¥‰à¤ªà¥€ à¤•à¤°à¥‡à¤‚", ro:"Copy karein", tr:"Kopyala",
+      es:"Copiar", ar:"Ù†Ø³Ø®", fr:"Copier", de:"Kopieren",
+      pt:"Copiar", bn:"à¦•à¦ªà¦¿ à¦•à¦°à§à¦¨", pa:"à¨•à¨¾à¨ªà©€ à¨•à¨°à©‹", zh:"å¤åˆ¶"
+    },
+    "Print sheet": {
+      ur:"Ø´ÛŒÙ¹ Ù¾Ø±Ù†Ù¹ Ú©Ø±ÛŒÚº", hi:"à¤¶à¥€à¤Ÿ à¤ªà¥à¤°à¤¿à¤‚à¤Ÿ à¤•à¤°à¥‡à¤‚", ro:"Sheet print karein",
+      tr:"SayfayÄ± yazdÄ±r", es:"Imprimir hoja",
+      ar:"Ø·Ø¨Ø§Ø¹Ø© Ø§Ù„ÙˆØ±Ù‚Ø©", fr:"Imprimer la feuille", de:"Blatt drucken",
+      pt:"Imprimir folha", bn:"à¦¶à§€à¦Ÿ à¦ªà§à¦°à¦¿à¦¨à§à¦Ÿ à¦•à¦°à§à¦¨", pa:"à¨¸à¨¼à©€à¨Ÿ à¨ªà©à¨°à¨¿à©°à¨Ÿ à¨•à¨°à©‹", zh:"æ‰“å°è¡¨æ ¼"
+    },
+    "Thinkingâ€¦": {
+      ur:"Ø³ÙˆÚ† Ø±ÛØ§ ÛÛ’â€¦", hi:"à¤µà¤¿à¤šà¤¾à¤° à¤•à¤° à¤°à¤¹à¤¾ à¤¹à¥ˆâ€¦", ro:"Soch raha haiâ€¦",
+      tr:"DÃ¼ÅŸÃ¼nÃ¼yorâ€¦", es:"Pensandoâ€¦",
+      ar:"Ø¬Ø§Ø±Ù Ø§Ù„ØªÙÙƒÙŠØ±â€¦", fr:"RÃ©flexion en coursâ€¦", de:"Ãœberlegeâ€¦",
+      pt:"Pensandoâ€¦", bn:"à¦­à¦¾à¦¬à¦›à§‡â€¦", pa:"à¨¸à©‹à¨š à¨°à¨¿à¨¹à¨¾ à¨¹à©ˆâ€¦", zh:"æ€è€ƒä¸­â€¦"
+    },
+    "Could not reach the solver. Try again.": {
+      ur:"Ø³Ø±ÙˆØ± Ø³Û’ Ø±Ø§Ø¨Ø·Û Ù†Û ÛÙˆ Ø³Ú©Ø§Û” Ø¯ÙˆØ¨Ø§Ø±Û Ú©ÙˆØ´Ø´ Ú©Ø±ÛŒÚºÛ”",
+      hi:"à¤¸à¤°à¥à¤µà¤° à¤¸à¥‡ à¤•à¤¨à¥‡à¤•à¥à¤Ÿ à¤¨à¤¹à¥€à¤‚ à¤¹à¥‹ à¤¸à¤•à¤¾à¥¤ à¤ªà¥à¤¨à¤ƒ à¤ªà¥à¤°à¤¯à¤¾à¤¸ à¤•à¤°à¥‡à¤‚à¥¤",
+      ro:"Solver se rabta nahi ho saka. Dobara koshish karein.",
+      tr:"Ã‡Ã¶zÃ¼cÃ¼ye ulaÅŸÄ±lamadÄ±. Tekrar deneyin.",
+      es:"No se pudo conectar con el solucionador. IntÃ©ntalo de nuevo.",
+      ar:"ØªØ¹Ø°Ø± Ø§Ù„Ø§ØªØµØ§Ù„ Ø¨Ø§Ù„Ù…Ø­Ù„Ù„. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.",
+      fr:"Impossible de joindre le rÃ©solveur. RÃ©essayez.",
+      de:"LÃ¶ser nicht erreichbar. Erneut versuchen.",
+      pt:"NÃ£o foi possÃ­vel conectar ao solucionador. Tente novamente.",
+      bn:"à¦¸à¦®à¦¾à¦§à¦¾à¦¨à¦•à¦¾à¦°à§€à¦¤à§‡ à¦ªà§Œà¦à¦›à¦¾à¦¨à§‹ à¦¯à¦¾à¦¯à¦¼à¦¨à¦¿à¥¤ à¦†à¦¬à¦¾à¦° à¦šà§‡à¦·à§à¦Ÿà¦¾ à¦•à¦°à§à¦¨à¥¤",
+      pa:"à¨¸à©‹à¨²à¨µà¨° à¨¤à©±à¨• à¨ªà¨¹à©à©°à¨š à¨¨à¨¹à©€à¨‚ à¨¹à©‹à¨ˆà¥¤ à¨¦à©à¨¬à¨¾à¨°à¨¾ à¨•à©‹à¨¸à¨¼à¨¿à¨¸à¨¼ à¨•à¨°à©‹à¥¤",
+      zh:"æ— æ³•è¿žæŽ¥åˆ°æ±‚è§£å™¨ã€‚è¯·é‡è¯•ã€‚"
+    },
+    "Type your math problem, or tap Î£ to add symbolsâ€¦": {
+      ur:"Ø§Ù¾Ù†Ø§ Ø±ÛŒØ§Ø¶ÛŒ Ú©Ø§ Ø³ÙˆØ§Ù„ Ù„Ú©Ú¾ÛŒÚºØŒ ÛŒØ§ Ø¹Ù„Ø§Ù…Ø§Øª Ú©ÛŒÙ„Ø¦Û’ Î£ Ø¯Ø¨Ø§Ø¦ÛŒÚºâ€¦",
+      hi:"à¤…à¤ªà¤¨à¤¾ à¤—à¤£à¤¿à¤¤à¥€à¤¯ à¤ªà¥à¤°à¤¶à¥à¤¨ à¤²à¤¿à¤–à¥‡à¤‚, à¤¯à¤¾ à¤šà¤¿à¤¹à¥à¤¨ à¤œà¥‹à¤¡à¤¼à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ Î£ à¤¦à¤¬à¤¾à¤à¤‚â€¦",
+      ro:"Apna math sawÄl likhein, ya Î£ dabayeinâ€¦",
+      tr:"Matematik probleminizi yazÄ±n veya sembol eklemek iÃ§in Î£'ya dokununâ€¦",
+      es:"Escribe tu problema matemÃ¡tico, o toca Î£ para sÃ­mbolosâ€¦",
+      ar:"Ø§ÙƒØªØ¨ Ù…Ø³Ø£Ù„ØªÙƒ Ø§Ù„Ø±ÙŠØ§Ø¶ÙŠØ©ØŒ Ø£Ùˆ Ø§Ø¶ØºØ· Î£ Ù„Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø±Ù…ÙˆØ²â€¦",
+      fr:"Tapez votre problÃ¨me de maths, ou appuyez sur Î£â€¦",
+      de:"Geben Sie Ihre Matheaufgabe ein oder tippen Sie auf Î£â€¦",
+      pt:"Digite seu problema de matemÃ¡tica ou toque em Î£â€¦",
+      bn:"à¦†à¦ªà¦¨à¦¾à¦° à¦—à¦£à¦¿à¦¤à§‡à¦° à¦¸à¦®à¦¸à§à¦¯à¦¾ à¦Ÿà¦¾à¦‡à¦ª à¦•à¦°à§à¦¨, à¦¬à¦¾ Î£ à¦šà¦¾à¦ªà§à¦¨â€¦",
+      pa:"à¨†à¨ªà¨£à©€ à¨—à¨£à¨¿à¨¤ à¨¦à©€ à¨¸à¨®à©±à¨¸à¨¿à¨† à¨²à¨¿à¨–à©‹, à¨œà¨¾à¨‚ Î£ à¨¦à¨¬à¨¾à¨“â€¦",
+      zh:"è¾“å…¥æ•°å­¦é—®é¢˜ï¼Œæˆ–ç‚¹å‡»Î£æ·»åŠ ç¬¦å·â€¦"
+    }
+  };
+
+  // â”€â”€â”€ 3. Socratic Prompt Prefixes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  var PROMPT_PREFIXES = {
+    hint: {
+      en: "Give hints only, one at a time. Do not reveal the final answer. Problem: ",
+      ur: "Ø¨Ø±Ø§Û Ú©Ø±Ù… ØµØ±Ù Ø§ÛŒÚ© ÙˆÙ‚Øª Ù…ÛŒÚº Ø§ÛŒÚ© Ø§Ø´Ø§Ø±Û Ø¯ÛŒÚºØŒ Ø­ØªÙ…ÛŒ Ø¬ÙˆØ§Ø¨ Ù…Øª Ø¨ØªØ§Ø¦ÛŒÚºÛ” Ø³ÙˆØ§Ù„: ",
+      hi: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤à¤• à¤¬à¤¾à¤° à¤®à¥‡à¤‚ à¤•à¥‡à¤µà¤² à¤à¤• à¤¸à¤‚à¤•à¥‡à¤¤ à¤¦à¥‡à¤‚, à¤…à¤‚à¤¤à¤¿à¤® à¤‰à¤¤à¥à¤¤à¤° à¤ªà¥à¤°à¤•à¤Ÿ à¤¨ à¤•à¤°à¥‡à¤‚à¥¤ à¤ªà¥à¤°à¤¶à¥à¤¨: ",
+      ro: "Sirf ek ek karke ishÄrah dein, aakhri jawab mat batayein. SawÄl: ",
+      tr: "YalnÄ±zca birer birer ipucu ver. Nihai cevabÄ± aÃ§Ä±klama. Problem: ",
+      es: "Da solo pistas, una a la vez. No reveles la respuesta final. Problema: ",
+      ar: "Ù‚Ø¯Ù… ØªÙ„Ù…ÙŠØ­Ø§Øª ÙÙ‚Ø·ØŒ ÙˆØ§Ø­Ø¯Ø§Ù‹ ØªÙ„Ùˆ Ø§Ù„Ø¢Ø®Ø±. Ù„Ø§ ØªÙƒØ´Ù Ø¹Ù† Ø§Ù„Ø¥Ø¬Ø§Ø¨Ø© Ø§Ù„Ù†Ù‡Ø§Ø¦ÙŠØ©. Ø§Ù„Ù…Ø³Ø£Ù„Ø©: ",
+      fr: "Donnez des indices seulement, un Ã  la fois. Ne rÃ©vÃ©lez pas la rÃ©ponse finale. ProblÃ¨me: ",
+      de: "Gib nur Hinweise, einen nach dem anderen. Verrate nicht die endgÃ¼ltige Antwort. Aufgabe: ",
+      pt: "DÃª apenas dicas, uma de cada vez. NÃ£o revele a resposta final. Problema: ",
+      bn: "à¦¶à§à¦§à§à¦®à¦¾à¦¤à§à¦° à¦à¦•à¦¬à¦¾à¦°à§‡ à¦à¦•à¦Ÿà¦¿ à¦‡à¦™à§à¦—à¦¿à¦¤ à¦¦à¦¿à¦¨à¥¤ à¦šà§‚à¦¡à¦¼à¦¾à¦¨à§à¦¤ à¦‰à¦¤à§à¦¤à¦° à¦ªà§à¦°à¦•à¦¾à¦¶ à¦•à¦°à¦¬à§‡à¦¨ à¦¨à¦¾à¥¤ à¦¸à¦®à¦¸à§à¦¯à¦¾: ",
+      pa: "à¨¸à¨¿à¨°à¨«à¨¼ à¨‡à©±à¨• à¨µà¨¾à¨° à¨µà¨¿à©±à¨š à¨‡à©±à¨• à¨¸à©°à¨•à©‡à¨¤ à¨¦à¨¿à¨“à¥¤ à¨…à©°à¨¤à¨¿à¨® à¨œà¨µà¨¾à¨¬ à¨¨à¨¾ à¨¦à©±à¨¸à©‹à¥¤ à¨¸à¨®à©±à¨¸à¨¿à¨†: ",
+      zh: "æ¯æ¬¡åªç»™ä¸€ä¸ªæç¤ºï¼Œä¸è¦æ­ç¤ºæœ€ç»ˆç­”æ¡ˆã€‚é—®é¢˜ï¼š"
+    },
+    socratic: {
+      en: "Act as a Socratic tutor: ask guiding questions, never give the answer. Problem: ",
+      ur: "Ø¨Ø·ÙˆØ± Ø³Ù‚Ø±Ø§Ø·ÛŒ Ø§Ø³ØªØ§Ø¯ Ø±ÛÙ†Ù…Ø§Ø¦ÛŒ Ú©Ø±ÛŒÚº: Ø±ÛÙ†Ù…Ø§ Ø³ÙˆØ§Ù„Ø§Øª Ù¾ÙˆÚ†Ú¾ÛŒÚºØŒ Ø¬ÙˆØ§Ø¨ Ù†Û Ø¯ÛŒÚºÛ” Ø³ÙˆØ§Ù„: ",
+      hi: "à¤à¤• à¤¸à¥à¤•à¤°à¤¾à¤¤à¥€ à¤¶à¤¿à¤•à¥à¤·à¤• à¤•à¥‡ à¤°à¥‚à¤ª à¤®à¥‡à¤‚ à¤•à¤¾à¤°à¥à¤¯ à¤•à¤°à¥‡à¤‚: à¤ªà¥à¤°à¤¶à¥à¤¨ à¤ªà¥‚à¤›à¥‡à¤‚, à¤•à¤­à¥€ à¤‰à¤¤à¥à¤¤à¤° à¤¨ à¤¦à¥‡à¤‚à¥¤ à¤ªà¥à¤°à¤¶à¥à¤¨: ",
+      ro: "Socratic ustaad ki tarah rehnuma sawalat poochein, seedha jawab mat dein. SawÄl: ",
+      tr: "Sokratik bir Ã¶ÄŸretmen gibi davran: yÃ¶nlendirici sorular sor, asla cevabÄ± verme. Problem: ",
+      es: "ActÃºa como un tutor socrÃ¡tico: haz preguntas guÃ­a, nunca des la respuesta. Problema: ",
+      ar: "ØªØµØ±Ù ÙƒÙ…Ø¹Ù„Ù… Ø³Ù‚Ø±Ø§Ø·ÙŠ: Ø§Ø·Ø±Ø­ Ø£Ø³Ø¦Ù„Ø© ØªÙˆØ¬ÙŠÙ‡ÙŠØ©ØŒ ÙˆÙ„Ø§ ØªÙ‚Ø¯Ù… Ø§Ù„Ø¥Ø¬Ø§Ø¨Ø© Ø£Ø¨Ø¯Ù‹Ø§. Ø§Ù„Ù…Ø³Ø£Ù„Ø©: ",
+      fr: "Agissez comme un tuteur socratique: posez des questions directrices, ne donnez jamais la rÃ©ponse. ProblÃ¨me: ",
+      de: "Handeln Sie als sokratischer Tutor: Stellen Sie Leitfragen, geben Sie niemals die Antwort. Aufgabe: ",
+      pt: "Aja como um tutor socrÃ¡tico: faÃ§a perguntas orientadoras, nunca dÃª a resposta. Problema: ",
+      bn: "à¦¸à¦•à§à¦°à§‡à¦Ÿà¦¿à¦• à¦Ÿà¦¿à¦‰à¦Ÿà¦° à¦¹à¦¿à¦¸à§‡à¦¬à§‡ à¦•à¦¾à¦œ à¦•à¦°à§à¦¨: à¦—à¦¾à¦‡à¦¡à¦¿à¦‚ à¦ªà§à¦°à¦¶à§à¦¨ à¦•à¦°à§à¦¨, à¦•à¦–à¦¨à§‹ à¦‰à¦¤à§à¦¤à¦° à¦¦à§‡à¦¬à§‡à¦¨ à¦¨à¦¾à¥¤ à¦¸à¦®à¦¸à§à¦¯à¦¾: ",
+      pa: "à¨¸à©à¨•à¨°à¨¾à¨¤à¨¿à¨• à¨…à¨§à¨¿à¨†à¨ªà¨• à¨µà¨œà©‹à¨‚ à¨•à©°à¨® à¨•à¨°à©‹: à¨®à¨¾à¨°à¨—à¨¦à¨°à¨¸à¨¼à¨• à¨ªà©à¨°à¨¸à¨¼à¨¨ à¨ªà©à©±à¨›à©‹, à¨•à¨¦à©‡ à¨œà¨µà¨¾à¨¬ à¨¨à¨¾ à¨¦à¨¿à¨“à¥¤ à¨¸à¨®à©±à¨¸à¨¿à¨†: ",
+      zh: "ä½œä¸ºè‹æ ¼æ‹‰åº•å¼å¯¼å¸ˆï¼šæé—®å¼•å¯¼ï¼Œä»Žä¸ç›´æŽ¥ç»™å‡ºç­”æ¡ˆã€‚é—®é¢˜ï¼š"
+    }
+  };
+
+  // â”€â”€â”€ 4. State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  var STORAGE_KEY = "msiq_lang";
+  var currentLang = localStorage.getItem(STORAGE_KEY) || "en";
+  if (!LANGUAGES[currentLang]) currentLang = "en";
+
+  // â”€â”€â”€ 5. Google Translate Cookie â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function setGoogleTranslateCookie(lang) {
+    var target = (lang === "ro" || lang === "en") ? "en" : LANGUAGES[lang].google || lang;
+    var cookieVal = "/en/" + target;
+    document.cookie = "googtrans=" + cookieVal + "; path=/;";
+    var domain = window.location.hostname;
+    if (domain && domain !== "localhost" && domain !== "127.0.0.1") {
+      document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+      document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+    }
+  }
+
+  // â”€â”€â”€ 6. DOM Dictionary Translation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function translateDOM(lang) {
+    var isRTL = (lang === "ur" || lang === "ar");
+    document.documentElement.setAttribute("lang", lang === "ro" ? "ur-Latn" : lang);
+    document.documentElement.setAttribute("dir", isRTL ? "rtl" : "ltr");
+
+    // Walk text nodes
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      // Skip the dropdown we injected so it doesn't get re-translated
+      if (node.parentElement && node.parentElement.closest && node.parentElement.closest("#msiq-lang-wrap")) continue;
+      var txt = node.nodeValue.trim();
+      if (!txt) continue;
+      if (DICTIONARY[txt] && DICTIONARY[txt][lang]) {
+        node.nodeValue = node.nodeValue.replace(txt, DICTIONARY[txt][lang]);
+      } else if (lang === "en") {
+        // Reverse lookup â€” restore English
+        for (var orig in DICTIONARY) {
+          for (var l in DICTIONARY[orig]) {
+            if (DICTIONARY[orig][l] === txt) {
+              node.nodeValue = node.nodeValue.replace(txt, orig);
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    // Input placeholders
+    document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(function (el) {
+      var p = el.getAttribute("placeholder");
+      if (!p) return;
+      if (DICTIONARY[p] && DICTIONARY[p][lang]) {
+        el.setAttribute("data-orig-ph", el.getAttribute("data-orig-ph") || p);
+        el.setAttribute("placeholder", DICTIONARY[p][lang]);
+      } else if (lang === "en" && el.getAttribute("data-orig-ph")) {
+        el.setAttribute("placeholder", el.getAttribute("data-orig-ph"));
+      }
+    });
+
+    // Buttons
+    document.querySelectorAll("button, a.btn, .chip").forEach(function (btn) {
+      if (btn.id === "msiq-lang-wrap" || (btn.closest && btn.closest("#msiq-lang-wrap"))) return;
+      var textNode = Array.from(btn.childNodes).find(function (n) { return n.nodeType === 3 && n.nodeValue.trim(); });
+      if (textNode) {
+        var t = textNode.nodeValue.trim();
+        if (DICTIONARY[t] && DICTIONARY[t][lang]) {
+          textNode.nodeValue = textNode.nodeValue.replace(t, DICTIONARY[t][lang]);
+        }
+      }
+    });
+
+    // Socratic / Hint chips
+    var chips = document.querySelectorAll("#modes .chip");
+    if (chips.length >= 3) {
+      chips[1].setAttribute("data-m", PROMPT_PREFIXES.hint[lang] || PROMPT_PREFIXES.hint.en);
+      chips[2].setAttribute("data-m", PROMPT_PREFIXES.socratic[lang] || PROMPT_PREFIXES.socratic.en);
+    }
+  }
+
+  // â”€â”€â”€ 7. Google Translate Widget â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function triggerGoogleTranslate(lang, retries) {
+    retries = retries || 0;
+    if (retries > 20) return; // give up after ~6s
+    var target = (lang === "ro" || lang === "en") ? "en" : (LANGUAGES[lang] && LANGUAGES[lang].google ? LANGUAGES[lang].google : lang);
+    var combo = document.querySelector(".goog-te-combo");
+    if (combo) {
+      combo.value = target;
+      combo.dispatchEvent(new Event("change"));
+    } else {
+      setTimeout(function () { triggerGoogleTranslate(lang, retries + 1); }, 300);
+    }
+  }
+
+  function initGoogleTranslate() {
+    if (window._msiqGTEInit) return;
+    window._msiqGTEInit = true;
+
+    var container = document.getElementById("google_translate_element");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "google_translate_element";
+      container.style.display = "none";
+      document.body.appendChild(container);
+    }
+
+    window.googleTranslateElementInit = function () {
+      new window.google.translate.TranslateElement({
+        pageLanguage: "en",
+        includedLanguages: "tr",
+        autoDisplay: false
+      }, "google_translate_element");
+      // Re-apply stored language once widget is ready
+      if (currentLang !== "en") {
+        setTimeout(function () { triggerGoogleTranslate(currentLang); }, 600);
+      }
+    };
+
+    if (!document.getElementById("msiq-gte-script")) {
+      var s = document.createElement("script");
+      s.id = "msiq-gte-script";
+      s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      s.async = true;
+      document.head.appendChild(s);
+    }
+  }
+
+  // â”€â”€â”€ 8. Apply Language â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function applyLanguage(lang) {
+    var previousLang = currentLang;
+
+    currentLang = lang;
+    localStorage.setItem(STORAGE_KEY, lang);
+
+    if (lang === "en" && previousLang !== "en") {
+      var host = window.location.hostname;
+      var domains = [""];
+
+      if (host && host !== "localhost" && host !== "127.0.0.1") {
+        domains.push("; domain=" + host);
+        domains.push("; domain=." + host);
+      }
+
+      domains.forEach(function (domain) {
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + domain;
+      });
+
+      window.location.reload();
+      return;
+    }
+
+    setGoogleTranslateCookie(lang);
+    translateDOM(lang);
+    triggerGoogleTranslate(lang);
+
+    var sel = document.getElementById("msiq-lang-select");
+    if (sel && sel.value !== lang) sel.value = lang;
+  }
+
+  // â”€â”€â”€ 9. Inject Styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function injectStyles() {
+    if (document.getElementById("msiq-lang-styles")) return;
+    var css = [
+      "/* === MathSolveIQ Language Selector === */",
+      "#msiq-lang-wrap {",
+      "  display: inline-flex; align-items: center; gap: 5px;",
+      "  background: var(--card, #fff); border: 1px solid var(--line, #e3e7ec);",
+      "  border-radius: 999px; padding: 4px 10px 4px 8px;",
+      "  color: var(--ink, #1a2233);",
+      "  box-shadow: 0 1px 4px rgba(0,0,0,0.08);",
+      "  cursor: pointer; transition: border-color .18s, box-shadow .18s;",
+      "  flex-shrink: 0; z-index: 9999;",
+      "}",
+      "#msiq-lang-wrap:hover, #msiq-lang-wrap:focus-within {",
+      "  border-color: var(--acc, #0f766e);",
+      "  box-shadow: 0 0 0 3px var(--acc2, rgba(15,118,110,.15));",
+      "}",
+      "#msiq-lang-wrap svg {",
+      "  width: 14px; height: 14px; stroke: var(--acc, #0f766e);",
+      "  fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;",
+      "  display: block; flex-shrink: 0;",
+      "}",
+      "#msiq-lang-select {",
+      "  background: transparent; border: none;",
+      "  color: var(--ink, #1a2233); font: 500 12px/1 system-ui, -apple-system, sans-serif;",
+      "  cursor: pointer; outline: none; max-width: 130px;",
+      "}",
+      "#msiq-lang-select option { background: var(--card, #fff); color: var(--ink, #1a2233); }",
+      /* Floating position for index.html */
+      "#msiq-lang-wrap.msiq-floating {",
+      "  position: fixed; top: 14px; right: 20px; z-index: 9999;",
+      "}",
+      "@media(max-width: 899px) {",
+      "  #msiq-lang-wrap.msiq-floating {",
+      "    top: 10px; right: 52px;",
+      "  }",
+      "  #msiq-lang-select { max-width: 100px; font-size: 11px; }",
+      "}",
+      /* Hide Google Translate UI clutter */
+      ".goog-te-banner-frame, .skiptranslate > iframe, #goog-gt-tt,",
+      ".goog-te-balloon-frame, .goog-tooltip, .goog-tooltip-table-cell { display: none !important; }",
+      "body { top: 0 !important; }",
+      ".goog-te-gadget { display: none !important; }",
+      /* RTL safety */
+      "[dir='rtl'] { text-align: right; }",
+      "[dir='rtl'] .math, [dir='rtl'] .step, [dir='rtl'] canvas,",
+      "[dir='rtl'] input[inputmode='decimal'], [dir='rtl'] .score {",
+      "  direction: ltr !important; unicode-bidi: embed !important; text-align: left;",
+      "}"
+    ].join("\n");
+    var style = document.createElement("style");
+    style.id = "msiq-lang-styles";
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+
+  // â”€â”€â”€ 10. Build & Place the Dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function injectDropdown() {
+    if (document.getElementById("msiq-lang-wrap")) return;
+
+    // Build the pill widget
+    var wrap = document.createElement("div");
+    wrap.id = "msiq-lang-wrap";
+
+    // Globe SVG icon
+    var svgNS = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    var c = document.createElementNS(svgNS, "circle");
+    c.setAttribute("cx", "12"); c.setAttribute("cy", "12"); c.setAttribute("r", "10");
+    var p1 = document.createElementNS(svgNS, "path");
+    p1.setAttribute("d", "M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z");
+    var p2 = document.createElementNS(svgNS, "path");
+    p2.setAttribute("d", "M2 12h20");
+    svg.appendChild(c); svg.appendChild(p1); svg.appendChild(p2);
+
+    // Select element
+    var select = document.createElement("select");
+    select.id = "msiq-lang-select";
+    select.setAttribute("aria-label", "Select language");
+
+    Object.keys(LANGUAGES).forEach(function (code) {
+      var opt = document.createElement("option");
+      opt.value = code;
+      opt.textContent = LANGUAGES[code].native + " (" + LANGUAGES[code].name + ")";
+      if (code === currentLang) opt.selected = true;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener("change", function () {
+      applyLanguage(this.value);
+    });
+
+    wrap.appendChild(svg);
+    wrap.appendChild(select);
+
+    // â”€â”€ Placement Logic â”€â”€
+    // index.html has #page-home â€” use fixed floating pill (doesn't disturb sidebar)
+    var isIndex = !!document.getElementById("page-home");
+    var topBar  = document.querySelector(".top");
+
+    if (isIndex) {
+      wrap.classList.add("msiq-floating");
+      document.body.appendChild(wrap);
+    } else if (topBar) {
+      // Subpages: append into .top bar (flex row â†’ goes to right)
+      topBar.appendChild(wrap);
+    } else {
+      // Fallback: floating
+      wrap.classList.add("msiq-floating");
+      document.body.appendChild(wrap);
+    }
+  }
+
+  // â”€â”€â”€ 11. MutationObserver for dynamic content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function setupObserver() {
+    var observer = new MutationObserver(function (mutations) {
+      if (currentLang === "en") return;
+      mutations.forEach(function (m) {
+        if (!m.addedNodes || !m.addedNodes.length) return;
+        m.addedNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.id === "msiq-lang-wrap") return; // skip our own widget
+          var tw = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+          var n;
+          while ((n = tw.nextNode())) {
+            var val = n.nodeValue.trim();
+            if (DICTIONARY[val] && DICTIONARY[val][currentLang]) {
+              n.nodeValue = n.nodeValue.replace(val, DICTIONARY[val][currentLang]);
+            }
+          }
+        });
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // â”€â”€â”€ 12. Bootstrap â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function init() {
+    injectStyles();
+    injectDropdown();
+    initGoogleTranslate();
+    if (currentLang !== "en") {
+      applyLanguage(currentLang);
+    }
+    setupObserver();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  // Expose so external code can call msiqLang.apply("ur") if needed
+  window.msiqLang = { apply: applyLanguage, current: function () { return currentLang; } };
+})();

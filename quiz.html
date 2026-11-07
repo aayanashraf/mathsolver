@@ -17,10 +17,18 @@ label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}
 .score{font:700 44px/1.1 Georgia,serif;color:var(--acc);margin:6px 0}
 .rev{padding:10px 0;border-bottom:1px dashed var(--line)}.rev:last-child{border:0}
 [hidden]{display:none!important}
+
+/* Quiz upgrade */
+#clock { font-weight:700; color:var(--acc); }
+#pause { min-width:105px; }
+#next:disabled, #pause:disabled { opacity:.55; cursor:not-allowed; }
+#opts { transition:opacity .15s ease; }
+#qtext { transition:opacity .15s ease; }
 </style><link rel="manifest" href="/manifest.webmanifest">
 <script defer src="/js/pwa.js"></script>
 <script defer src="/js/i18n.js"></script>
 <link rel="stylesheet" href="/css/glass-3d.css">
+  <link rel="stylesheet" href="/css/theme-overrides.css">
 </head><body>
 <div class="doc">
  <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
@@ -28,28 +36,73 @@ label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}
  <p class="lead">Pick a topic, answer, and read why. Every question has an explanation.</p>
 
  <div class="card" id="setup">
-  <div class="row">
-   <div><label for="topic">Topic</label><select id="topic"></select></div>
-   <div><label for="count">Questions</label><select id="count"><option value="5">5</option><option value="10">10</option></select></div>
+ <div class="row">
+  <div><label for="topic">Topic</label><select id="topic"></select></div>
+  <div><label for="count">Questions</label>
+   <select id="count">
+    <option value="5">5 Questions</option>
+    <option value="10">10 Questions</option>
+    <option value="15">15 Questions</option>
+    <option value="20">20 Questions</option>
+    <option value="0">All Available</option>
+   </select>
   </div>
-  <div class="row"><button class="btn fit" id="start" type="button">Generate Quiz</button></div>
-  <p class="hint" id="best"></p>
-  <p class="hint">A single topic has 6 questions, so choose "Mixed" for 10.</p>
  </div>
+ <div class="row">
+  <div><label for="difficulty">Difficulty</label>
+   <select id="difficulty">
+    <option value="all">All Levels</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+   </select>
+  </div>
+  <div><label for="timer">Quiz Timer</label>
+   <select id="timer">
+    <option value="0">No Timer</option>
+    <option value="5">5 Minutes</option>
+    <option value="10">10 Minutes</option>
+    <option value="15">15 Minutes</option>
+   </select>
+  </div>
+ </div>
+ <div class="row">
+  <button class="btn fit" id="start" type="button">Generate Quiz</button>
+ </div>
+ <p class="hint" id="best"></p>
+ <p class="hint" id="available"></p>
+</div>
 
- <div class="card" id="play" hidden>
-  <div class="hint" id="prog"></div><div class="bar"><i id="fill"></i></div>
-  <div class="q" id="qtext"></div><div id="opts"></div>
-  <div class="why" id="why" hidden></div>
-  <div class="row"><button class="btn fit" id="next" type="button" hidden>Next</button></div>
+<div class="card" id="play" hidden>
+ <div class="row" style="justify-content:space-between;align-items:center">
+  <div class="hint" id="prog"></div>
+  <div class="hint" id="clock" aria-live="polite">00:00</div>
  </div>
+ <div class="bar"><i id="fill"></i></div>
+ <div class="row" style="margin-bottom:12px">
+  <button class="btn ghost fit" id="pause" type="button">Pause</button>
+ </div>
+ <div class="q" id="qtext"></div>
+ <div id="opts"></div>
+ <div class="why" id="why" hidden></div>
+ <div class="row">
+  <button class="btn fit" id="next" type="button" hidden>Next</button>
+ </div>
+</div>
 
- <div class="card" id="done" hidden>
-  <div class="hint">Your score</div><div class="score" id="score"></div><p id="msg"></p>
-  <div id="review"></div>
-  <div class="row"><button class="btn fit" id="retry" type="button" hidden>Retry the ones I missed</button><button class="btn ghost fit" id="again" type="button">New quiz</button></div>
+<div class="card" id="done" hidden>
+ <div class="hint">Your score</div>
+ <div class="score" id="score"></div>
+ <p id="percentage"></p>
+ <p id="duration"></p>
+ <p id="msg"></p>
+ <div id="review"></div>
+ <div class="row">
+  <button class="btn fit" id="retry" type="button" hidden>Retry the ones I missed</button>
+  <button class="btn ghost fit" id="again" type="button">New quiz</button>
  </div>
-  <footer>
+</div>
+<footer>
     <div class="footer-links">
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
@@ -121,68 +174,344 @@ var BANK = {
 };
 var MIXED = "Mixed (all topics)";
 var $ = function (i) { return document.getElementById(i); };
-var cur = [], idx = 0, score = 0, wrong = [], topic = "";
 
-function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-function store(get, v) { try { if (get) return JSON.parse(localStorage.getItem("msiq_quiz") || "{}"); localStorage.setItem("msiq_quiz", JSON.stringify(v)); } catch (e) { return {}; } }
-function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+var cur = [], idx = 0, score = 0, wrong = [], topic = "";
+var difficulty = "all", answered = false, paused = false, finished = false;
+var timerHandle = null, remaining = 0, elapsed = 0, timerEnabled = false;
+
+function shuffle(a) {
+ a = a.slice();
+ for (var i = a.length - 1; i > 0; i--) {
+  var j = Math.floor(Math.random() * (i + 1));
+  var t = a[i]; a[i] = a[j]; a[j] = t;
+ }
+ return a;
+}
+
+function store(get, v) {
+ try {
+  if (get) return JSON.parse(localStorage.getItem("msiq_quiz") || "{}");
+  localStorage.setItem("msiq_quiz", JSON.stringify(v));
+ } catch (e) { return {}; }
+}
+
+function esc(s) {
+ return String(s).replace(/[&<>]/g, function (c) {
+  return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+ });
+}
+
+function formatTime(seconds) {
+ var m = Math.floor(seconds / 60);
+ var s = seconds % 60;
+ return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+}
 
 var sel = $("topic");
-Object.keys(BANK).concat([MIXED]).forEach(function (t) { var o = document.createElement("option"); o.textContent = t; sel.appendChild(o); });
-function showBest() { var b = store(true)[sel.value]; $("best").textContent = b ? "Your best score on this topic: " + b : ""; }
-sel.onchange = showBest; showBest();
+Object.keys(BANK).concat([MIXED]).forEach(function (t) {
+ var o = document.createElement("option");
+ o.textContent = t;
+ o.value = t;
+ sel.appendChild(o);
+});
+
+function bestKey() {
+ return sel.value + "|" + $("difficulty").value;
+}
+
+function showBest() {
+ var b = store(true);
+ var value = b[bestKey()];
+ if (!value && $("difficulty").value === "all") value = b[sel.value];
+ $("best").textContent = value ? "Your best score: " + value : "No best score recorded yet.";
+ updateAvailable();
+}
 
 function pool() {
-  var t = sel.value, all = [];
-  if (t === MIXED) Object.keys(BANK).forEach(function (k) { BANK[k].forEach(function (q) { all.push(q); }); }); else all = BANK[t];
-  return all;
-}
-function build(qs) {
-  return qs.map(function (q) {
-    var order = shuffle([0, 1, 2, 3]);
-    return { q: q.q, e: q.e, o: order.map(function (i) { return q.o[i]; }), a: order.indexOf(q.a) };
+ var t = sel.value, all = [];
+
+ function addQuestions(name) {
+  BANK[name].forEach(function (q, i) {
+   var level = i < 2 ? "easy" : (i < 4 ? "medium" : "hard");
+   if (difficulty === "all" || difficulty === level) {
+    all.push({
+     q: q.q, o: q.o.slice(), a: q.a, e: q.e,
+     _difficulty: level, _topic: name
+    });
+   }
   });
+ }
+
+ if (t === MIXED) Object.keys(BANK).forEach(addQuestions);
+ else addQuestions(t);
+
+ return all;
 }
-function begin(qs) {
-  cur = qs; idx = 0; score = 0; wrong = [];
-  $("setup").hidden = true; $("done").hidden = true; $("play").hidden = false; ask();
+
+function updateAvailable() {
+ var total = pool().length;
+ $("available").textContent = total + " questions available for this selection.";
 }
-function ask() {
-  var q = cur[idx];
-  $("prog").textContent = "Question " + (idx + 1) + " of " + cur.length;
-  $("fill").style.width = (idx / cur.length * 100) + "%";
-  $("qtext").textContent = q.q; $("why").hidden = true; $("next").hidden = true;
-  var box = $("opts"); box.innerHTML = "";
-  q.o.forEach(function (txt, i) {
-    var b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = txt;
-    b.onclick = function () { pick(i); }; box.appendChild(b);
-  });
-}
-function pick(i) {
-  var q = cur[idx], bs = $("opts").children;
-  for (var k = 0; k < bs.length; k++) { bs[k].disabled = true; if (k === q.a) bs[k].classList.add("ok"); }
-  if (i === q.a) score++; else { bs[i].classList.add("no"); wrong.push(q); }
-  $("why").hidden = false; $("why").innerHTML = "<b>" + (i === q.a ? "Correct. " : "Not quite. ") + "</b>" + esc(q.e);
-  $("next").hidden = false; $("next").textContent = idx + 1 === cur.length ? "See my score" : "Next";
-}
-$("next").onclick = function () { idx++; if (idx < cur.length) ask(); else finish(); };
-function finish() {
-  $("play").hidden = true; $("done").hidden = false;
-  $("score").textContent = score + " / " + cur.length;
-  var pct = score / cur.length;
-  $("msg").textContent = pct === 1 ? "Perfect. Try a harder topic or the mixed quiz." : pct >= 0.7 ? "Good work. Review the ones you missed below." : "Keep going. Read each explanation, then retry the ones you missed.";
-  var b = store(true), key = topic, prev = b[key];
-  if (!prev || score > parseInt(prev, 10)) { b[key] = score + " / " + cur.length; store(false, b); }
-  var r = $("review"); r.innerHTML = "";
-  wrong.forEach(function (q) { var d = document.createElement("div"); d.className = "rev"; d.innerHTML = "<b>" + esc(q.q) + "</b><br>Answer: " + esc(q.o[q.a]) + "<br><span class='hint'>" + esc(q.e) + "</span>"; r.appendChild(d); });
-  $("retry").hidden = wrong.length === 0;
-}
-$("start").onclick = function () {
-  topic = sel.value;
-  var n = Math.min(parseInt($("count").value, 10), pool().length);
-  begin(build(shuffle(pool()).slice(0, n)));
+
+sel.onchange = showBest;
+$("difficulty").onchange = function () {
+ difficulty = $("difficulty").value;
+ showBest();
 };
-$("retry").onclick = function () { begin(build(wrong.map(function (q) { return { q: q.q, e: q.e, o: q.o, a: q.a }; }))); };
-$("again").onclick = function () { $("done").hidden = true; $("setup").hidden = false; showBest(); };
+$("count").onchange = updateAvailable;
+
+difficulty = $("difficulty").value;
+showBest();
+
+function build(qs) {
+ return qs.map(function (q) {
+  var order = shuffle([0, 1, 2, 3]);
+  return {
+   q: q.q,
+   e: q.e,
+   o: order.map(function (i) { return q.o[i]; }),
+   a: order.indexOf(q.a),
+   _difficulty: q._difficulty,
+   _topic: q._topic
+  };
+ });
+}
+
+function stopClock() {
+ if (timerHandle) {
+  clearInterval(timerHandle);
+  timerHandle = null;
+ }
+}
+
+function updateClock() {
+ $("clock").textContent = timerEnabled
+  ? "Time left: " + formatTime(remaining)
+  : "Time: " + formatTime(elapsed);
+}
+
+function startClock() {
+ stopClock();
+ timerHandle = setInterval(function () {
+  if (paused || finished) return;
+
+  elapsed++;
+
+  if (timerEnabled) {
+   remaining--;
+   if (remaining <= 0) {
+    remaining = 0;
+    updateClock();
+    finish();
+    return;
+   }
+  }
+
+  updateClock();
+ }, 1000);
+
+ updateClock();
+}
+
+function begin(qs) {
+ stopClock();
+ cur = qs;
+ idx = 0;
+ score = 0;
+ wrong = [];
+ answered = false;
+ paused = false;
+ finished = false;
+ elapsed = 0;
+
+ timerEnabled = Number($("timer").value) > 0;
+ remaining = Number($("timer").value) * 60;
+
+ $("pause").textContent = "Pause";
+ $("setup").hidden = true;
+ $("done").hidden = true;
+ $("play").hidden = false;
+
+ startClock();
+ ask();
+}
+
+function ask() {
+ if (finished || idx >= cur.length) return;
+
+ answered = false;
+ paused = false;
+
+ var q = cur[idx];
+
+ $("prog").textContent = "Question " + (idx + 1) + " of " + cur.length;
+ $("fill").style.width = (idx / cur.length * 100) + "%";
+ $("qtext").textContent = q.q;
+ $("why").hidden = true;
+ $("next").hidden = true;
+ $("next").disabled = false;
+ $("pause").disabled = false;
+ $("pause").textContent = "Pause";
+
+ var box = $("opts");
+ box.innerHTML = "";
+
+ q.o.forEach(function (txt, i) {
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "opt";
+  b.textContent = txt;
+  b.onclick = function () { pick(i); };
+  box.appendChild(b);
+ });
+}
+
+function pick(i) {
+ if (paused || answered || finished) return;
+
+ answered = true;
+
+ var q = cur[idx];
+ var bs = $("opts").children;
+
+ for (var k = 0; k < bs.length; k++) {
+  bs[k].disabled = true;
+  if (k === q.a) bs[k].classList.add("ok");
+ }
+
+ if (i === q.a) score++;
+ else {
+  bs[i].classList.add("no");
+  wrong.push(q);
+ }
+
+ $("why").hidden = false;
+ $("why").innerHTML =
+  "<b>" + (i === q.a ? "Correct. " : "Not quite. ") + "</b>" + esc(q.e);
+
+ $("next").hidden = false;
+ $("next").textContent = idx + 1 === cur.length ? "See My Results" : "Next";
+}
+
+$("next").onclick = function () {
+ if (paused || !answered || finished) return;
+ idx++;
+ if (idx < cur.length) ask();
+ else finish();
+};
+
+$("pause").onclick = function () {
+ if (finished) return;
+
+ paused = !paused;
+ $("pause").textContent = paused ? "Resume" : "Pause";
+
+ var bs = $("opts").children;
+ for (var i = 0; i < bs.length; i++) {
+  bs[i].disabled = paused || answered;
+ }
+
+ $("next").disabled = paused;
+ $("qtext").style.opacity = paused ? "0.45" : "1";
+ $("opts").style.opacity = paused ? "0.45" : "1";
+};
+
+function finish() {
+ if (finished) return;
+ finished = true;
+ stopClock();
+
+ $("play").hidden = true;
+ $("done").hidden = false;
+
+ $("score").textContent = score + " / " + cur.length;
+
+ var pct = Math.round(score / cur.length * 100);
+ $("percentage").textContent = "Accuracy: " + pct + "%";
+ $("duration").textContent = "Time taken: " + formatTime(elapsed);
+
+ $("msg").textContent = pct === 100
+  ? "Perfect score! Excellent work."
+  : pct >= 70
+   ? "Good work. Review the questions you missed below."
+   : "Keep practising. Review the explanations and try again.";
+
+ $("fill").style.width = "100%";
+
+ var b = store(true);
+ var key = topic + "|" + difficulty;
+ var previous = b[key];
+ var oldScore = previous ? parseInt(previous, 10) : -1;
+
+ if (difficulty === "all" && !previous && b[topic]) {
+  oldScore = parseInt(b[topic], 10);
+ }
+
+ if (score > oldScore) {
+  b[key] = score + " / " + cur.length;
+  store(false, b);
+ }
+
+ var r = $("review");
+ r.innerHTML = "";
+
+ if (wrong.length === 0) {
+  var success = document.createElement("p");
+  success.textContent = "You answered every question correctly!";
+  r.appendChild(success);
+ }
+
+ wrong.forEach(function (q) {
+  var d = document.createElement("div");
+  d.className = "rev";
+
+  var title = document.createElement("b");
+  title.textContent = q.q;
+
+  var answer = document.createElement("p");
+  answer.textContent = "Correct answer: " + q.o[q.a];
+
+  var explanation = document.createElement("p");
+  explanation.className = "hint";
+  explanation.textContent = q.e;
+
+  d.appendChild(title);
+  d.appendChild(answer);
+  d.appendChild(explanation);
+  r.appendChild(d);
+ });
+
+ $("retry").hidden = wrong.length === 0;
+}
+
+$("start").onclick = function () {
+ topic = sel.value;
+ difficulty = $("difficulty").value;
+
+ var available = pool();
+ if (!available.length) {
+  $("available").textContent = "No questions available for this selection.";
+  return;
+ }
+
+ var requested = Number($("count").value);
+ var n = requested === 0 ? available.length : Math.min(requested, available.length);
+
+ begin(build(shuffle(available).slice(0, n)));
+};
+
+$("retry").onclick = function () {
+ if (!wrong.length) return;
+ begin(build(wrong));
+};
+
+$("again").onclick = function () {
+ stopClock();
+ finished = true;
+ $("done").hidden = true;
+ $("play").hidden = true;
+ $("setup").hidden = false;
+ showBest();
+};
 </script>
 </body></html>

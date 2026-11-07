@@ -1,0 +1,767 @@
+﻿MATHSOLVEIQ COMPLETE STATIC AUDIT
+DATE: 11/06/2026 06:15:29
+
+--- GIT STATUS ---
+ M about.html
+ M api/solve.js
+ M calculator/acceleration.html
+ M calculator/add-days.html
+ M calculator/age-calculator.html
+ M calculator/area-converter.html
+ M calculator/ascii-converter.html
+ M calculator/average-speed.html
+ M calculator/bill-split.html
+ M calculator/binary-addition.html
+ M calculator/binary-decimal.html
+ M calculator/binomial-probability.html
+ M calculator/break-even.html
+ M calculator/cagr-calculator.html
+ M calculator/cash-flow.html
+ M calculator/coefficient-variation.html
+ M calculator/cogs-calculator.html
+ M calculator/complete-the-square.html
+ M calculator/compound-interest.html
+ M calculator/concrete-volume.html
+ M calculator/cross-product.html
+ M calculator/data-storage-converter.html
+ M calculator/data-transfer-time.html
+ M calculator/days-between.html
+ M calculator/decimal-binary.html
+ M calculator/decimal-hex.html
+ M calculator/density-calculator.html
+ M calculator/derivative.html
+ M calculator/determinant.html
+ M calculator/dilution.html
+ M calculator/discount-calculator.html
+ M calculator/distance-formula.html
+ M calculator/distance-travelled.html
+ M calculator/domain-and-range.html
+ M calculator/dot-product.html
+ M calculator/eigenvalue.html
+ M calculator/electric-power.html
+ M calculator/energy-converter.html
+ M calculator/factoring.html
+ M calculator/fence-estimator.html
+ M calculator/flooring-estimator.html
+ M calculator/force-calculator.html
+ M calculator/fraction.html
+ M calculator/fuel-cost.html
+ M calculator/fuel-economy.html
+ M calculator/function-composition.html
+ M calculator/gcf-lcm.html
+ M calculator/grade-calculator.html
+ M calculator/gross-margin.html
+ M calculator/hex-decimal.html
+ M calculator/hours-to-decimal.html
+ M calculator/ideal-gas-law.html
+ M calculator/implicit-differentiation.html
+ M calculator/index.html
+ M calculator/inequality.html
+ M calculator/integral.html
+ M calculator/inverse-function.html
+ M calculator/inverse-matrix.html
+ M calculator/ipv4-subnet.html
+ M calculator/kinetic-energy.html
+ M calculator/law-of-cosines.html
+ M calculator/length-converter.html
+ M calculator/loan-payment.html
+ M calculator/logarithm.html
+ M calculator/markup-calculator.html
+ M calculator/mass-converter.html
+ M calculator/matrix.html
+ M calculator/mean-median-mode.html
+ M calculator/mechanical-power.html
+ M calculator/molality.html
+ M calculator/molar-mass.html
+ M calculator/molarity.html
+ M calculator/net-profit.html
+ M calculator/normal-distribution.html
+ M calculator/ohms-law.html
+ M calculator/paint-estimator.html
+ M calculator/partial-derivative.html
+ M calculator/percent-yield.html
+ M calculator/percentage.html
+ M calculator/permutation-combination.html
+ M calculator/ph-calculator.html
+ M calculator/potential-energy.html
+ M calculator/power-converter.html
+ M calculator/pressure-converter.html
+ M calculator/profit-margin.html
+ M calculator/pythagorean-theorem.html
+ M calculator/quadratic-equation.html
+ M calculator/quartiles.html
+ M calculator/rational-expression.html
+ M calculator/resistor-parallel.html
+ M calculator/resistor-series.html
+ M calculator/revenue-calculator.html
+ M calculator/roi-calculator.html
+ M calculator/roof-pitch.html
+ M calculator/sales-commission.html
+ M calculator/sales-tax.html
+ M calculator/savings-growth.html
+ M calculator/series-convergence.html
+ M calculator/simple-interest.html
+ M calculator/simplify.html
+ M calculator/slope.html
+ M calculator/solution-concentration.html
+ M calculator/speed-converter.html
+ M calculator/stair-calculator.html
+ M calculator/standard-deviation.html
+ M calculator/standard-error.html
+ M calculator/systems-of-equations.html
+ M calculator/taylor-series.html
+ M calculator/temperature-converter.html
+ M calculator/tile-estimator.html
+ M calculator/time-converter.html
+ M calculator/time-duration.html
+ M calculator/tip-calculator.html
+ M calculator/travel-time.html
+ M calculator/unit-circle.html
+ M calculator/vat-calculator.html
+ M calculator/voltage-divider.html
+ M calculator/volume-converter.html
+ M calculator/wavelength-frequency.html
+ M calculator/weight-force.html
+ M calculator/weighted-average.html
+ M calculator/word-problem-solver.html
+ M calculator/work-calculator.html
+ M calculator/working-days.html
+ M calculator/z-score.html
+ M contact.html
+ M css/glass-3d.css
+ M css/style.css
+ M exam-mode.html
+ M flashcards.html
+ M formulas.html
+ M homework.html
+ M index.html
+ M js/calculator-directory.js
+ M js/extras.js
+ M js/i18n.js
+ M js/photo.js
+ M js/solve.js
+ M privacy.html
+ M quiz.html
+ M script.js
+ M sw.js
+ M terms.html
+ M videos.html
+?? api/solve.js.backup-media-20261105-111236
+?? backup-language-20261105-071205/
+?? backups/
+?? calculator/index.html.backup-encoding-20261105-121004
+?? calculator/word-problem-solver.html.pwa-backup-20261105-095719
+?? check-site.js
+?? css/glass-3d-before-calpage-fix-20261105-084128.css
+?? css/glass-3d-before-depth-20261105-083048.css
+?? css/glass-3d-before-professional-20261105-083313.css
+?? css/glass-3d.css.backup-theme-20261105-103535
+?? css/style.css.backup-theme-20261105-103535
+?? css/theme-overrides.css
+?? css/theme-overrides.css.backup-20261105-105535
+?? flashcards.html.pwa-backup-20261105-095719
+?? formulas.html.pwa-backup-20261105-095719
+?? gemini-pack/
+?? homework.html.pwa-backup-20261105-095719
+?? i18n-fix-audit.txt
+?? index.html.backup-media-20261105-111236
+?? js/calculator-directory.js.backup-smart-search-20261105-094214
+?? js/extras.js.backup-camera-20261105-114505
+?? js/extras.js.backup-drawing-mode-20261105-114100
+?? js/extras.js.backup-icons-20261105-114942
+?? js/i18n-backup-fix-20261105-075456.js
+?? js/i18n-backup-fix-20261105-075627.js
+?? js/i18n-backup.js
+?? js/i18n-before-brace-fix-20261105-075906.js
+?? js/i18n-before-brace-fix-20261105-075930.js
+?? js/i18n-before-en-tr-only-20261105-080818.js
+?? js/i18n-before-final-fix-20261105-080019.js
+?? js/i18n-before-fix-20261105-075325.js
+?? js/i18n.js.backup
+?? js/i18n.js.backup-20261105-074002
+?? js/i18n.js.backup-20261105-081138
+?? js/i18n.js.backup-before-final-encoding-20261105-121341
+?? js/i18n.js.backup-language-name-20261105-121642
+?? js/i18n.js.backup-media-20261105-111236
+?? js/i18n.js.backup-style-20261105-081429
+?? js/i18n.js.backup-turkish-20261105-121155
+?? js/i18n.js.bak
+?? js/i18n.js.before-final-turkish-fix
+?? js/i18n.js.before-turkish-recovery
+?? js/photo.js.backup-media-20261105-111236
+?? js/solve.js.backup-compact-20261105-111859
+?? js/solve.js.backup-drawing-tools-20261105-111804
+?? js/solve.js.backup-media-20261105-111236
+?? js/solve.js.failed-20261105-115528
+?? lang-pack/
+?? node-v24.21.0-x64.msi
+?? notebook-pack.zip
+?? script.js.before-solver-repair
+?? script.js.before-upload-repair
+?? style.css.backup-3d-20261105-081741
+?? sw-before-fix-20261105-095338.js
+?? sw.js.backup-camera-20261105-114505
+?? sw.js.backup-drawing-mode-20261105-114100
+?? sw.js.backup-drawing-tools-20261105-111804
+?? sw.js.backup-media-20261105-111236
+?? sw.js.backup-theme-20261105-103535
+?? sw.js.backup-theme-20261105-105037
+?? videos.html.pwa-backup-20261105-095719
+
+
+--- FILE COUNTS ---
+HTML: 429
+JS:   56
+CSS:  7
+
+--- JAVASCRIPT SYNTAX CHECK ---
+
+ERROR: D:\mathsolver\mathsolveiq\script.js
+node : D:\mathsolver\mathsolveiq\script.js:72
+At line:20 char:14
++         $e = node --check $f.FullName 2>&1
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\mathsolver\mathsolveiq\script.js:72:String) [], RemoteE 
+   xception
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+            resultBox.innerHTML = \
+                                  ^
+
+SyntaxError: Invalid or unexpected token
+    at wrapSafe (node:internal/modules/cjs/loader:1861:18)
+    at checkSyntax (node:internal/main/check_syntax:88:3)
+
+Node.js v24.21.0
+
+
+ERROR: D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js
+node : D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:355
+At line:20 char:14
++         $e = node --check $f.FullName 2>&1
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\mathsolver\m...5-075906.js:355:String) [], RemoteExcept 
+   ion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(function (el) {
+    ^^^^^^^^
+
+SyntaxError: Unexpected identifier 'document'
+    at wrapSafe (node:internal/modules/cjs/loader:1861:18)
+    at checkSyntax (node:internal/main/check_syntax:88:3)
+
+Node.js v24.21.0
+
+
+ERROR: D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js
+node : D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:355
+At line:20 char:14
++         $e = node --check $f.FullName 2>&1
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\mathsolver\m...5-075930.js:355:String) [], RemoteExcept 
+   ion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(function (el) {
+    ^^^^^^^^
+
+SyntaxError: Unexpected identifier 'document'
+    at wrapSafe (node:internal/modules/cjs/loader:1861:18)
+    at checkSyntax (node:internal/main/check_syntax:88:3)
+
+Node.js v24.21.0
+
+
+ERROR: D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js
+node : D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:355
+At line:20 char:14
++         $e = node --check $f.FullName 2>&1
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\mathsolver\m...5-080019.js:355:String) [], RemoteExcept 
+   ion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(function (el) {
+    ^^^^^^^^
+
+SyntaxError: Unexpected identifier 'document'
+    at wrapSafe (node:internal/modules/cjs/loader:1861:18)
+    at checkSyntax (node:internal/main/check_syntax:88:3)
+
+Node.js v24.21.0
+
+Syntax scan completed for 56 JS files.
+
+--- MISSING LOCAL HTML REFERENCES ---
+
+--- TRANSLATION SYSTEM REFERENCES ---
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:324: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:327: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:328: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:411: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:414: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:424: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\backup-language-20261105-071205\i18n.js:434: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\acceleration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\add-days.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\age-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\area-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\ascii-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\average-speed.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\bill-split.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\binary-addition.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\binary-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\binomial-probability.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\break-even.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\cagr-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\cash-flow.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\coefficient-variation.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\cogs-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\complete-the-square.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\compound-interest.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\concrete-volume.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\cross-product.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\data-storage-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\data-transfer-time.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\days-between.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\decimal-binary.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\decimal-hex.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\density-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\derivative.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\determinant.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\dilution.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\discount-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\distance-formula.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\distance-travelled.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\domain-and-range.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\dot-product.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\eigenvalue.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\electric-power.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\energy-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\factoring.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\fence-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\flooring-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\force-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\fraction.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\fuel-cost.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\fuel-economy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\function-composition.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\gcf-lcm.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\grade-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\gross-margin.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\hex-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\hours-to-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\ideal-gas-law.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\implicit-differentiation.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\index.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\inequality.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\integral.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\inverse-function.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\inverse-matrix.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\ipv4-subnet.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\kinetic-energy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\law-of-cosines.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\length-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\loan-payment.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\logarithm.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\markup-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\mass-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\matrix.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\mean-median-mode.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\mechanical-power.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\molality.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\molar-mass.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\molarity.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\net-profit.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\normal-distribution.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\ohms-law.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\paint-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\partial-derivative.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\percent-yield.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\percentage.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\permutation-combination.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\ph-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\potential-energy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\power-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\pressure-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\profit-margin.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\pythagorean-theorem.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\quadratic-equation.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\quartiles.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\rational-expression.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\resistor-parallel.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\resistor-series.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\revenue-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\roi-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\roof-pitch.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\sales-commission.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\sales-tax.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\savings-growth.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\series-convergence.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\simple-interest.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\simplify.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\slope.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\solution-concentration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\speed-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\stair-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\standard-deviation.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\standard-error.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\systems-of-equations.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\taylor-series.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\temperature-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\tile-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\time-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\time-duration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\tip-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\travel-time.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\unit-circle.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\vat-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\voltage-divider.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\volume-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\wavelength-frequency.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\weight-force.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\weighted-average.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\word-problem-solver.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\work-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\working-days.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\engine-fix-20261105-092113\z-score.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\acceleration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\add-days.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\age-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\area-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\ascii-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\average-speed.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\bill-split.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\binary-addition.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\binary-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\binomial-probability.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\break-even.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\cagr-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\cash-flow.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\coefficient-variation.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\cogs-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\complete-the-square.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\compound-interest.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\concrete-volume.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\cross-product.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\data-storage-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\data-transfer-time.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\days-between.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\decimal-binary.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\decimal-hex.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\density-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\derivative.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\determinant.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\dilution.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\discount-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\distance-formula.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\distance-travelled.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\domain-and-range.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\dot-product.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\eigenvalue.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\electric-power.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\energy-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\factoring.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\fence-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\flooring-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\force-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\fraction.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\fuel-cost.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\fuel-economy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\function-composition.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\gcf-lcm.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\grade-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\gross-margin.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\hex-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\hours-to-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\ideal-gas-law.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\implicit-differentiation.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\index.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\inequality.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\integral.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\inverse-function.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\inverse-matrix.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\ipv4-subnet.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\kinetic-energy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\law-of-cosines.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\length-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\loan-payment.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\logarithm.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\markup-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\mass-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\matrix.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\mean-median-mode.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\mechanical-power.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\molality.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\molar-mass.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\molarity.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\net-profit.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\normal-distribution.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\ohms-law.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\paint-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\partial-derivative.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\percent-yield.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\percentage.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\permutation-combination.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\ph-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\potential-energy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\power-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\pressure-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\profit-margin.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\pythagorean-theorem.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\quadratic-equation.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\quartiles.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\rational-expression.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\resistor-parallel.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\resistor-series.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\revenue-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\roi-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\roof-pitch.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\sales-commission.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\sales-tax.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\savings-growth.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\series-convergence.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\simple-interest.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\simplify.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\slope.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\solution-concentration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\speed-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\stair-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\standard-deviation.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\standard-error.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\systems-of-equations.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\taylor-series.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\temperature-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\tile-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\time-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\time-duration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\tip-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\travel-time.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\unit-circle.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\vat-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\voltage-divider.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\volume-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\wavelength-frequency.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\weight-force.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\weighted-average.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\word-problem-solver.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\work-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\working-days.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\calculator\z-score.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\about.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\contact.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\exam-mode.html:30: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\flashcards.html:20: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\formulas.html:17: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\homework.html:16: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\index.html:23: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\privacy.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\quiz.html:22: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\terms.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\backups\theme-fix-20261105-105037\videos.html:21: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\acceleration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\add-days.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\age-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\area-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\ascii-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\average-speed.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\bill-split.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\binary-addition.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\binary-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\binomial-probability.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\break-even.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\cagr-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\cash-flow.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\coefficient-variation.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\cogs-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\complete-the-square.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\compound-interest.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\concrete-volume.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\cross-product.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\data-storage-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\data-transfer-time.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\days-between.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\decimal-binary.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\decimal-hex.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\density-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\derivative.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\determinant.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\dilution.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\discount-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\distance-formula.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\distance-travelled.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\domain-and-range.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\dot-product.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\eigenvalue.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\electric-power.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\energy-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\factoring.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\fence-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\flooring-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\force-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\fraction.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\fuel-cost.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\fuel-economy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\function-composition.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\gcf-lcm.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\grade-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\gross-margin.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\hex-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\hours-to-decimal.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\ideal-gas-law.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\implicit-differentiation.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\index.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\inequality.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\integral.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\inverse-function.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\inverse-matrix.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\ipv4-subnet.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\kinetic-energy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\law-of-cosines.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\length-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\loan-payment.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\logarithm.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\markup-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\mass-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\matrix.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\mean-median-mode.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\mechanical-power.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\molality.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\molar-mass.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\molarity.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\net-profit.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\normal-distribution.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\ohms-law.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\paint-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\partial-derivative.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\percent-yield.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\percentage.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\permutation-combination.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\ph-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\potential-energy.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\power-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\pressure-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\profit-margin.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\pythagorean-theorem.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\quadratic-equation.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\quartiles.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\rational-expression.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\resistor-parallel.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\resistor-series.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\revenue-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\roi-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\roof-pitch.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\sales-commission.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\sales-tax.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\savings-growth.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\series-convergence.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\simple-interest.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\simplify.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\slope.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\solution-concentration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\speed-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\stair-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\standard-deviation.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\standard-error.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\systems-of-equations.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\taylor-series.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\temperature-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\tile-estimator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\time-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\time-duration.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\tip-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\travel-time.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\unit-circle.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\vat-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\voltage-divider.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\volume-converter.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\wavelength-frequency.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\weight-force.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\weighted-average.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\word-problem-solver.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\work-calculator.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\working-days.html:16: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\calculator\z-score.html:18: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:400: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:403: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:413: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:423: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075456.js:446: document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + domain;
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:400: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:403: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:413: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:423: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-backup-fix-20261105-075627.js:446: document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + domain;
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:400: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:403: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:413: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:423: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-backup.js:446: document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + domain;
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:404: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:407: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:417: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075906.js:427: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:404: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:407: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:417: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-brace-fix-20261105-075930.js:427: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:401: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:404: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:414: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-en-tr-only-20261105-080818.js:424: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:404: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:407: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:417: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-final-fix-20261105-080019.js:427: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:313: document.cookie = "googtrans=" + cookieVal + "; path=/;";
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:316: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:317: document.cookie = "googtrans=" + cookieVal + "; path=/; domain=." + domain + ";";
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:400: var container = document.getElementById("google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:403: container.id = "google_translate_element";
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:413: }, "google_translate_element");
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:423: s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+D:\mathsolver\mathsolveiq\js\i18n-before-fix-20261105-075325.js:446: document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + domain;
+D:\mathsolver\mathsolveiq\about.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\apply-i18n.js:4: * Injects <script defer src="/js/i18n.js"></script> and ensures semantic <header> integration.
+D:\mathsolver\mathsolveiq\apply-i18n.js:7: *   node apply-i18n.js
+D:\mathsolver\mathsolveiq\apply-i18n.js:26: // 1. Inject /js/i18n.js into <head>
+D:\mathsolver\mathsolveiq\apply-i18n.js:27: if (content.includes('js/i18n.js')) {
+D:\mathsolver\mathsolveiq\apply-i18n.js:31: content = content.replace(/<\/head>/i, '  <script defer src="/js/i18n.js"></script>\n</head>');
+D:\mathsolver\mathsolveiq\contact.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\exam-mode.html:30: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\flashcards.html:20: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\formulas.html:17: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\homework.html:16: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\index.html:23: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\offline.html:14: </style><script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\privacy.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\quiz.html:22: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\terms.html:12: <script defer src="/js/i18n.js"></script>
+D:\mathsolver\mathsolveiq\videos.html:21: </style><script defer src="/js/i18n.js"></script>
+
+
+--- PROJECT FILE LIST ---
+update-pack\js\calc2.js
+

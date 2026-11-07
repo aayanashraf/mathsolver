@@ -1,0 +1,148 @@
+/* MathSolveIQ: unified dark theme - blue accent */
+:root[data-theme="dark"]{
+  color-scheme:dark!important;
+  --bg:#0b1220!important;
+  --card:#121d2f!important;
+  --ink:#f1f5ff!important;
+  --mute:#b7c4d9!important;
+  --line:#2b3a53!important;
+  --acc:#7595ff!important;
+  --acc2:#233455!important;
+  --bad:#ff8585!important;
+  --shadow:0 8px 28px rgba(0,0,0,.30)!important;
+  --primary:#7595ff!important;
+  --accent:#7595ff!important;
+}
+
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+body[data-theme="dark"]{
+  background:#0b1220!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  h1,h2,h3,h4,h5,h6,p,li,label,small,strong,b,em,
+  figcaption,summary,legend,th,td,dt,dd
+){
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  .lead,.hint,.muted,.subtitle,.description,
+  .helper-text,.text-muted,.secondary-text
+){
+  color:#b7c4d9!important;
+}
+
+html[data-theme="dark"] body :is(
+  header,aside,nav,.sidebar,#sidebar,.left-sidebar,
+  .app-sidebar,.side-nav,.drawer
+){
+  background:#111b2c!important;
+  color:#f1f5ff!important;
+  border-color:#2b3a53!important;
+}
+
+html[data-theme="dark"] body :is(
+  main,#main,#app,#root,.app,.app-shell,.main,
+  .main-content,.content,.content-area,.workspace,
+  .layout,.chat-layout,.chat-container,.page-content
+){
+  background:transparent!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  .card,.panel,.glass-card,.glass-panel,.glass-surface,
+  .calculator-card,.tool-card,.result-card,.result-box,
+  .composer,.hero,.feature-card,.modal,.dialog
+){
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+  border-color:#2b3a53!important;
+}
+
+html[data-theme="dark"] body :is(
+  a,nav a,.logo
+){
+  color:#9bb4ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  input,select,textarea
+){
+  background:#101a2a!important;
+  color:#f1f5ff!important;
+  border:1px solid #344762!important;
+}
+
+html[data-theme="dark"] body :is(input,textarea)::placeholder{
+  color:#a5b2c8!important;
+  opacity:1!important;
+}
+
+html[data-theme="dark"] body select option{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+}
+
+/* Remove green buttons in dark theme */
+html[data-theme="dark"] body :is(
+  button,.btn,[role="button"],.action-btn,.mode-btn
+){
+  background:#1b2a42!important;
+  color:#f1f5ff!important;
+  border-color:#3a5278!important;
+}
+
+html[data-theme="dark"] body :is(
+  .primary,.primary-btn,.btn-primary,.solve-btn,
+  .solve-button,.submit-btn,.send-btn,
+  button[type="submit"],#solveBtn,#solve
+){
+  background:#6687f5!important;
+  color:#081328!important;
+  border-color:#6687f5!important;
+}
+
+html[data-theme="dark"] body :is(button,a,[role="button"]):focus-visible{
+  outline:3px solid #91aaff!important;
+  outline-offset:3px!important;
+}
+
+/* Professional language dropdown */
+html[data-theme="dark"] body #msiq-lang-wrap{
+  background:#121d2f!important;
+  border:1px solid #405579!important;
+  border-radius:12px!important;
+  box-shadow:0 6px 20px rgba(0,0,0,.3)!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap svg{
+  stroke:#91aaff!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap #msiq-lang-select{
+  width:auto!important;
+  min-width:110px!important;
+  max-width:160px!important;
+  color:#f1f5ff!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap #msiq-lang-select option{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body .err{
+  color:#ff8585!important;
+}
+
+html[data-theme="dark"] body footer{
+  color:#b7c4d9!important;
+  border-color:#2b3a53!important;
+}

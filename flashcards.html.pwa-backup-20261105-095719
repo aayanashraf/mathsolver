@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Flashcards – MathSolveIQ</title>
+<meta name="description" content="Free math flashcards with spaced repetition: algebra, trigonometry, calculus, geometry, statistics, exponents and logs. Add your own cards.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/flashcards.html">
+<link rel="icon" href="images/favicon.svg?v=2" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+body{padding-left:0}.doc{max-width:760px;margin:0 auto;padding:24px 16px 60px}.doc h1{font:700 32px/1.2 Georgia,serif;margin:12px 0 6px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.top a{color:var(--acc);text-decoration:none;font-weight:600}
+label{display:block;font-weight:600;margin:0 0 4px;font-size:14px}[hidden]{display:none!important}
+
+.fc{min-height:190px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;border:2px solid var(--line);border-radius:20px;background:var(--card);font:600 24px/1.4 Georgia,serif;cursor:pointer;user-select:none}
+.fc.back{border-color:var(--acc);background:var(--acc2);color:var(--acc)}
+.boxes{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.boxes span{padding:4px 10px;border-radius:999px;background:var(--acc2);color:var(--acc);font-size:13px;font-weight:600}
+.mine div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}.mine button{border:0;background:none;color:var(--bad);cursor:pointer}
+.no{background:#fee2e2!important;color:#991b1b!important}
+@media(prefers-color-scheme:dark){.no{background:#450a0a!important;color:#fecaca!important}}
+</style><script defer src="/js/i18n.js"></script>
+<link rel="stylesheet" href="/css/glass-3d.css">
+</head><body>
+<div class="doc">
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <h1>Math Flashcards</h1>
+ <p class="lead">Flip a card, say whether you knew it, and the cards you miss come back sooner. This is spaced repetition, and it is one of the best ways to remember formulas.</p>
+
+ <div class="card" id="setup">
+  <div class="row"><div><label for="deck">Deck</label><select id="deck"></select></div></div>
+  <div class="boxes" id="stats"></div>
+  <div class="row"><button class="btn fit" id="start" type="button">Study now</button><button class="btn ghost fit" id="reset" type="button">Reset this deck</button></div>
+  <p class="hint" id="info"></p>
+ </div>
+
+ <div class="card" id="play" hidden>
+  <div class="hint" id="prog"></div>
+  <div class="fc" id="card" role="button" tabindex="0" aria-label="Flashcard. Press space to flip."></div>
+  <p class="hint">Tap the card or press Space to flip. Press 1 for "Again" and 2 for "I knew it".</p>
+  <div class="row"><button class="btn ghost fit no" id="again" type="button" hidden>Again (1)</button><button class="btn fit" id="know" type="button" hidden>I knew it (2)</button></div>
+ </div>
+
+ <div class="card" id="done" hidden><h2 style="margin:0 0 6px">Session finished</h2><p id="sum"></p><div class="row"><button class="btn fit" id="back" type="button">Back to decks</button></div></div>
+
+ <div class="card mine"><b>Make your own card</b>
+  <div class="row"><input id="mf" placeholder="Front (question)" maxlength="140"><input id="mb" placeholder="Back (answer)" maxlength="200"><button class="btn fit" id="add" type="button">Add</button></div>
+  <div id="mylist"></div>
+ </div>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
+  </footer>
+</div>
+<script src="js/studydata.js"></script>
+<script>
+(function () {
+  var $ = function (i) { return document.getElementById(i); };
+  var D = window.MSIQ_STUDY.DECKS, MINE = "My cards", DAY = 86400000, GAP = { 1: 0, 2: 1, 3: 3, 4: 7, 5: 14 };
+  var S = { cards: {}, mine: [] };
+  try { S = JSON.parse(localStorage.getItem("msiq_fc") || "") || S; } catch (e) {}
+  S.cards = S.cards || {}; S.mine = S.mine || [];
+  function save() { try { localStorage.setItem("msiq_fc", JSON.stringify(S)); } catch (e) {} }
+  function deckCards(name) {
+    var arr = name === MINE ? S.mine.map(function (c) { return [c[0], c[1]]; }) : D[name];
+    return arr.map(function (c, i) { return { id: name + "|" + (name === MINE ? c[0] + "|" + c[1] : i), f: c[0], b: c[1] }; });
+  }
+  function st(c) { return S.cards[c.id] || { b: 1, d: 0 }; }
+  var sel = $("deck");
+  Object.keys(D).concat([MINE]).forEach(function (n) { var o = document.createElement("option"); o.textContent = n; sel.appendChild(o); });
+  function stats() {
+    var cs = deckCards(sel.value), now = Date.now(), box = [0, 0, 0, 0, 0, 0], due = 0;
+    cs.forEach(function (c) { var s = st(c); box[s.b]++; if (s.d <= now) due++; });
+    $("stats").innerHTML = "<span>" + cs.length + " cards</span><span>" + due + " due</span>" + [1, 2, 3, 4, 5].map(function (b) { return "<span>Box " + b + ": " + box[b] + "</span>"; }).join("");
+    $("info").textContent = cs.length ? (due ? "" : "Nothing is due right now. You can still study to practise.") : "This deck is empty. Add a card below.";
+    return cs;
+  }
+  sel.onchange = stats; stats();
+  var queue = [], cur = null, flipped = false, seen = 0, total = 0;
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  $("start").onclick = function () {
+    var cs = stats(); if (!cs.length) return;
+    var now = Date.now(), due = cs.filter(function (c) { return st(c).d <= now; });
+    queue = shuffle(due.length ? due : cs); total = queue.length; seen = 0;
+    $("setup").hidden = true; $("done").hidden = true; $("play").hidden = false; next();
+  };
+  function next() {
+    if (!queue.length) { finish(); return; }
+    cur = queue.shift(); flipped = false;
+    $("prog").textContent = "Card " + Math.min(seen + 1, total) + " of " + total + (queue.length + 1 > total - seen ? "" : "");
+    var c = $("card"); c.className = "fc"; c.textContent = cur.f; $("again").hidden = true; $("know").hidden = true; c.focus();
+  }
+  function flip() { if (!cur) return; flipped = !flipped; var c = $("card"); c.className = "fc" + (flipped ? " back" : ""); c.textContent = flipped ? cur.b : cur.f; $("again").hidden = !flipped; $("know").hidden = !flipped; }
+  function rate(good) {
+    if (!cur || !flipped) return;
+    var s = st(cur);
+    if (good) { s.b = Math.min(5, s.b + 1); s.d = Date.now() + GAP[s.b] * DAY; seen++; }
+    else { s.b = 1; s.d = 0; queue.push(cur); }
+    S.cards[cur.id] = s; save(); cur = null; next();
+  }
+  function finish() {
+    $("play").hidden = true; $("done").hidden = false;
+    $("sum").textContent = "You reviewed " + total + " card" + (total === 1 ? "" : "s") + ". Cards you knew move up a box and come back later; cards you missed stay in Box 1.";
+    stats();
+  }
+  $("card").onclick = flip;
+  $("again").onclick = function () { rate(false); }; $("know").onclick = function () { rate(true); };
+  document.addEventListener("keydown", function (e) {
+    if ($("play").hidden || /input|textarea|select/i.test(e.target.tagName)) return;
+    if (e.key === " ") { e.preventDefault(); flip(); } else if (e.key === "1") rate(false); else if (e.key === "2") rate(true);
+  });
+  $("back").onclick = function () { $("done").hidden = true; $("setup").hidden = false; stats(); };
+  $("reset").onclick = function () { if (!confirm("Reset your progress for this deck?")) return; deckCards(sel.value).forEach(function (c) { delete S.cards[c.id]; }); save(); stats(); };
+  function drawMine() {
+    var box = $("mylist"); box.innerHTML = "";
+    S.mine.forEach(function (c, i) {
+      var d = document.createElement("div"), t = document.createElement("span"), x = document.createElement("button");
+      t.textContent = c[0] + "  →  " + c[1]; x.textContent = "Delete"; x.type = "button";
+      x.onclick = function () { S.mine.splice(i, 1); save(); drawMine(); stats(); }; d.appendChild(t); d.appendChild(x); box.appendChild(d);
+    });
+  }
+  $("add").onclick = function () {
+    var f = $("mf").value.trim(), b = $("mb").value.trim(); if (!f || !b) return;
+    S.mine.push([f, b]); save(); $("mf").value = ""; $("mb").value = ""; drawMine(); stats();
+  };
+  drawMine();
+})();
+</script>
+</body></html>

@@ -226,7 +226,398 @@
   var fab = document.createElement("button"); fab.type = "button"; fab.className = "calc-fab"; fab.textContent = "🧮 Calculator"; fab.onclick = openCalc;
   document.body.appendChild(fab);
   if (micBtn) {
-    var cb = document.createElement("button"); cb.type = "button"; cb.className = micBtn.className.replace("mic-on", "").trim(); cb.textContent = "🧮 Calculator"; cb.onclick = openCalc;
+    /* MSIQ_EXTRAS_DRAWING_MODE */
+var openDrawingMode = function () {
+  var previous = document.getElementById("msiq-drawing-modal");
+  if (previous) return;
+
+  if (!document.getElementById("msiq-drawing-modal-css")) {
+    var style = document.createElement("style");
+    style.id = "msiq-drawing-modal-css";
+    style.textContent = `
+      #msiq-drawing-modal{position:fixed;inset:0;z-index:100000;background:rgba(8,15,30,.68);display:flex;align-items:center;justify-content:center;padding:16px}
+      #msiq-drawing-box{width:min(760px,100%);max-height:94vh;overflow:auto;background:var(--card,#fff);color:var(--ink,#172033);border:1px solid var(--line,#ddd);border-radius:18px;padding:18px;box-shadow:0 20px 70px rgba(0,0,0,.3)}
+      #msiq-drawing-box h3{margin:2px 0 5px;font-size:20px}
+      #msiq-drawing-box .draw-help{font-size:13px;color:var(--mute,#667085);margin-bottom:13px}
+      #msiq-drawing-canvas{width:100%;height:230px;display:block;background:#fff;border:1px solid #cbd5e1;border-radius:10px;touch-action:none;cursor:crosshair}
+      #msiq-drawing-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0}
+      #msiq-drawing-tools button{cursor:pointer}
+      .msiq-pen{width:30px;height:30px;border-radius:50%;border:2px solid #aab3c2}
+      .msiq-pen.active{outline:3px solid var(--acc,#5878df);outline-offset:2px}
+      .msiq-draw-action{padding:8px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-weight:600}
+      .msiq-draw-primary{background:var(--acc)!important;color:white!important;border-color:var(--acc)!important}
+      #msiq-draw-status{font-size:13px;color:var(--mute);margin-top:10px}
+      @media(max-width:480px){#msiq-drawing-box{padding:13px}#msiq-drawing-canvas{height:190px}}
+    `;
+    document.head.appendChild(style);
+  }
+
+  var modal=document.createElement("div");
+  modal.id="msiq-drawing-modal";
+  modal.innerHTML=
+    '<section id="msiq-drawing-box" role="dialog" aria-modal="true" aria-label="Drawing Mode">'+
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">'+
+    '<h3>Drawing Mode</h3>'+
+    '<button type="button" id="msiq-draw-close" class="msiq-draw-action">Close ✕</button>'+
+    '</div>'+
+    '<div class="draw-help">Write your equation or draw a math diagram using your mouse, finger or stylus.</div>'+
+    '<div id="msiq-drawing-tools"><b style="font-size:13px">Pen:</b></div>'+
+    '<canvas id="msiq-drawing-canvas" width="1200" height="480"></canvas>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">'+
+    '<button type="button" class="msiq-draw-action" id="msiq-draw-undo">Undo</button>'+
+    '<button type="button" class="msiq-draw-action" id="msiq-draw-clear">Clear</button>'+
+    '<button type="button" class="msiq-draw-action msiq-draw-primary" id="msiq-draw-solve">Solve Drawing</button>'+
+    '</div><div id="msiq-draw-status" aria-live="polite">Choose a pen colour and start drawing.</div>'+
+    '</section>';
+
+  document.body.appendChild(modal);
+
+  var canvas=document.getElementById("msiq-drawing-canvas");
+  var ctx=canvas.getContext("2d");
+  var tools=document.getElementById("msiq-drawing-tools");
+  var status=document.getElementById("msiq-draw-status");
+  var colors=[
+    ["Black","#172033"],["Blue","#2563eb"],["Red","#dc2626"],
+    ["Green","#16a34a"],["Purple","#9333ea"],["Orange","#f59e0b"]
+  ];
+  var selected="#172033",erasing=false,drawing=false,last=null,ink=false;
+  var undoStack=[],buttons=[];
+
+  function clearCanvas(){
+    ctx.fillStyle="#fff";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ink=false;
+    undoStack=[];
+  }
+  clearCanvas();
+
+  function selectTool(button){
+    buttons.forEach(function(b){b.classList.toggle("active",b===button)});
+    eraser.classList.toggle("active",button===eraser);
+  }
+
+  colors.forEach(function(item,i){
+    var b=document.createElement("button");
+    b.type="button";
+    b.className="msiq-pen";
+    b.style.background=item[1];
+    b.title=item[0];
+    b.setAttribute("aria-label",item[0]+" pen");
+    if(i===0)b.classList.add("active");
+    b.onclick=function(){selected=item[1];erasing=false;selectTool(b)};
+    buttons.push(b);
+    tools.appendChild(b);
+  });
+
+  var eraser=document.createElement("button");
+  eraser.type="button";
+  eraser.className="msiq-draw-action";
+  eraser.textContent="Eraser";
+  eraser.onclick=function(){erasing=true;selectTool(eraser)};
+  tools.appendChild(eraser);
+
+  function point(e){
+    var r=canvas.getBoundingClientRect();
+    return {x:(e.clientX-r.left)*canvas.width/r.width,
+            y:(e.clientY-r.top)*canvas.height/r.height};
+  }
+
+  canvas.addEventListener("pointerdown",function(e){
+    e.preventDefault();
+    canvas.setPointerCapture(e.pointerId);
+    undoStack.push({
+      data:ctx.getImageData(0,0,canvas.width,canvas.height),
+      ink:ink
+    });
+    if(undoStack.length>25)undoStack.shift();
+
+    drawing=true;
+    last=point(e);
+    ctx.beginPath();
+    ctx.fillStyle=erasing?"#fff":selected;
+    ctx.arc(last.x,last.y,erasing?21:4,0,Math.PI*2);
+    ctx.fill();
+    ink=true;
+  });
+
+  canvas.addEventListener("pointermove",function(e){
+    if(!drawing||!last)return;
+    e.preventDefault();
+    var p=point(e);
+    ctx.beginPath();
+    ctx.moveTo(last.x,last.y);
+    ctx.lineTo(p.x,p.y);
+    ctx.strokeStyle=erasing?"#fff":selected;
+    ctx.lineWidth=erasing?42:8;
+    ctx.lineCap="round";
+    ctx.lineJoin="round";
+    ctx.stroke();
+    last=p;
+  });
+
+  function stop(){drawing=false;last=null}
+  canvas.addEventListener("pointerup",stop);
+  canvas.addEventListener("pointercancel",stop);
+
+  document.getElementById("msiq-draw-clear").onclick=clearCanvas;
+  document.getElementById("msiq-draw-undo").onclick=function(){
+    var s=undoStack.pop();
+    if(!s)return;
+    ctx.putImageData(s.data,0,0);
+    ink=s.ink;
+  };
+
+  function close(){
+    modal.remove();
+    document.removeEventListener("keydown",onKey);
+  }
+  function onKey(e){if(e.key==="Escape")close()}
+
+  document.getElementById("msiq-draw-close").onclick=close;
+  modal.addEventListener("click",function(e){if(e.target===modal)close()});
+  document.addEventListener("keydown",onKey);
+
+  document.getElementById("msiq-draw-solve").onclick=async function(){
+    if(!ink){status.textContent="Draw your problem first.";return}
+    var submit=this;
+    submit.disabled=true;
+    status.textContent="Sending drawing to MathSolveIQ...";
+
+    try{
+      var q=document.getElementById("q");
+      var chip=document.querySelector("#modes .chip.on");
+      var m=chip?chip.textContent.toLowerCase():"";
+      var mode=m.indexOf("hint")>-1?"hint":m.indexOf("socratic")>-1?"socratic":"full";
+      var lang="English";
+      try{lang=localStorage.getItem("msiq_lang")==="tr"?"Turkish":"English"}catch(e){}
+
+      var data=canvas.toDataURL("image/jpeg",0.88).split(",")[1];
+      var response=await fetch("/api/solve",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          question:q?q.value.trim():"",
+          mode:mode,
+          lang:lang,
+          history:[],
+          image:{type:"image/jpeg",data:data}
+        })
+      });
+      var result=await response.json().catch(function(){return {}});
+      if(!response.ok)throw new Error(result.error||"Could not solve the drawing.");
+
+      var out=document.getElementById("solveOut");
+      if(out){
+        out.innerHTML="";
+        var answer=document.createElement("div");
+        answer.className="step";
+        answer.style.whiteSpace="pre-wrap";
+        answer.textContent=result.answer||"No answer returned.";
+        out.appendChild(answer);
+        out.scrollIntoView({behavior:"smooth",block:"nearest"});
+      }
+      close();
+    }catch(error){
+      status.textContent=error.message||"Something went wrong.";
+      submit.disabled=false;
+    }
+  };
+};
+
+var cb = document.createElement("button");
+cb.type = "button";
+cb.className = micBtn.className.replace("mic-on", "").trim();
+cb.textContent = "Drawing Mode";
+cb.onclick = openDrawingMode;
     micBtn.parentNode.insertBefore(cb, micBtn.nextSibling);
+    /* MSIQ_LIVE_CAMERA */
+    var cameraBtn=document.createElement("button");
+    cameraBtn.type="button";
+    cameraBtn.id="msiq-live-camera-btn";
+    cameraBtn.className=cb.className;
+    cameraBtn.textContent="\uD83D\uDCF7 Live Camera";
+    cameraBtn.title="Take a live photo of your math problem";
+    micBtn.parentNode.insertBefore(cameraBtn,cb.nextSibling);
+    /* Assign a camera-specific icon */
+    cameraBtn.textContent="\uD83D\uDCF7 Live Camera";
+
+    /* Give the upload button a picture icon, not a camera icon */
+    function setPhotoIcon(){
+      var found=false;
+      Array.prototype.forEach.call(
+        document.querySelectorAll("#page-home button,#page-home [role='button']"),
+        function(b){
+          if(b===micBtn||b===cb||b===cameraBtn)return;
+          if(/photo|upload/i.test(b.textContent||"")){
+            if(!/🖼/.test(b.textContent)){
+              b.textContent="\uD83D\uDDBC\uFE0F Photo / PDF";
+              b.setAttribute("aria-label","Upload Photo or PDF");
+            }
+            found=true;
+          }
+        }
+      );
+      return found;
+    }
+    if(!setPhotoIcon()){
+      var photoObserver=new MutationObserver(function(){
+        if(setPhotoIcon())photoObserver.disconnect();
+      });
+      photoObserver.observe(document.getElementById("page-home")||document.body,
+        {childList:true,subtree:true});
+    }
+
+    var openLiveCamera=function(){
+      if(document.getElementById("msiq-camera-modal"))return;
+
+      if(!document.getElementById("msiq-camera-style")){
+        var cameraStyle=document.createElement("style");
+        cameraStyle.id="msiq-camera-style";
+        cameraStyle.textContent=`
+          #msiq-camera-modal{position:fixed;inset:0;z-index:100001;background:rgba(8,15,30,.75);display:flex;align-items:center;justify-content:center;padding:14px}
+          #msiq-camera-panel{width:min(650px,100%);max-height:94vh;overflow:auto;background:var(--card,#fff);color:var(--ink,#172033);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 20px 70px rgba(0,0,0,.35)}
+          #msiq-camera-video{display:block;width:100%;max-height:58vh;min-height:200px;object-fit:contain;background:#080d16;border-radius:12px}
+          #msiq-camera-status{font-size:13px;color:var(--mute);margin:10px 0}
+          .msiq-camera-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+          .msiq-camera-actions button{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-weight:600;cursor:pointer}
+          .msiq-camera-actions .primary{background:var(--acc);color:white;border-color:var(--acc)}
+        `;
+        document.head.appendChild(cameraStyle);
+      }
+
+      var modal=document.createElement("div");
+      modal.id="msiq-camera-modal";
+      modal.innerHTML=
+        '<section id="msiq-camera-panel" role="dialog" aria-modal="true" aria-label="Live Camera">'+
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">'+
+        '<strong style="font-size:19px">Live Camera</strong>'+
+        '<button type="button" id="msiq-camera-close" class="msiq-draw-action">Close ✕</button>'+
+        '</div>'+
+        '<video id="msiq-camera-video" autoplay muted playsinline></video>'+
+        '<div id="msiq-camera-status" aria-live="polite">Requesting camera permission...</div>'+
+        '<div class="msiq-camera-actions">'+
+        '<button type="button" id="msiq-camera-capture" class="primary" disabled>Capture & Solve</button>'+
+        '<button type="button" id="msiq-camera-cancel">Cancel</button>'+
+        '</div></section>';
+
+      document.body.appendChild(modal);
+
+      var video=modal.querySelector("#msiq-camera-video");
+      var status=modal.querySelector("#msiq-camera-status");
+      var capture=modal.querySelector("#msiq-camera-capture");
+      var stream=null,closed=false;
+
+      function closeCamera(){
+        if(closed)return;
+        closed=true;
+        if(stream)stream.getTracks().forEach(function(t){t.stop()});
+        video.srcObject=null;
+        modal.remove();
+        document.removeEventListener("keydown",escapeCamera);
+      }
+
+      function escapeCamera(e){if(e.key==="Escape")closeCamera()}
+
+      modal.querySelector("#msiq-camera-close").onclick=closeCamera;
+      modal.querySelector("#msiq-camera-cancel").onclick=closeCamera;
+      modal.addEventListener("click",function(e){
+        if(e.target===modal)closeCamera();
+      });
+      document.addEventListener("keydown",escapeCamera);
+
+      async function startCamera(){
+        try{
+          if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+            throw new Error("Camera requires HTTPS and browser camera support. Use Upload Photo / PDF instead.");
+          }
+
+          stream=await navigator.mediaDevices.getUserMedia({
+            audio:false,
+            video:{facingMode:{ideal:"environment"}}
+          });
+
+          if(closed){
+            stream.getTracks().forEach(function(t){t.stop()});
+            return;
+          }
+
+          video.srcObject=stream;
+          await video.play();
+          capture.disabled=false;
+          status.textContent="Camera ready. Point it at your math problem.";
+        }catch(e){
+          status.textContent=e.message||"Camera access failed. Allow camera permission or use Upload Photo / PDF.";
+          capture.disabled=true;
+        }
+      }
+
+      capture.onclick=async function(){
+        if(!video.videoWidth){
+          status.textContent="Camera is still starting. Please try again.";
+          return;
+        }
+
+        capture.disabled=true;
+        status.textContent="Processing your photo...";
+
+        try{
+          var canvas=document.createElement("canvas");
+          var scale=Math.min(1,1600/Math.max(video.videoWidth,video.videoHeight));
+          canvas.width=Math.max(1,Math.round(video.videoWidth*scale));
+          canvas.height=Math.max(1,Math.round(video.videoHeight*scale));
+
+          canvas.getContext("2d").drawImage(video,0,0,canvas.width,canvas.height);
+          var data=canvas.toDataURL("image/jpeg",0.85).split(",")[1];
+
+          status.textContent="Sending photo to MathSolveIQ...";
+
+          var q=document.getElementById("q");
+          var chip=document.querySelector("#modes .chip.on");
+          var selectedMode=chip?chip.textContent.toLowerCase():"";
+          var solveMode=selectedMode.indexOf("hint")>-1?"hint":
+            selectedMode.indexOf("socratic")>-1?"socratic":"full";
+          var language="English";
+
+          try{
+            language=localStorage.getItem("msiq_lang")==="tr"?"Turkish":"English";
+          }catch(ignore){}
+
+          var response=await fetch("/api/solve",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+              question:q?q.value.trim():"",
+              mode:solveMode,
+              lang:language,
+              history:[],
+              image:{type:"image/jpeg",data:data}
+            })
+          });
+
+          var result=await response.json().catch(function(){return {}});
+          if(!response.ok)throw new Error(result.error||"Could not solve this photo.");
+
+          var output=document.getElementById("solveOut");
+          if(output){
+            output.innerHTML="";
+            var answer=document.createElement("div");
+            answer.className="step";
+            answer.style.whiteSpace="pre-wrap";
+            answer.textContent=result.answer||"No answer was returned.";
+            output.appendChild(answer);
+            output.scrollIntoView({behavior:"smooth",block:"nearest"});
+          }
+
+          closeCamera();
+        }catch(e){
+          status.textContent=e.message||"Something went wrong.";
+          capture.disabled=false;
+        }
+      };
+
+      startCamera();
+    };
+
+    cameraBtn.onclick=openLiveCamera;
   }
 })();

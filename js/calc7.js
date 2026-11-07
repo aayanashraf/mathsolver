@@ -659,7 +659,7 @@ add("fuel-economy",[
   {id:"fuel",label:"Fuel used (liters)",value:40}
 ],function(v) {
   var d=num(v.distance,"distance"),f=num(v.fuel,"fuel used");
-  if(d<0||f<=0)throw new Error("Distance cannot be negative and fuel used must be positive.");
+  if(d<=0||f<=0)throw new Error("Distance and fuel used must be positive.");
   return step("Fuel economy","<b>"+fmt(d/f)+" km/L</b>")+
     step("Fuel consumption","<b>"+fmt(f/d*100)+" L/100 km</b>");
 });

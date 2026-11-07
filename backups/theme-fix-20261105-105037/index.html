@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathSolveIQ – Free Math Solver</title>
+<meta name="description" content="MathSolveIQ: a free math helper with step-by-step explanations, hints, graphing and calculators.">
+<link rel="icon" href="images/favicon.svg?v=2" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css"><link rel="canonical" href="https://mathsolveiq.vercel.app/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MathSolveIQ">
+<meta property="og:title" content="MathSolveIQ - Free AI Math Helper">
+<meta property="og:description" content="Free math helper with step-by-step explanations, hints, graphing, calculators and exam practice.">
+<meta property="og:url" content="https://mathsolveiq.vercel.app/">
+<meta property="og:image" content="https://mathsolveiq.vercel.app/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MathSolveIQ - Free AI Math Helper">
+<meta name="twitter:description" content="Step-by-step math help, hints, graphing, calculators and exam practice.">
+<meta name="twitter:image" content="https://mathsolveiq.vercel.app/images/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"MathSolveIQ","url":"https://mathsolveiq.vercel.app/"}</script><link rel="manifest" href="/manifest.webmanifest">
+<script defer src="/js/pwa.js"></script>
+<script defer src="/js/i18n.js"></script>
+<link rel="stylesheet" href="/css/glass-3d.css">
+</head><body>
+
+<header><div class="wrap">
+ <a class="logo" href="#home"><img src="images/logo.svg?v=2" alt="" width="30" height="30" style="vertical-align:middle;margin-right:8px">MathSolve<span>IQ</span></a>
+ <a class="btn newchat" href="#home" id="newchat">＋ New problem</a>
+ <nav id="nav">
+  <a href="#home"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+  <a href="/calculator"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg><span>Calculators</span></a>
+  <a href="#graph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><span>Graph</span></a>
+  <a href="#quadratic"><svg viewBox="0 0 24 24"><path d="M4 20c2-8 5-14 8-14s6 6 8 14"/><path d="M8 12h8"/></svg><span>Quadratic</span></a>
+  <a href="#tools"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>Tools</span></a>
+
+  <div class="nav-title">Learning</div>
+  <a href="quiz.html"><svg viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg><span>Practice Quizzes</span></a>
+  <a href="flashcards.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span>Flashcards</span></a>
+  <a href="formulas.html"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10M6 14h6"/></svg><span>Formula Library</span></a>
+  <a href="homework.html"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span>Homework Mode</span></a>
+
+  <div class="nav-title">Resources</div>
+  <a href="exam-mode.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span>Exam Modes (SAT/FSc/JEE)</span></a>
+  <a href="videos.html"><svg viewBox="0 0 24 24"><path d="m10 8 6 4-6 4V8z"/><rect width="20" height="16" x="2" y="4" rx="3"/></svg><span>Video Lessons</span></a>
+ </nav>
+ <div class="recent"><div class="rt">Recent</div><div id="recent"><span class="hint">No problems yet</span></div></div>
+ <button class="btn ghost" id="theme" aria-label="Toggle theme">◐</button>
+</div></header>
+
+<main class="wrap">
+
+<!-- ===== PAGE: home ===== -->
+<section class="page" id="page-home">
+ <h2>Free AI Math Helper</h2>
+ <p class="lead">Type a problem, speak it, or pick a calculator. Learn the method, not just the answer.</p>
+
+ <div class="card hero">
+  <textarea id="q" placeholder="Type your math problem, or tap Σ to add symbols…"></textarea>
+  <div class="syms" id="syms" hidden></div>
+  <div class="row">
+   <button class="btn ghost fit" id="symBtn" type="button">Σ</button>
+   <button class="btn ghost fit" id="micBtn" type="button">🎤 Speak</button>
+   <button class="btn ghost fit" type="button" id="photoBtn" title="Upload a photo or PDF of your problem">📷 Photo (Upload Photo / PDF)</button>
+   <button class="btn fit" id="solveBtn" type="button">Solve step by step</button>
+  </div>
+  <div class="chips" id="modes">
+   <button class="chip on" data-m="">Full solution</button>
+   <button class="chip" data-m="Give hints only, one at a time. Do not reveal the final answer. Problem: ">Hints only</button>
+   <button class="chip" data-m="Act as a Socratic tutor: ask guiding questions, never give the answer. Problem: ">Socratic</button>
+  </div>
+  <div class="out" id="solveOut"></div>
+ </div>
+
+ <h3>Popular calculators</h3>
+ <div class="grid" id="popular"></div>
+ <p><a href="/calculator">Browse all calculators →</a></p>
+
+ <h3>How it works</h3>
+ <div class="grid steps3">
+  <div class="card"><span class="num">1</span><b>Enter</b><p>Type, speak or choose a calculator for your problem.</p></div>
+  <div class="card"><span class="num">2</span><b>Understand</b><p>See every step with the rule used and the reason for it.</p></div>
+  <div class="card"><span class="num">3</span><b>Practise</b><p>Ask follow-ups, request hints and try similar questions.</p></div>
+ </div>
+
+ <h3>Why students pick MathSolveIQ</h3>
+ <div class="grid">
+  <div class="card"><b>Hints, not just answers</b><p>Switch to hint or Socratic mode and work it out yourself.</p></div>
+  <div class="card"><b>Your language</b><p>Explanations in English, Urdu, Hindi and Roman Urdu.</p></div>
+  <div class="card"><b>Instant tools</b><p>Graphing, quadratics, units and statistics work in milliseconds.</p></div>
+  <div class="card"><b>Made for exams</b><p>Built around SAT, AP, O/A Level, FSc and JEE style questions.</p></div>
+  <div class="card"><b>Free to start</b><p>Core tools need no account and no payment.</p></div>
+  <div class="card"><b>Works on phones</b><p>Light and dark themes, tuned for small screens.</p></div>
+ </div>
+
+ <h3>Subjects</h3>
+ <p class="subj"><span>Arithmetic</span><span>Algebra</span><span>Geometry</span><span>Trigonometry</span><span>Precalculus</span><span>Calculus</span><span>Linear algebra</span><span>Statistics</span><span>Probability</span></p>
+
+ <h3>Questions</h3>
+ <details><summary>Is it really free?</summary><p>Yes. The core tools are free and need no account.</p></details>
+ <details><summary>Can I trust the answers?</summary><p>AI can slip, especially with arithmetic. Use the check step and verify important results.</p></details>
+ <details><summary>What is Socratic mode?</summary><p>The helper asks guiding questions instead of giving the answer, so you reach it yourself.</p></details>
+ <details><summary>Which topics are covered?</summary><p>From arithmetic to calculus, linear algebra, statistics and probability.</p></details>
+ <details><summary>Does it work offline?</summary><p>The graph, quadratic and tools pages run in your browser. The AI solver needs internet.</p></details>
+</section>
+
+<!-- ===== PAGE: calculators ===== -->
+<section class="page" id="page-calculators">
+ <h2>Calculators</h2><p class="lead">Pick a skill. Tools with their own page open directly; the others fill the solver for you.</p>
+ <div class="grid" id="allcalc"></div>
+</section>
+
+<!-- ===== PAGE: graph ===== -->
+<section class="page" id="page-graph">
+ <h2>Graph</h2><p class="lead">Use x, + − * / ^, sin, cos, tan, sqrt, abs, ln, log, exp, pi, e. Drag to pan, wheel to zoom.</p>
+ <div class="card">
+  <div id="fns"></div>
+  <div class="row"><button class="btn ghost fit" id="addf">+ Add</button><button class="btn fit" id="plot">Plot</button><button class="btn ghost fit" id="rst">Reset view</button></div>
+  <canvas id="cv" width="800" height="520" style="margin-top:12px"></canvas>
+ </div>
+</section>
+
+<!-- ===== PAGE: quadratic ===== -->
+<section class="page" id="page-quadratic">
+ <h2>Quadratic Equation Solver</h2><p class="lead">ax² + bx + c = 0</p>
+ <div class="card">
+  <div class="row"><input id="qa" type="number" step="any" value="1" placeholder="a"><input id="qb" type="number" step="any" value="-5" placeholder="b"><input id="qc" type="number" step="any" value="6" placeholder="c"> <button class="btn fit" id="qgo">Solve</button><button type="button" id="hint-btn" style="background: var(--bg-card-hover); color: var(--accent); border: 1px solid var(--border-highlight); padding: 10px 16px; margin-left: 8px; font-weight: 600; cursor: pointer;">?? Get Hint</button></div>
+  <div id="qout" style="margin-top:12px"></div>
+ </div>
+</section>
+
+<!-- ===== PAGE: tools ===== -->
+<section class="page" id="page-tools">
+ <h2>Tools</h2><p class="lead">Calculator, unit converter and statistics.</p>
+ <div class="card"><b>Scientific calculator</b>
+  <div class="row"><input id="sc" placeholder="sin(pi/2)+sqrt(16)*2^3"><button class="btn fit" id="scg">=</button></div><div class="out" id="sr"></div></div>
+ <div class="card"><b>Unit converter</b>
+  <div class="row"><select id="uc"></select><input id="uv" type="number" value="1"><select id="uf"></select><select id="ut"></select></div><div class="out" id="ur"></div></div>
+ <div class="card"><b>Statistics</b>
+  <div class="row"><input id="st" placeholder="4, 8, 15, 16, 23, 42"><button class="btn fit" id="stg">Calculate</button></div><div class="out" id="so"></div></div>
+</section>
+
+<!-- ===== PAGE: formulas ===== -->
+<section class="page" id="page-formulas">
+ <h2>Formulas</h2><p class="lead">Quick reference.</p><div id="fl"></div>
+</section>
+
+<!-- ===== NAYA PAGE ADD KARNE KI JAGAH =====
+ <section class="page" id="page-NAAM"><h2>Title</h2> ... </section>
+ aur nav mein: <a href="#NAAM">Title</a>
+-->
+</main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
+  </footer>
+
+<script>
+/* Home page extras. Runs BEFORE app.js so the mode chips can prefix the question. */
+(function(){
+ var $=function(i){return document.getElementById(i)};
+ var CALC=[
+  ["Solve for x","Linear and multistep equations","Solve 3x + 7 = 22"],
+  ["Graphing","Plot and compare functions","#graph"],
+  ["Quadratic","Roots with full steps","#quadratic"],
+  ["Factoring","GCF, trinomials, special products","Factor x^2 - 5x + 6"],
+  ["Fractions","Add, subtract, multiply, divide","Compute 3/4 + 5/6"],
+  ["Systems of equations","Substitution and elimination","Solve x + y = 10 and x - y = 2"],
+  ["Inequalities","Intervals and sign changes","Solve -2x + 3 < 11"],
+  ["Logarithms","Evaluate, expand and solve","Solve log2(x) + log2(x-2) = 3"],
+  ["Derivatives","Power, product and chain rules","Differentiate x^2 * sin(x)"],
+  ["Integrals","Antiderivatives and methods","Integrate 2x * e^(x^2)"],
+  ["Matrices","Operations and row reduction","Find the inverse of [[2,1],[5,3]]"],
+  ["Determinants","2x2 and larger matrices","Determinant of [[1,2,3],[0,4,5],[1,0,6]]"],
+  ["Trig identities","Verify and simplify","Prove sin^2x + cos^2x = 1"],
+  ["Standard deviation","Sample and population spread","#tools"],
+  ["Limits","Left, right and at infinity","Find the limit of sin(x)/x as x approaches 0"],
+  ["Probability","Events, combinations, permutations","Probability of two sixes with two dice"]
+ ];
+ function card(c){var a=document.createElement("a");a.innerHTML="<b>"+c[0]+"</b>"+c[1];
+  if(c[2][0]==="#"){a.href=c[2]}else{a.href="#home";a.onclick=function(){setTimeout(function(){$("q").value=c[2];$("q").focus()},0)}}
+  return a}
+ CALC.slice(0,14).forEach(function(c){$("popular").appendChild(card(c))});
+ CALC.forEach(function(c){$("allcalc").appendChild(card(c))});
+ /* symbols */
+ ["²","³","√(","π","∫","∑","≤","≥","≠","×","÷","^","(",")","/","θ","lim","∞","[[1,2],[3,4]]"].forEach(function(s){
+  var b=document.createElement("button");b.type="button";b.textContent=s;b.onclick=function(){var q=$("q");q.setRangeText(s,q.selectionStart,q.selectionEnd,"end");q.focus()};$("syms").appendChild(b)});
+ $("symBtn").onclick=function(){$("syms").hidden=!$("syms").hidden};
+ /* mic */
+ $("micBtn").onclick=function(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!R){$("solveOut").textContent="Voice input is not supported in this browser.";return}
+  var r=new R();r.lang="en-US";r.onresult=function(e){$("q").value+=" "+e.results[0][0].transcript};r.start()};
+ /* mode chips */
+ var mode="";document.querySelectorAll("#modes .chip").forEach(function(c){c.onclick=function(){
+  document.querySelectorAll("#modes .chip").forEach(function(x){x.classList.remove("on")});c.classList.add("on");mode=c.dataset.m}});
+ /* prefix mode + save recent (capture so it runs before app.js handler) */
+ $("solveBtn").addEventListener("click",function(){var q=$("q"),orig=q.value.trim();if(!orig)return;
+  save(orig);if(mode){q.value=mode+orig;setTimeout(function(){q.value=orig},0)}},true);
+ function save(t){try{var a=JSON.parse(localStorage.getItem("msiq_recent")||"[]");a=[t].concat(a.filter(function(x){return x!==t})).slice(0,6);localStorage.setItem("msiq_recent",JSON.stringify(a));show()}catch(e){}}
+ function show(){var a=[];try{a=JSON.parse(localStorage.getItem("msiq_recent")||"[]")}catch(e){}
+  var r=$("recent");if(!a.length)return;r.innerHTML="";a.forEach(function(t){var d=document.createElement("a");d.href="#home";d.textContent=t.length>34?t.slice(0,34)+"…":t;d.title=t;d.onclick=function(){setTimeout(function(){$("q").value=t},0)};r.appendChild(d)})}
+ show();
+ $("newchat").onclick=function(){setTimeout(function(){$("q").value="";$("solveOut").textContent="";$("q").focus()},0)};
+})();
+</script>
+<script src="js/app.js"></script><script src="js/photo.js"></script><script src="js/home-links.js"></script>
+<script src="js/solve.js"></script>
+<script src="js/extras.js"></script>
+</body></html>
+
+
+
+
+
+
+
+
+

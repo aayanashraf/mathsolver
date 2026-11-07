@@ -773,3 +773,140 @@ body:has(.site-subnav) .doc > * {
     gap: 9px !important;
   }
 }
+
+
+/* MATHSOLVEIQ THEME READABILITY + LANGUAGE SELECTOR */
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){color-scheme:dark}
+}
+
+body{color:var(--ink)}
+
+body :is(h1,h2,h3,h4,h5,h6,p,li,label,small,figcaption,dt,dd,th,td,legend,summary,blockquote){
+  color:var(--ink);
+}
+
+body :is(.lead,.hint,.muted,.text-muted,.subtitle,.description,.helper-text){
+  color:var(--mute);
+}
+
+body :is(.card,.glass-card,.glass-panel,.glass-surface,.calculator-card,.calc-card,
+.tool-card,.panel,.result-card,.result-box,.output-box,.formula-card,.info-card,
+.stat-card,.feature-card,.faq-item,.modal,.dialog,.step){
+  background-color:var(--card);
+  color:var(--ink);
+  border-color:var(--line);
+}
+
+body :is(.card,.glass-card,.glass-panel,.glass-surface,.calculator-card,.calc-card,
+.tool-card,.panel,.result-card,.result-box,.output-box,.formula-card,.info-card,
+.stat-card,.feature-card,.faq-item,.modal,.dialog,.step)
+:is(h1,h2,h3,h4,h5,h6,p,li,label,small,span,strong,b,em,figcaption,summary){
+  color:var(--ink);
+}
+
+body .err,body .error{color:var(--bad)!important}
+body .hint,body .muted,body .text-muted{color:var(--mute)!important}
+
+body input,body select,body textarea{
+  color:var(--ink);
+  background-color:var(--bg);
+  border-color:var(--line);
+}
+
+body input::placeholder,body textarea::placeholder{
+  color:var(--mute);
+  opacity:1;
+}
+
+body select option{
+  color:var(--ink);
+  background-color:var(--card);
+}
+
+body table,body th,body td,body hr{
+  border-color:var(--line);
+}
+
+/* Professional language selector */
+body #msiq-lang-wrap{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:40px;
+  padding:5px 11px;
+  background:var(--card);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  vertical-align:middle;
+  transition:border-color .2s,box-shadow .2s;
+}
+
+body #msiq-lang-wrap:hover,
+body #msiq-lang-wrap:focus-within{
+  border-color:var(--acc);
+  box-shadow:0 0 0 3px var(--acc2);
+}
+
+body #msiq-lang-wrap svg{
+  width:16px;
+  height:16px;
+  flex-shrink:0;
+  stroke:var(--acc);
+}
+
+body #msiq-lang-wrap #msiq-lang-select{
+  display:block;
+  width:auto!important;
+  min-width:110px;
+  max-width:160px;
+  height:30px;
+  margin:0;
+  padding:4px 25px 4px 3px;
+  border:0!important;
+  border-radius:7px;
+  background:transparent!important;
+  color:var(--ink)!important;
+  box-shadow:none!important;
+  font:600 13px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;
+  cursor:pointer;
+  outline:none;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+body #msiq-lang-wrap::after{
+  content:"";
+  width:7px;
+  height:7px;
+  flex-shrink:0;
+  margin-left:-20px;
+  margin-top:-4px;
+  border-right:2px solid var(--mute);
+  border-bottom:2px solid var(--mute);
+  transform:rotate(45deg);
+  pointer-events:none;
+}
+
+body #msiq-lang-wrap #msiq-lang-select option{
+  background:var(--card)!important;
+  color:var(--ink)!important;
+}
+
+@media(max-width:480px){
+  body #msiq-lang-wrap{
+    min-height:36px;
+    padding:4px 8px;
+    gap:6px;
+  }
+  body #msiq-lang-wrap #msiq-lang-select{
+    min-width:100px;
+    max-width:125px;
+    font-size:12px;
+  }
+}

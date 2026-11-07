@@ -1,0 +1,33 @@
+﻿===== LANGUAGE CONFIG =====
+var LANGUAGES = {
+    en: { name: "English", native: "English", dir: "ltr", google: "en" },
+    tr: { name: "Turkish", native: "Türkçe", dir: "ltr", google: "tr" }
+  };
+===== APPLY LANGUAGE =====
+function applyLanguage(lang) {
+    var previousLang = currentLang;
+
+    currentLang = lang;
+    localStorage.setItem(STORAGE_KEY, lang);
+
+    if (lang === "en" && previousLang !== "en") {
+      var host = window.location.hostname;
+      var domains = [""];
+
+      if (host && host !== "localhost" && host !== "127.0.0.1") {
+        domains.push("; domain=" + host);
+        domains.push("; domain=." + host);
+      }
+===== TRANSLATE DOM =====
+function translateDOM(lang) {
+    var isRTL = (lang === "ur" || lang === "ar");
+    document.documentElement.setAttribute("lang", lang === "ro" ? "ur-Latn" : lang);
+    document.documentElement.setAttribute("dir", isRTL ? "rtl" : "ltr");
+
+    //
+===== DICTIONARY DUPLICATE KEYS =====
+===== ENCODING COUNTS =====
+Ã : 114
+Ø : 613
+à¤ : 445
+ðŸ : 26

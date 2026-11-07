@@ -34,23 +34,21 @@ document.addEventListener('DOMContentLoaded', () => {
           let expr = query.replace(/(\d+)x/g, '*x').replace(/\^/g, '**');
           let ans = eval(expr);
 
-          resultBox.innerHTML = \
-            <h3 style="color: var(--accent); margin-bottom: 10px;">Solution:</h3>
-            <p style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px;">\ = \</p>
-            <div style="border-top: 1px solid var(--border-color); padding-top: 10px; color: var(--text-muted);">
-              <p>? <strong>Step 1:</strong> Given expression identify kiya: <code>\</code></p>
-              <p>? <strong>Step 2:</strong> Mathematical rules apply kiye.</p>
-              <p>? <strong>Step 3:</strong> Final answer calculate hua: <strong>\</strong></p>
+          resultBox.innerHTML = `
+            <h3 style="color:var(--accent);margin-bottom:10px;">Solution:</h3>
+            <p style="font-size:1.2rem;font-weight:bold;margin-bottom:10px;">${query} = ${ans}</p>
+            <div style="border-top:1px solid var(--border-color);padding-top:10px;color:var(--text-muted);">
+              <p><strong>Step 1:</strong> Expression identified: <code>${query}</code></p>
+              <p><strong>Step 2:</strong> Mathematical expression evaluated.</p>
+              <p><strong>Step 3:</strong> Final answer: <strong>${ans}</strong></p>
             </div>
-          \;
+          `;
         } catch (e) {
-          resultBox.innerHTML = \
-            <h3 style="color: var(--accent); margin-bottom: 10px;">Step-by-Step AI Breakdown:</h3>
-            <p style="margin-bottom: 8px;"><strong>Problem:</strong> \</p>
-            <div style="border-top: 1px solid var(--border-color); padding-top: 10px; color: var(--text-muted);">
-              <p>? Document/Text analyzed and evaluated successfully.</p>
-            </div>
-          \;
+          resultBox.innerHTML = `
+            <h3>Step-by-Step AI Breakdown:</h3>
+            <p><strong>Problem:</strong> ${query}</p>
+            <p>Enter a supported mathematical expression.</p>
+          `;
         }
       }, 600);
     });
@@ -66,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (file) {
         const isPDF = file.name.endsWith('.pdf');
         resultBox.style.display = 'block';
-        resultBox.innerHTML = \<p style="color: var(--accent);">\ process ho rahi hai (\)...</p>\;
+        resultBox.innerHTML = `<p style="color:var(--accent);">File processing: ${file.name}...</p>`;
         
         setTimeout(() => {
           if (isPDF) {
@@ -102,10 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
       { q: "Solve for x: 3x - 5 = 10", options: ["x = 2", "x = 5", "x = 3", "x = 15"], correct: 1 }
     ],
     quadratic: [
-      { q: "Find the roots of x² - 5x + 6 = 0", options: ["x = 2, 3", "x = -2, -3", "x = 1, 6", "x = 0, 5"], correct: 0 }
+      { q: "Find the roots of xï¿½ - 5x + 6 = 0", options: ["x = 2, 3", "x = -2, -3", "x = 1, 6", "x = 0, 5"], correct: 0 }
     ],
     calculus: [
-      { q: "What is the derivative of f(x) = x³?", options: ["3x²", "x²", "3x", "x³/3"], correct: 0 }
+      { q: "What is the derivative of f(x) = xï¿½?", options: ["3xï¿½", "xï¿½", "3x", "xï¿½/3"], correct: 0 }
     ],
     fractions: [
       { q: "Simplify: 1/2 + 1/4", options: ["3/4", "2/4", "1/6", "2/6"], correct: 0 }
@@ -306,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { q: "[FSc Math Chapter 4] The distance between points (1, 2) and (4, 6) is:", options: ["5", "25", "7", "v7"], correct: 0 }
     ],
     JEE: [
-      { q: "[JEE Main] The number of real solutions of equation x² - 3|x| + 2 = 0 is:", options: ["4", "2", "1", "0"], correct: 0 },
+      { q: "[JEE Main] The number of real solutions of equation xï¿½ - 3|x| + 2 = 0 is:", options: ["4", "2", "1", "0"], correct: 0 },
       { q: "[JEE Advanced] Evaluate: ? (e^x / (1 + e^x)) dx", options: ["ln(1 + e^x) + C", "e^x + C", "1 / (1 + e^x) + C", "ln(e^x) + C"], correct: 0 }
     ]
   };

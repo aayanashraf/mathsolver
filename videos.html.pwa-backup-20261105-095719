@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Video Lessons – MathSolveIQ</title>
+<meta name="description" content="Free math video lessons by topic: algebra, quadratics, trigonometry, calculus, geometry, statistics and matrices.">
+<link rel="canonical" href="https://mathsolveiq.vercel.app/videos.html">
+<link rel="icon" href="images/favicon.svg?v=2" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+body{padding-left:0}.doc{max-width:900px;margin:0 auto;padding:24px 16px 60px}.doc h1{font:700 32px/1.2 Georgia,serif;margin:12px 0 6px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.top a{color:var(--acc);text-decoration:none;font-weight:600}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}.chip.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.vc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.vt{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:0;padding:0;cursor:pointer;display:block}
+.vt img,.vt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.vt .play{position:absolute;inset:0;display:grid;place-items:center;font-size:44px;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.vm{padding:10px 12px}.vm b{display:block;line-height:1.3}.vm span{color:var(--mute);font-size:14px}
+.more{display:flex;flex-direction:column;justify-content:center;padding:16px;text-decoration:none;color:var(--ink)}.more b{color:var(--acc)}
+.ch a{display:inline-block;margin:4px 8px 0 0;padding:6px 12px;border-radius:999px;background:var(--acc2);color:var(--acc);text-decoration:none;font-weight:600}
+</style><script defer src="/js/i18n.js"></script>
+<link rel="stylesheet" href="/css/glass-3d.css">
+</head><body>
+<div class="doc">
+ <div class="top"><a href="index.html">MathSolveIQ</a><a href="index.html">← Back to the solver</a></div>
+ <h1>Math Video Lessons</h1>
+ <p class="lead">Pick a topic and watch. Videos are by their own creators and play from YouTube. Nothing loads until you press play.</p>
+ <div class="row"><input id="s" placeholder="Search videos, e.g. quadratic" aria-label="Search videos"></div>
+ <div class="chips" id="chips"></div>
+ <div class="vg" id="grid"></div>
+ <p class="hint" id="empty" hidden></p>
+ <div class="card ch" style="margin-top:20px"><b>Good free channels to explore</b><br>
+  <a href="https://www.youtube.com/@khanacademy" target="_blank" rel="noopener noreferrer">Khan Academy</a>
+  <a href="https://www.youtube.com/@TheOrganicChemistryTutor" target="_blank" rel="noopener noreferrer">The Organic Chemistry Tutor</a>
+  <a href="https://www.youtube.com/@3blue1brown" target="_blank" rel="noopener noreferrer">3Blue1Brown</a>
+  <a href="https://www.youtube.com/@ProfessorLeonard" target="_blank" rel="noopener noreferrer">Professor Leonard</a>
+  <a href="https://www.youtube.com/@patrickjmt" target="_blank" rel="noopener noreferrer">PatrickJMT</a>
+ </div>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
+  </footer>
+</div>
+<script src="js/videos-data.js"></script>
+<script>
+(function () {
+  var $ = function (i) { return document.getElementById(i); };
+  var V = (window.MSIQ_VIDEOS || []).filter(function (v) { return v && /^[A-Za-z0-9_-]{11}$/.test(v.id || ""); });
+  var T = [["Algebra", "algebra equations explained step by step"], ["Quadratics", "quadratic equations explained"], ["Trigonometry", "trigonometry unit circle explained"],
+    ["Calculus", "calculus derivatives and integrals explained"], ["Geometry", "geometry formulas explained"], ["Statistics", "statistics mean median standard deviation explained"],
+    ["Matrices", "matrices determinant and inverse explained"], ["Exam prep", "SAT math and FSc math exam preparation"]];
+  var cur = "All";
+  function chips() {
+    var box = $("chips"); box.innerHTML = "";
+    ["All"].concat(T.map(function (t) { return t[0]; })).forEach(function (n) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip" + (n === cur ? " on" : ""); b.textContent = n;
+      b.onclick = function () { cur = n; chips(); draw(); }; box.appendChild(b);
+    });
+  }
+  function card(v) {
+    var d = document.createElement("div"); d.className = "vc";
+    var t = document.createElement("button"); t.type = "button"; t.className = "vt"; t.setAttribute("aria-label", "Play " + v.title);
+    var img = document.createElement("img"); img.loading = "lazy"; img.alt = ""; img.src = "https://i.ytimg.com/vi/" + v.id + "/hqdefault.jpg";
+    var p = document.createElement("span"); p.className = "play"; p.textContent = "▶";
+    t.appendChild(img); t.appendChild(p);
+    t.onclick = function () {
+      var f = document.createElement("iframe"); f.src = "https://www.youtube-nocookie.com/embed/" + v.id + "?autoplay=1&rel=0";
+      f.title = v.title; f.allow = "autoplay; encrypted-media; picture-in-picture"; f.allowFullscreen = true; f.referrerPolicy = "strict-origin-when-cross-origin";
+      t.innerHTML = ""; t.appendChild(f); t.onclick = null; t.style.cursor = "default";
+    };
+    var m = document.createElement("div"); m.className = "vm"; var b = document.createElement("b"); b.textContent = v.title;
+    var s = document.createElement("span"); s.textContent = (v.channel || "YouTube") + " · " + (v.topic || "Math");
+    var w = document.createElement("a"); w.href = "https://www.youtube.com/watch?v=" + v.id; w.target = "_blank"; w.rel = "noopener noreferrer"; w.textContent = "Watch on YouTube ↗"; w.style.cssText = "display:block;margin-top:4px;font-size:14px;color:var(--acc)";
+    m.appendChild(b); m.appendChild(s); m.appendChild(w); d.appendChild(t); d.appendChild(m); return d;
+  }
+  function more(topic, q) {
+    var a = document.createElement("a"); a.className = "vc more"; a.target = "_blank"; a.rel = "noopener noreferrer";
+    a.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+    var b = document.createElement("b"); b.textContent = "Find " + topic + " videos on YouTube ↗"; var s = document.createElement("span"); s.textContent = "Opens a YouTube search in a new tab.";
+    a.appendChild(b); a.appendChild(s); return a;
+  }
+  function draw() {
+    var k = $("s").value.trim().toLowerCase(), g = $("grid"); g.innerHTML = "";
+    var list = V.filter(function (v) { return (cur === "All" || v.topic === cur) && (!k || (v.title + " " + (v.channel || "") + " " + (v.topic || "")).toLowerCase().indexOf(k) > -1); });
+    list.forEach(function (v) { g.appendChild(card(v)); });
+    T.forEach(function (t) { if (cur === "All" || cur === t[0]) g.appendChild(more(t[0], k ? k + " " + t[1] : t[1])); });
+    var e = $("empty");
+    e.hidden = list.length > 0;
+    e.textContent = V.length ? "No saved video matches that. Use the YouTube search cards above." : "No saved videos yet. The cards above open YouTube searches for each topic.";
+  }
+  $("s").oninput = draw; chips(); draw();
+})();
+</script>
+</body></html>

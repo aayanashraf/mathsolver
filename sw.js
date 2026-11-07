@@ -3,10 +3,10 @@
    - Images and fonts: cached copy first, refreshed in the background.
    - /api/ and other websites are never touched.
    To force every visitor to drop old cached files, change CACHE_VERSION. */
-var CACHE_VERSION = "v1";
+var CACHE_VERSION = "v7";
 var CACHE = "msiq-" + CACHE_VERSION;
 var MAX_PAGES = 150;
-var PRECACHE = ["/", "/offline.html", "/calculator", "/css/style.css", "/js/calc.js", "/js/calc2.js", "/js/calc3.js", "/js/calc4.js", "/images/favicon.svg"];
+var PRECACHE = ["/js/extras.js", "/js/solve.js", "/js/photo.js", "/css/theme-overrides.css","/", "/offline.html", "/calculator", "/css/style.css", "/js/calc.js", "/js/calc2.js", "/js/calc3.js", "/js/calc5.js", "/js/calc6.js", "/js/calc7.js", "/images/favicon.svg"];
 
 function cleanResponse(res) {
   /* A redirected response cannot be used to answer a page navigation, so store a clean copy. */
@@ -81,3 +81,5 @@ self.addEventListener("fetch", function (e) {
   if (/\.(?:css|js)$/.test(url.pathname)) { e.respondWith(networkFirst(req, 4000, false)); return; }
   if (/\.(?:svg|png|jpe?g|webp|gif|ico|woff2?)$/.test(url.pathname)) { e.respondWith(cacheFirst(req)); }
 });
+
+

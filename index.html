@@ -22,11 +22,12 @@
 <script defer src="/js/pwa.js"></script>
 <script defer src="/js/i18n.js"></script>
 <link rel="stylesheet" href="/css/glass-3d.css">
+  <link rel="stylesheet" href="/css/theme-overrides.css">
 </head><body>
 
 <header><div class="wrap">
  <a class="logo" href="#home"><img src="images/logo.svg?v=2" alt="" width="30" height="30" style="vertical-align:middle;margin-right:8px">MathSolve<span>IQ</span></a>
- <a class="btn newchat" href="#home" id="newchat">＋ New problem</a>
+ <a class="btn newchat" href="#home" id="newchat">ï¼‹ New problem</a>
  <nav id="nav">
   <a href="#home"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
   <a href="/calculator"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg><span>Calculators</span></a>
@@ -45,7 +46,7 @@
   <a href="videos.html"><svg viewBox="0 0 24 24"><path d="m10 8 6 4-6 4V8z"/><rect width="20" height="16" x="2" y="4" rx="3"/></svg><span>Video Lessons</span></a>
  </nav>
  <div class="recent"><div class="rt">Recent</div><div id="recent"><span class="hint">No problems yet</span></div></div>
- <button class="btn ghost" id="theme" aria-label="Toggle theme">◐</button>
+ <button class="btn ghost" id="theme" aria-label="Toggle theme">â—</button>
 </div></header>
 
 <main class="wrap">
@@ -56,12 +57,12 @@
  <p class="lead">Type a problem, speak it, or pick a calculator. Learn the method, not just the answer.</p>
 
  <div class="card hero">
-  <textarea id="q" placeholder="Type your math problem, or tap Σ to add symbols…"></textarea>
-  <div class="syms" id="syms" hidden></div>
+  <textarea id="q" placeholder="Type your math problem, or tap Î£ to add symbolsâ€¦"></textarea>
+  <section class="math-keyboard-card" id="mathKeyboardCard" hidden><div class="math-keyboard-title">Math Keyboard Tools</div><div class="syms" id="syms"></div></section>
   <div class="row">
-   <button class="btn ghost fit" id="symBtn" type="button">Σ</button>
+   <button class="btn ghost fit" id="symBtn" type="button">Î£</button>
    <button class="btn ghost fit" id="micBtn" type="button">🎤 Speak</button>
-   <button class="btn ghost fit" type="button" id="photoBtn" title="Upload a photo or PDF of your problem">📷 Photo (Upload Photo / PDF)</button>
+   <button class="btn ghost fit" type="button" id="photoBtn" title="Upload a photo or PDF of your problem">ðŸ“· Photo (Upload Photo / PDF)</button>
    <button class="btn fit" id="solveBtn" type="button">Solve step by step</button>
   </div>
   <div class="chips" id="modes">
@@ -74,7 +75,7 @@
 
  <h3>Popular calculators</h3>
  <div class="grid" id="popular"></div>
- <p><a href="/calculator">Browse all calculators →</a></p>
+ <p><a href="/calculator">Browse all calculators â†’</a></p>
 
  <h3>How it works</h3>
  <div class="grid steps3">
@@ -112,17 +113,35 @@
 
 <!-- ===== PAGE: graph ===== -->
 <section class="page" id="page-graph">
- <h2>Graph</h2><p class="lead">Use x, + − * / ^, sin, cos, tan, sqrt, abs, ln, log, exp, pi, e. Drag to pan, wheel to zoom.</p>
+ <h2>Advanced Graphing</h2><p class="lead">Plot and compare functions, explore roots, tangent slopes, critical points and definite integrals. Drag to pan and use the mouse wheel to zoom.</p>
  <div class="card">
+  <h3 style="margin:0 0 8px">Functions</h3>
   <div id="fns"></div>
-  <div class="row"><button class="btn ghost fit" id="addf">+ Add</button><button class="btn fit" id="plot">Plot</button><button class="btn ghost fit" id="rst">Reset view</button></div>
-  <canvas id="cv" width="800" height="520" style="margin-top:12px"></canvas>
+  <div class="row"><button class="btn ghost fit" id="addf">+ Add function</button><button class="btn fit" id="plot">Plot graph</button><button class="btn ghost fit" id="rst">Reset view</button></div>
+  <canvas id="cv" width="1000" height="620" style="margin-top:12px"></canvas>
+  <div class="graph-analysis">
+   <h3 style="margin:22px 0 8px">Graph analysis</h3>
+   <div class="row">
+    <select id="graphAction" aria-label="Graph analysis type">
+     <option value="roots">Find x-intercepts (roots)</option>
+     <option value="tangent">Tangent line and slope</option>
+     <option value="integral">Definite integral / signed area</option>
+     <option value="critical">Critical points (local turning points)</option>
+    </select>
+    <input id="graphMin" type="number" step="any" value="-5" aria-label="Interval start" placeholder="From x">
+    <input id="graphMax" type="number" step="any" value="5" aria-label="Interval end" placeholder="To x">
+    <input id="graphPoint" type="number" step="any" value="1" aria-label="Point for tangent" placeholder="At x">
+    <button class="btn fit" id="graphAnalyze">Analyze</button>
+   </div>
+   <p class="hint">Analysis uses the first function in the list. For tangent, enter the x-coordinate in â€œAt xâ€. For roots, integrals and critical points, use the interval bounds.</p>
+   <div class="out" id="graphResult" aria-live="polite"></div>
+  </div>
  </div>
 </section>
 
 <!-- ===== PAGE: quadratic ===== -->
 <section class="page" id="page-quadratic">
- <h2>Quadratic Equation Solver</h2><p class="lead">ax² + bx + c = 0</p>
+ <h2>Quadratic Equation Solver</h2><p class="lead">axÂ² + bx + c = 0</p>
  <div class="card">
   <div class="row"><input id="qa" type="number" step="any" value="1" placeholder="a"><input id="qb" type="number" step="any" value="-5" placeholder="b"><input id="qc" type="number" step="any" value="6" placeholder="c"> <button class="btn fit" id="qgo">Solve</button><button type="button" id="hint-btn" style="background: var(--bg-card-hover); color: var(--accent); border: 1px solid var(--border-highlight); padding: 10px 16px; margin-left: 8px; font-weight: 600; cursor: pointer;">?? Get Hint</button></div>
   <div id="qout" style="margin-top:12px"></div>
@@ -158,7 +177,7 @@
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
     </div>
-    <p>© MathSolveIQ · Free AI Math Solver & Calculators</p>
+    <p>Â© MathSolveIQ Â· Free AI Math Solver & Calculators</p>
   </footer>
 
 <script>
@@ -188,10 +207,42 @@
   return a}
  CALC.slice(0,14).forEach(function(c){$("popular").appendChild(card(c))});
  CALC.forEach(function(c){$("allcalc").appendChild(card(c))});
- /* symbols */
- ["²","³","√(","π","∫","∑","≤","≥","≠","×","÷","^","(",")","/","θ","lim","∞","[[1,2],[3,4]]"].forEach(function(s){
-  var b=document.createElement("button");b.type="button";b.textContent=s;b.onclick=function(){var q=$("q");q.setRangeText(s,q.selectionStart,q.selectionEnd,"end");q.focus()};$("syms").appendChild(b)});
- $("symBtn").onclick=function(){$("syms").hidden=!$("syms").hidden};
+ /* Advanced Math Keyboard */
+ /* Advanced Math Keyboard */
+ var mathKeys = [
+  ["Fraction / ½","()/()"],["Power / x²","x^2"],["Power / x³","x^3"],["Power / xⁿ","^"],
+  ["Square Root / √","sqrt("],["Cube Root / ∛","cbrt("],["Pi / π","pi"],["Theta / θ","theta"],
+  ["Infinity / ∞","infinity"],["Summation / ∑","sum("],["Integral / ∫","integral("],["Limit / lim","lim"],
+  ["Alpha / α","alpha"],["Beta / β","beta"],["Delta / Δ","Delta"],["Degree / °","deg"],
+  ["Less Equal / ≤","<="],["Greater Equal / ≥",">="],["Not Equal / ≠","!="],["Plus Minus / ±","+/-"],
+  ["Multiply / ×","*"],["Divide / ÷","/"],["Absolute / |x|","abs("],["Log / log","log("],
+  ["Natural Log / ln","ln("],["Sine / sin","sin("],["Cosine / cos","cos("],["Tangent / tan","tan("],
+  ["Derivative / d/dx","d/dx"],["Parentheses / ( )","()"],["Comma / ,",","],["Decimal / .","."]
+ ];
+ var symbolPanel = $("syms");
+ symbolPanel.setAttribute("aria-label", "Advanced Math Keyboard");
+ symbolPanel.style.cssText = "display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;width:100%;max-height:180px;overflow-y:auto;";
+mathKeys.forEach(function (item) {
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "chip"; b.style.cssText = "min-width:0;padding:7px 4px;font-size:12px;border-radius:8px;white-space:normal;";
+  b.style.cssText = "min-width:0;padding:7px 4px;font-size:12px;border-radius:8px;white-space:normal;";
+  b.textContent = item[0];
+  b.title = "Insert " + item[0];
+  b.setAttribute("aria-label", "Insert " + item[0]);
+  b.onclick = function () {
+   var q = $("q");
+   var start = q.selectionStart || 0;
+   var end = q.selectionEnd || 0;
+   q.setRangeText(item[1], start, end, "end");
+   q.focus();
+  };
+  symbolPanel.appendChild(b);
+ });
+ $("symBtn").onclick = function () {
+  var card = $("mathKeyboardCard"); card.hidden = !card.hidden;
+  if (!$("mathKeyboardCard").hidden) $("q").focus();
+ };
  /* mic */
  $("micBtn").onclick=function(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!R){$("solveOut").textContent="Voice input is not supported in this browser.";return}
@@ -204,15 +255,37 @@
   save(orig);if(mode){q.value=mode+orig;setTimeout(function(){q.value=orig},0)}},true);
  function save(t){try{var a=JSON.parse(localStorage.getItem("msiq_recent")||"[]");a=[t].concat(a.filter(function(x){return x!==t})).slice(0,6);localStorage.setItem("msiq_recent",JSON.stringify(a));show()}catch(e){}}
  function show(){var a=[];try{a=JSON.parse(localStorage.getItem("msiq_recent")||"[]")}catch(e){}
-  var r=$("recent");if(!a.length)return;r.innerHTML="";a.forEach(function(t){var d=document.createElement("a");d.href="#home";d.textContent=t.length>34?t.slice(0,34)+"…":t;d.title=t;d.onclick=function(){setTimeout(function(){$("q").value=t},0)};r.appendChild(d)})}
+  var r=$("recent");if(!a.length)return;r.innerHTML="";a.forEach(function(t){var d=document.createElement("a");d.href="#home";d.textContent=t.length>34?t.slice(0,34)+"â€¦":t;d.title=t;d.onclick=function(){setTimeout(function(){$("q").value=t},0)};r.appendChild(d)})}
  show();
  $("newchat").onclick=function(){setTimeout(function(){$("q").value="";$("solveOut").textContent="";$("q").focus()},0)};
 })();
 </script>
 <script src="js/app.js"></script><script src="js/photo.js"></script><script src="js/home-links.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [["\\(", "\\)"], ["$", "$"]],
+    displayMath: [["\\[", "\\]"], ["$$", "$$"]],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+  },
+  startup: {
+    typeset: false,
+    ready: function () {
+      MathJax.startup.defaultReady();
+      window.dispatchEvent(new Event("msiq-mathjax-ready"));
+    }
+  }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <script src="js/solve.js"></script>
+<script src="js/check-my-work.js"></script>
 <script src="js/extras.js"></script>
 </body></html>
+
 
 
 

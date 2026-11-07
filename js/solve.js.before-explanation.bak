@@ -1,0 +1,269 @@
+/* MathSolveIQ: home-page AI solver and Check My Work mode. Load AFTER js/app.js. */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var btn = $("solveBtn"), box = $("q"), out = $("solveOut"), modes = $("modes");
+  if (!btn || !box || !out || !modes) return;
+  var history = [], image = null, busy = false;
+
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+    });
+  }
+  function fmt(s) {
+    return esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+  function selectedChip() { return document.querySelector("#modes .chip.on"); }
+  function mode() {
+    var c = selectedChip(), t = c ? c.textContent.toLowerCase() : "";
+    if (t.indexOf("check my work") > -1) return "check";
+    return t.indexOf("hint") > -1 ? "hint" : t.indexOf("socratic") > -1 ? "socratic" : "full";
+  }
+  function cleanQ() {
+    var q = box.value, c = selectedChip(), pre = c ? (c.dataset.m || "") : "";
+    if (pre && q.indexOf(pre) === 0) q = q.slice(pre.length);
+    /* The legacy click handler may briefly prefix the previous mode before this handler runs. */
+    [
+      "Give hints only, one at a time. Do not reveal the final answer. Problem: ",
+      "Act as a Socratic tutor: ask guiding questions, never give the answer. Problem: "
+    ].forEach(function (prefix) {
+      if (q.indexOf(prefix) === 0) q = q.slice(prefix.length);
+    });
+    return q.trim();
+  }
+
+  /* Add the checker UI without changing the existing page layout. */
+  var checkChip = document.createElement("button");
+  checkChip.type = "button";
+  checkChip.className = "chip";
+  checkChip.textContent = "Check my work";
+  checkChip.setAttribute("aria-pressed", "false");
+  modes.appendChild(checkChip);
+
+  var panel = document.createElement("div");
+  panel.className = "msiq-check-panel";
+  panel.hidden = true;
+  panel.style.cssText = "margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card,transparent)";
+  var label = document.createElement("label");
+  label.htmlFor = "msiqStudentWork";
+  label.textContent = "Your solution / working";
+  label.style.cssText = "display:block;font-weight:600;margin-bottom:6px";
+  var work = document.createElement("textarea");
+  work.id = "msiqStudentWork";
+  work.rows = 5;
+  work.maxLength = 5000;
+  work.placeholder = "Write your answer and the steps you used...";
+  work.style.cssText = "display:block;width:100%;min-height:110px;box-sizing:border-box";
+  panel.appendChild(label);
+  panel.appendChild(work);
+  modes.parentNode.insertBefore(panel, modes.nextSibling);
+
+  function syncMode() {
+    var checking = mode() === "check";
+    panel.hidden = !checking;
+    btn.textContent = checking ? "Check my work" : "Solve step by step";
+    checkChip.setAttribute("aria-pressed", checking ? "true" : "false");
+  }
+  checkChip.addEventListener("click", function () {
+    Array.prototype.forEach.call(modes.querySelectorAll(".chip"), function (c) { c.classList.remove("on"); });
+    checkChip.classList.add("on");
+    syncMode();
+    work.focus();
+  });
+  Array.prototype.forEach.call(modes.querySelectorAll(".chip"), function (chip) {
+    if (chip !== checkChip) chip.addEventListener("click", syncMode);
+  });
+
+  /* Image and PDF upload: compress photos locally and send PDFs as native PDF data. */
+  var note = document.createElement("div");
+  note.className = "hint";
+  note.setAttribute("role", "status");
+  note.setAttribute("aria-live", "polite");
+  out.parentNode.insertBefore(note, out);
+  var photoBtn = $("photoBtn");
+  if (photoBtn) {
+    var f = document.createElement("input");
+    f.type = "file";
+    f.accept = "image/jpeg,image/png,image/webp,image/gif,application/pdf,.pdf";
+    f.hidden = true;
+    f.setAttribute("aria-label", "Choose a math question image or PDF");
+    document.body.appendChild(f);
+
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "chip";
+    removeBtn.textContent = "Remove file";
+    removeBtn.hidden = true;
+    note.parentNode.insertBefore(removeBtn, out);
+    removeBtn.addEventListener("click", function () {
+      image = null;
+      f.value = "";
+      note.textContent = "Attachment removed.";
+      removeBtn.hidden = true;
+    });
+
+    photoBtn.disabled = false;
+    photoBtn.removeAttribute("title");
+    photoBtn.textContent = "📷 Upload Photo / PDF";
+    photoBtn.onclick = function () { f.click(); };
+
+    function setAttachment(payload, filename, label) {
+      image = payload;
+      note.textContent = label + " ready: " + filename + ". Press Solve.";
+      removeBtn.hidden = false;
+    }
+
+    f.onchange = function () {
+      var file = f.files && f.files[0];
+      if (!file) return;
+      var isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+      var allowedImage = ["image/jpeg", "image/png", "image/webp", "image/gif"].indexOf(file.type) !== -1;
+      if (!isPdf && !allowedImage) {
+        note.textContent = "Please choose a JPG, PNG, WEBP, GIF image or a PDF file.";
+        f.value = "";
+        return;
+      }
+      if (isPdf) {
+        if (file.size > 2800000) {
+          note.textContent = "PDF is too large. Please choose a PDF smaller than 2.8 MB.";
+          f.value = "";
+          return;
+        }
+        note.textContent = "Reading PDF...";
+        var reader = new FileReader();
+        reader.onload = function () {
+          var result = String(reader.result || "");
+          var data = result.indexOf(",") >= 0 ? result.split(",")[1] : "";
+          if (!data || data.length >= 3900000) {
+            note.textContent = "Could not prepare this PDF. Try a smaller file.";
+            return;
+          }
+          setAttachment({ media_type: "application/pdf", data: data }, file.name, "PDF");
+        };
+        reader.onerror = function () { note.textContent = "Could not read this PDF file."; };
+        reader.readAsDataURL(file);
+        return;
+      }
+      if (file.size > 12000000) {
+        note.textContent = "Image is too large to process. Please choose an image smaller than 12 MB.";
+        f.value = "";
+        return;
+      }
+      note.textContent = "Preparing image...";
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function () {
+        try {
+          var scale = Math.min(1, 1600 / Math.max(img.width, img.height));
+          var canvas = document.createElement("canvas");
+          canvas.width = Math.max(1, Math.round(img.width * scale));
+          canvas.height = Math.max(1, Math.round(img.height * scale));
+          var ctx = canvas.getContext("2d", { alpha: false });
+          if (!ctx) throw new Error("Canvas unavailable");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          var dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+          if (dataUrl.length > 3900000) dataUrl = canvas.toDataURL("image/jpeg", 0.68);
+          var data = dataUrl.split(",")[1] || "";
+          if (!data || data.length >= 3900000) throw new Error("Image remains too large after compression");
+          setAttachment({ media_type: "image/jpeg", data: data }, file.name, "Photo");
+        } catch (e) {
+          note.textContent = "Could not prepare this image. Try a smaller or clearer image.";
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      };
+      img.onerror = function () {
+        note.textContent = "Could not read that image.";
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    };
+  }
+
+  async function ask(question, isFollow) {
+    if (busy) return;
+    var currentMode = mode();
+    var studentWork = currentMode === "check" ? work.value.trim() : "";
+    if (currentMode === "check" && !studentWork) {
+      out.innerHTML = '<span class="err">Write your solution or working in the box above first.</span>';
+      work.focus();
+      return;
+    }
+    busy = true;
+    btn.disabled = true;
+    var wrap = document.createElement("div");
+    wrap.className = "step";
+    wrap.textContent = "Thinking...";
+    if (!isFollow) out.innerHTML = "";
+    out.appendChild(wrap);
+    try {
+      var lang = (window.msiqLang && window.msiqLang.current() === "tr") ? "Turkish" : "English";
+      var response = await fetch("/api/solve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question: question,
+          mode: currentMode,
+          studentWork: studentWork,
+          lang: lang,
+          history: isFollow ? history : [],
+          image: image
+        })
+      });
+      var data = await response.json().catch(function () { return {}; });
+      if (!response.ok) throw new Error(data.error || "Something went wrong. Please try again.");
+      if (!isFollow) history = [];
+      history.push(
+        { role: "user", content: question || "Solve the problem in the photo." },
+        { role: "assistant", content: data.answer }
+      );
+      wrap.innerHTML = fmt(data.answer).replace(/\n/g, "<br>");
+      addFollow();
+      try {
+        var recent = JSON.parse(localStorage.getItem("msiq_recent") || "[]");
+        if (question) {
+          recent = [question].concat(recent.filter(function (x) { return x !== question; })).slice(0, 6);
+          localStorage.setItem("msiq_recent", JSON.stringify(recent));
+        }
+      } catch (e) {}
+    } catch (e) {
+      wrap.innerHTML = '<span class="err">' + esc(e.message) + "</span>";
+    }
+    busy = false;
+    btn.disabled = false;
+  }
+
+  function addFollow() {
+    var old = $("followBox");
+    if (old) old.remove();
+    var follow = document.createElement("div");
+    follow.id = "followBox";
+    follow.className = "row";
+    follow.innerHTML = '<input id="followQ" placeholder="Did not get a step? Ask a follow-up..."><button class="btn fit" id="followGo" type="button">Ask</button>';
+    out.appendChild(follow);
+    var go = function () {
+      var input = $("followQ"), value = input && input.value.trim();
+      if (!value) return;
+      follow.remove();
+      var userLine = document.createElement("div");
+      userLine.className = "hint";
+      userLine.textContent = "You: " + value;
+      out.appendChild(userLine);
+      ask(value, true);
+    };
+    $("followGo").onclick = go;
+    $("followQ").onkeydown = function (event) { if (event.key === "Enter") go(); };
+  }
+
+  btn.onclick = function () {
+    var question = cleanQ();
+    if (!question && !image) {
+      out.innerHTML = '<span class="err">Type a problem or add a photo first.</span>';
+      return;
+    }
+    ask(question, false);
+  };
+
+  syncMode();
+})();

@@ -1,0 +1,399 @@
+/* MathSolveIQ: unified dark theme - blue accent */
+:root[data-theme="dark"]{
+  color-scheme:dark!important;
+  --bg:#0b1220!important;
+  --card:#121d2f!important;
+  --ink:#f1f5ff!important;
+  --mute:#b7c4d9!important;
+  --line:#2b3a53!important;
+  --acc:#7595ff!important;
+  --acc2:#233455!important;
+  --bad:#ff8585!important;
+  --shadow:0 8px 28px rgba(0,0,0,.30)!important;
+  --primary:#7595ff!important;
+  --accent:#7595ff!important;
+}
+
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+body[data-theme="dark"]{
+  background:#0b1220!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  h1,h2,h3,h4,h5,h6,p,li,label,small,strong,b,em,
+  figcaption,summary,legend,th,td,dt,dd
+){
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  .lead,.hint,.muted,.subtitle,.description,
+  .helper-text,.text-muted,.secondary-text
+){
+  color:#b7c4d9!important;
+}
+
+html[data-theme="dark"] body :is(
+  header,aside,nav,.sidebar,#sidebar,.left-sidebar,
+  .app-sidebar,.side-nav,.drawer
+){
+  background:#111b2c!important;
+  color:#f1f5ff!important;
+  border-color:#2b3a53!important;
+}
+
+html[data-theme="dark"] body :is(
+  main,#main,#app,#root,.app,.app-shell,.main,
+  .main-content,.content,.content-area,.workspace,
+  .layout,.chat-layout,.chat-container,.page-content
+){
+  background:transparent!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  .card,.panel,.glass-card,.glass-panel,.glass-surface,
+  .calculator-card,.tool-card,.result-card,.result-box,
+  .composer,.hero,.feature-card,.modal,.dialog
+){
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+  border-color:#2b3a53!important;
+}
+
+html[data-theme="dark"] body :is(
+  a,nav a,.logo
+){
+  color:#9bb4ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  input,select,textarea
+){
+  background:#101a2a!important;
+  color:#f1f5ff!important;
+  border:1px solid #344762!important;
+}
+
+html[data-theme="dark"] body :is(input,textarea)::placeholder{
+  color:#a5b2c8!important;
+  opacity:1!important;
+}
+
+html[data-theme="dark"] body select option{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+}
+
+/* Remove green buttons in dark theme */
+html[data-theme="dark"] body :is(
+  button,.btn,[role="button"],.action-btn,.mode-btn
+){
+  background:#1b2a42!important;
+  color:#f1f5ff!important;
+  border-color:#3a5278!important;
+}
+
+html[data-theme="dark"] body :is(
+  .primary,.primary-btn,.btn-primary,.solve-btn,
+  .solve-button,.submit-btn,.send-btn,
+  button[type="submit"],#solveBtn,#solve
+){
+  background:#6687f5!important;
+  color:#081328!important;
+  border-color:#6687f5!important;
+}
+
+html[data-theme="dark"] body :is(button,a,[role="button"]):focus-visible{
+  outline:3px solid #91aaff!important;
+  outline-offset:3px!important;
+}
+
+/* Professional language dropdown */
+html[data-theme="dark"] body #msiq-lang-wrap{
+  background:#121d2f!important;
+  border:1px solid #405579!important;
+  border-radius:12px!important;
+  box-shadow:0 6px 20px rgba(0,0,0,.3)!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap svg{
+  stroke:#91aaff!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap #msiq-lang-select{
+  width:auto!important;
+  min-width:110px!important;
+  max-width:160px!important;
+  color:#f1f5ff!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap #msiq-lang-select option{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body .err{
+  color:#ff8585!important;
+}
+
+html[data-theme="dark"] body footer{
+  color:#b7c4d9!important;
+  border-color:#2b3a53!important;
+}
+
+/* FINAL DARK THEME CORRECTION - ROOT + BODY SUPPORT */
+html[data-theme="dark"],
+body[data-theme="dark"]{
+  color-scheme:dark!important;
+  --bg:#0b1220!important;
+  --card:#121d2f!important;
+  --ink:#f1f5ff!important;
+  --mute:#b7c4d9!important;
+  --line:#2b3a53!important;
+  --acc:#7595ff!important;
+  --acc2:#233455!important;
+  --bad:#ff8585!important;
+  --shadow:0 8px 28px rgba(0,0,0,.30)!important;
+}
+
+html[data-theme="dark"] body,
+body[data-theme="dark"]{
+  background:#0b1220!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,em,
+  label,li,summary,figcaption,legend,blockquote,
+  .nav-title,.rt
+),
+body[data-theme="dark"] :is(
+  h1,h2,h3,h4,h5,h6,p,span,small,strong,b,em,
+  label,li,summary,figcaption,legend,blockquote,
+  .nav-title,.rt
+){
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body :is(.lead,.hint,.mute,.muted,.rt),
+body[data-theme="dark"] :is(.lead,.hint,.mute,.muted,.rt){
+  color:#b7c4d9!important;
+}
+
+/* Homepage popular calculator cards */
+html[data-theme="dark"] body #page-home .grid a,
+html[data-theme="dark"] body #page-home .grid .card,
+html[data-theme="dark"] body #page-home .card,
+html[data-theme="dark"] body .calculator-card,
+body[data-theme="dark"] #page-home .grid a,
+body[data-theme="dark"] #page-home .grid .card,
+body[data-theme="dark"] #page-home .card,
+body[data-theme="dark"] .calculator-card{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+  border:1px solid #2b3a53!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.24)!important;
+}
+
+html[data-theme="dark"] body #page-home .grid a *,
+body[data-theme="dark"] #page-home .grid a *{
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body #page-home .grid a b,
+body[data-theme="dark"] #page-home .grid a b{
+  color:#8eacff!important;
+}
+
+html[data-theme="dark"] body #page-home .grid a p,
+body[data-theme="dark"] #page-home .grid a p{
+  color:#b7c4d9!important;
+}
+
+/* Sidebar and navigation */
+html[data-theme="dark"] body header,
+html[data-theme="dark"] body nav,
+html[data-theme="dark"] body aside,
+body[data-theme="dark"] header,
+body[data-theme="dark"] nav,
+body[data-theme="dark"] aside{
+  background:#111b2c!important;
+  color:#f1f5ff!important;
+  border-color:#2b3a53!important;
+}
+
+html[data-theme="dark"] body nav a,
+body[data-theme="dark"] nav a{
+  color:#dce6fa!important;
+}
+
+html[data-theme="dark"] body nav a:hover,
+body[data-theme="dark"] nav a:hover{
+  background:#233455!important;
+  color:#ffffff!important;
+}
+
+/* Other cards, controls and dropdown */
+html[data-theme="dark"] body .card,
+html[data-theme="dark"] body .hero,
+html[data-theme="dark"] body details,
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .hero,
+body[data-theme="dark"] details{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+  border-color:#2b3a53!important;
+}
+
+html[data-theme="dark"] body input,
+html[data-theme="dark"] body select,
+html[data-theme="dark"] body textarea,
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea{
+  background:#101a2a!important;
+  color:#f1f5ff!important;
+  border-color:#405579!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-wrap,
+body[data-theme="dark"] #msiq-lang-wrap{
+  background:#121d2f!important;
+  border:1px solid #405579!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-select,
+body[data-theme="dark"] #msiq-lang-select{
+  background:transparent!important;
+  color:#f1f5ff!important;
+  width:auto!important;
+}
+
+html[data-theme="dark"] body #msiq-lang-select option,
+body[data-theme="dark"] #msiq-lang-select option{
+  background:#121d2f!important;
+  color:#f1f5ff!important;
+}
+
+html[data-theme="dark"] body button,
+body[data-theme="dark"] button{
+  border-color:#405579!important;
+}
+
+
+
+/* msiq-mobile-calculator-improvements-v1 */
+@media (max-width: 768px) {
+  .doc {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .doc #form .row > div {
+    min-width: 0;
+  }
+
+  .doc #form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  .doc #form select,
+  .doc #form textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+    font-size: 16px !important;
+    box-sizing: border-box;
+  }
+
+  .doc #form button,
+  .doc #form .btn {
+    min-height: 44px;
+    white-space: normal;
+    touch-action: manipulation;
+  }
+
+  .doc #result:not(:empty) {
+    padding: 14px;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .doc .step {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .doc {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .doc #form > .row:first-child {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .doc #form > .row:nth-child(2) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
+  }
+
+  .doc #form > .row:nth-child(2) > button {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 7px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .doc #result:not(:empty) {
+    padding: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 340px) {
+  .doc #form > .row:nth-child(2) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* msiq-field-error-styles-v1 */
+.doc input.msiq-input-invalid,
+.doc select.msiq-input-invalid,
+.doc textarea.msiq-input-invalid {
+  border: 1px solid #dc4545 !important;
+  background-color: #fff5f5 !important;
+  box-shadow: 0 0 0 3px rgba(220,69,69,.12) !important;
+}
+
+.doc .msiq-field-error {
+  display: block;
+  margin-top: 5px;
+  color: #c62828;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+html[data-theme="dark"] .doc input.msiq-input-invalid,
+html[data-theme="dark"] .doc select.msiq-input-invalid,
+html[data-theme="dark"] .doc textarea.msiq-input-invalid {
+  background-color: #301b25 !important;
+  border-color: #ff7777 !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] .doc .msiq-field-error {
+  color: #ff8585 !important;
+}

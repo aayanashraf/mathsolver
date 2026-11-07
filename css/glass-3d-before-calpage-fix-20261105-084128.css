@@ -1,0 +1,702 @@
+/* MathSolveIQ - Light Glass 3D Design */
+
+:root {
+  color-scheme: light;
+  --acc: #587cf5;
+  --acc2: rgba(88,124,245,.10);
+  --line: rgba(126,151,190,.24);
+  --mute: #73819a;
+  --glass-bg: rgba(255,255,255,.76);
+  --glass-border: rgba(255,255,255,.94);
+  --glass-shadow: 0 16px 42px rgba(49,83,143,.10),
+                  inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #1d2d49 !important;
+  background:
+    radial-gradient(ellipse at 8% 5%, rgba(133,174,255,.23), transparent 34%),
+    radial-gradient(ellipse at 92% 18%, rgba(174,205,255,.25), transparent 32%),
+    linear-gradient(135deg, #f7faff 0%, #eef4ff 48%, #f9fbff 100%) !important;
+  background-attachment: fixed !important;
+}
+
+header,
+.navbar,
+.topbar,
+.site-header,
+.app-header,
+.header {
+  background: rgba(255,255,255,.78) !important;
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 8px 28px rgba(54,85,140,.09) !important;
+}
+
+.card,
+.panel,
+.tool-card,
+.calculator-card,
+.calc-card,
+.feature-card,
+.result-card,
+.solver-card,
+.workspace,
+.hero,
+.doc,
+.content-card,
+.glass-card,
+.tool-panel,
+.answer-box,
+.step-card {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transform-style: preserve-3d;
+  transition: transform .25s ease, box-shadow .25s ease,
+              border-color .25s ease !important;
+}
+
+.card:hover,
+.panel:hover,
+.tool-card:hover,
+.feature-card:hover,
+.calculator-card:hover,
+.calc-card:hover {
+  transform: perspective(1000px) translateY(-4px) rotateX(.5deg);
+  box-shadow: 0 22px 48px rgba(49,83,143,.15),
+              inset 0 1px 0 rgba(255,255,255,.98) !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+select {
+  color: #223452 !important;
+  background: rgba(255,255,255,.86) !important;
+  border: 1px solid rgba(128,153,192,.34) !important;
+  border-radius: 13px !important;
+  box-shadow: inset 0 2px 5px rgba(52,79,125,.045),
+              0 3px 10px rgba(52,79,125,.035) !important;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: #7395ff !important;
+  box-shadow: 0 0 0 4px rgba(88,124,245,.13),
+              inset 0 2px 5px rgba(52,79,125,.035) !important;
+}
+
+button,
+.btn,
+input[type="button"],
+input[type="submit"],
+[role="button"] {
+  border-radius: 13px !important;
+  transition: transform .2s ease, box-shadow .2s ease,
+              filter .2s ease !important;
+  box-shadow: 0 5px 12px rgba(50,78,130,.10),
+              inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+
+button:hover,
+.btn:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+[role="button"]:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.035);
+  box-shadow: 0 9px 20px rgba(50,78,130,.15),
+              inset 0 1px 0 rgba(255,255,255,.65) !important;
+}
+
+button:active,
+.btn:active {
+  transform: translateY(1px);
+}
+
+button:disabled,
+.btn:disabled,
+input:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-primary,
+.primary,
+button[type="submit"],
+input[type="submit"] {
+  color: #fff !important;
+  background: linear-gradient(145deg, #7194ff, #4e70e8) !important;
+  border: 1px solid rgba(255,255,255,.42) !important;
+  box-shadow: 0 7px 18px rgba(75,110,225,.25),
+              inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+
+.dropdown-menu,
+.menu-dropdown,
+.language-menu,
+.select-menu,
+.popover,
+.modal-content {
+  background: rgba(255,255,255,.94) !important;
+  border: 1px solid rgba(255,255,255,.98) !important;
+  border-radius: 17px !important;
+  box-shadow: 0 18px 45px rgba(41,69,119,.15) !important;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 13px;
+}
+
+th {
+  background: rgba(91,125,224,.09);
+}
+
+td,
+th {
+  border-color: rgba(126,151,190,.20) !important;
+}
+
+a {
+  transition: color .2s ease, opacity .2s ease;
+}
+
+hr {
+  border-color: rgba(126,151,190,.22) !important;
+}
+
+pre,
+code {
+  border-radius: 10px;
+}
+
+::selection {
+  color: #213b75;
+  background: rgba(111,151,255,.24);
+}
+
+@media (max-width: 768px) {
+  .card,
+  .panel,
+  .tool-card,
+  .calculator-card,
+  .calc-card,
+  .feature-card,
+  .result-card,
+  .solver-card,
+  .doc {
+    border-radius: 17px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+
+/* MathSolveIQ - Refined Professional Glass Design */
+
+:root {
+  --acc: #5878df;
+  --acc2: #edf2ff;
+  --line: #e5ebf5;
+  --mute: #718096;
+  --ink: #24334d;
+  --professional-shadow: 0 8px 26px rgba(39,65,110,.065);
+}
+
+body {
+  color: var(--ink) !important;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(210,226,255,.42), transparent 36%),
+    linear-gradient(145deg,#f8faff 0%,#f2f6fc 55%,#fbfcff 100%) !important;
+}
+
+header {
+  border: 1px solid rgba(255,255,255,.9) !important;
+  background: rgba(255,255,255,.88) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 5px 22px rgba(39,65,110,.055) !important;
+}
+
+#page-home .hero {
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden;
+  transform: none !important;
+  border: 1px solid #e7edfa !important;
+  border-radius: 24px !important;
+  background: linear-gradient(135deg,#ffffff 0%,#f5f8ff 65%,#edf3ff 100%) !important;
+  box-shadow:
+    0 1px 2px rgba(40,65,110,.03),
+    0 12px 32px rgba(49,80,139,.075) !important;
+}
+
+#page-home .hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 155px;
+  height: 155px;
+  top: -75px;
+  right: -42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%,
+    #ffffff 0%,#e5edff 40%,#b9cefa 75%,#9db8ed 100%);
+  box-shadow:
+    inset -8px -10px 20px rgba(65,100,170,.09),
+    0 12px 30px rgba(74,105,170,.08);
+  opacity: .58;
+  pointer-events: none;
+}
+
+#page-home .hero::after {
+  content: "∑   π   √";
+  position: absolute;
+  z-index: 0;
+  top: 22px;
+  right: 27px;
+  color: rgba(73,104,174,.14);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  pointer-events: none;
+}
+
+#page-home .hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+#page-home h2 {
+  text-shadow: 0 2px 12px rgba(55,82,138,.07);
+}
+
+.card,
+.panel,
+.tool-card,
+.calculator-card,
+.calc-card,
+.feature-card,
+.result-card,
+.solver-card,
+.workspace,
+.doc,
+.grid > a {
+  border: 1px solid rgba(226,233,245,.95) !important;
+  border-radius: 17px !important;
+  background: rgba(255,255,255,.88) !important;
+  box-shadow:
+    0 1px 2px rgba(35,60,105,.025),
+    0 7px 22px rgba(45,73,125,.055) !important;
+  transition: transform .22s ease, box-shadow .22s ease,
+              border-color .22s ease !important;
+}
+
+.card:hover,
+.panel:hover,
+.tool-card:hover,
+.calculator-card:hover,
+.calc-card:hover,
+.feature-card:hover,
+.grid > a:hover {
+  transform: translateY(-3px) !important;
+  border-color: #d5e0f5 !important;
+  box-shadow:
+    0 3px 8px rgba(35,60,105,.035),
+    0 13px 28px rgba(45,73,125,.085) !important;
+}
+
+.grid {
+  gap: 16px !important;
+}
+
+.grid > a {
+  padding: 20px !important;
+}
+
+.grid > a b {
+  color: #4d6fc9 !important;
+}
+
+.num {
+  box-shadow: 0 3px 8px rgba(75,105,195,.15) !important;
+}
+
+button,
+.btn,
+.chip,
+.syms button {
+  border-radius: 11px !important;
+  transition: transform .2s ease, box-shadow .2s ease !important;
+  box-shadow:
+    0 2px 5px rgba(45,73,125,.07),
+    inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+
+button:hover,
+.btn:hover,
+.chip:hover,
+.syms button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 12px rgba(45,73,125,.11) !important;
+}
+
+button:active,
+.btn:active {
+  transform: translateY(0) !important;
+}
+
+.newchat,
+.btn-primary,
+button[type="submit"],
+input[type="submit"] {
+  background: linear-gradient(135deg,#6688ec,#4f70d0) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.35) !important;
+  box-shadow: 0 4px 11px rgba(74,105,190,.20) !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+select {
+  border-radius: 11px !important;
+  border: 1px solid #e1e8f3 !important;
+  background: rgba(255,255,255,.95) !important;
+  box-shadow: inset 0 1px 3px rgba(40,65,110,.035) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #8aa5ed !important;
+  box-shadow: 0 0 0 3px rgba(88,120,223,.10) !important;
+  outline: none !important;
+}
+
+.dropdown-menu,
+.menu-dropdown,
+.language-menu,
+.select-menu,
+.popover,
+.modal-content {
+  background: rgba(255,255,255,.97) !important;
+  border: 1px solid #e7edf7 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 12px 32px rgba(39,65,110,.11) !important;
+}
+
+@media(max-width:768px) {
+  #page-home .hero::before {
+    width: 105px;
+    height: 105px;
+    top: -55px;
+    right: -35px;
+  }
+
+  #page-home .hero::after {
+    display: none;
+  }
+
+  .card:hover,
+  .grid > a:hover,
+  .panel:hover,
+  .tool-card:hover {
+    transform: translateY(-2px) !important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* =========================================
+   MathSolveIQ - Calculator Page Refinement
+   ========================================= */
+
+body:has(.doc .rel) .doc,
+body:has(.doc .grid) .doc {
+  max-width: 940px !important;
+  padding: 34px 22px 65px !important;
+  color: #263650 !important;
+}
+
+.doc .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  margin-bottom: 25px;
+  border: 1px solid #e8edf6;
+  border-radius: 14px;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 4px 16px rgba(42,70,120,.045);
+}
+
+.doc .top a {
+  color: #5878df !important;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.doc .top a:hover,
+.doc .crumb a:hover {
+  color: #3659bf !important;
+}
+
+.doc h1 {
+  color: #253653 !important;
+  font: 750 clamp(29px,4vw,38px)/1.2 system-ui,-apple-system,"Segoe UI",sans-serif !important;
+  letter-spacing: -1px;
+  margin: 18px 0 9px !important;
+}
+
+.doc h2 {
+  color: #2c3e5c !important;
+  font: 700 22px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif !important;
+  margin: 32px 0 13px !important;
+}
+
+.doc h3 {
+  color: #354766 !important;
+  font: 650 18px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif !important;
+  margin: 22px 0 10px !important;
+}
+
+.doc .lead {
+  color: #71809a !important;
+  font-size: 16px !important;
+  line-height: 1.75;
+  margin-bottom: 25px !important;
+}
+
+.doc .crumb {
+  color: #8491a7 !important;
+  font-size: 13px;
+  margin: 12px 0 20px;
+}
+
+.doc .crumb a {
+  color: #5878df !important;
+  text-decoration: none;
+}
+
+.doc .card {
+  padding: 24px !important;
+  margin: 22px 0 !important;
+  border: 1px solid #e4eaf5 !important;
+  border-radius: 19px !important;
+  background: rgba(255,255,255,.94) !important;
+  box-shadow: 0 8px 26px rgba(42,70,120,.065) !important;
+}
+
+.doc #form {
+  display: block;
+}
+
+.doc #form label,
+.doc label {
+  display: block;
+  color: #41516b !important;
+  font-size: 14px !important;
+  font-weight: 650 !important;
+  margin: 13px 0 7px !important;
+}
+
+.doc input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.doc select,
+.doc textarea {
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 13px !important;
+  border: 1px solid #dfe7f3 !important;
+  border-radius: 11px !important;
+  background: #fbfcff !important;
+  color: #263650 !important;
+  box-shadow: inset 0 1px 3px rgba(42,70,120,.035) !important;
+}
+
+.doc input:focus,
+.doc select:focus,
+.doc textarea:focus {
+  outline: none !important;
+  border-color: #8ba5ed !important;
+  box-shadow: 0 0 0 3px rgba(88,120,223,.11) !important;
+}
+
+.doc button,
+.doc .btn {
+  border-radius: 10px !important;
+  font-weight: 650 !important;
+}
+
+.doc button[type="submit"],
+.doc input[type="submit"],
+.doc .btn-primary {
+  background: linear-gradient(135deg,#6688ec,#4f70d0) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 11px rgba(74,105,190,.18) !important;
+}
+
+.doc #result {
+  margin-top: 18px;
+}
+
+.doc #result:empty,
+.doc .out:empty {
+  display: none;
+}
+
+.doc #result:not(:empty),
+.doc .out:not(:empty) {
+  padding: 18px;
+  border: 1px solid #e2eafa;
+  border-radius: 14px;
+  background: linear-gradient(145deg,#f8faff,#f1f5ff);
+  color: #344762;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.doc .step {
+  padding: 13px 12px !important;
+  border-bottom: 1px solid #e9eef7 !important;
+}
+
+.doc table {
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border: 1px solid #e5ebf5;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.doc th {
+  background: #eff4ff !important;
+  color: #42577b !important;
+  font-weight: 650;
+}
+
+.doc th,
+.doc td {
+  border-bottom: 1px solid #e9eef6 !important;
+  border-right: 1px solid #e9eef6 !important;
+  padding: 11px 13px !important;
+  text-align: left;
+}
+
+.doc tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.doc details {
+  border: 1px solid #e5ebf5 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  padding: 15px 17px !important;
+  margin: 11px 0 !important;
+}
+
+.doc details summary {
+  color: #354968;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.doc details p {
+  color: #71809a !important;
+  line-height: 1.75;
+}
+
+.doc .rel {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.doc .rel a {
+  display: inline-block;
+  padding: 8px 14px !important;
+  border: 1px solid #dfe7f8;
+  border-radius: 999px !important;
+  background: #f2f6ff !important;
+  color: #4f6fc9 !important;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.doc .rel a:hover {
+  background: #e8efff !important;
+  transform: translateY(-2px);
+}
+
+.doc ol,
+.doc ul {
+  padding-left: 23px;
+  color: #65758e;
+  line-height: 1.9;
+}
+
+.doc .hint {
+  color: #8793a7 !important;
+  line-height: 1.7;
+}
+
+@media(max-width:600px) {
+  body:has(.doc .rel) .doc,
+  body:has(.doc .grid) .doc {
+    padding: 22px 15px 48px !important;
+  }
+
+  .doc .card {
+    padding: 17px !important;
+  }
+
+  .doc h1 {
+    font-size: 29px !important;
+  }
+
+  .doc h2 {
+    font-size: 20px !important;
+  }
+
+  .doc .top {
+    padding: 11px 12px;
+  }
+
+  .doc th,
+  .doc td {
+    padding: 9px !important;
+  }
+}

@@ -1,0 +1,85 @@
+/* MathSolveIQ service worker.
+   - Pages and scripts/styles: network first (so updates show at once), cached copy when offline.
+   - Images and fonts: cached copy first, refreshed in the background.
+   - /api/ and other websites are never touched.
+   To force every visitor to drop old cached files, change CACHE_VERSION. */
+var CACHE_VERSION = "v5";
+var CACHE = "msiq-" + CACHE_VERSION;
+var MAX_PAGES = 150;
+var PRECACHE = ["/js/solve.js", "/js/photo.js", "/css/theme-overrides.css","/", "/offline.html", "/calculator", "/css/style.css", "/js/calc.js", "/js/calc2.js", "/js/calc3.js", "/js/calc5.js", "/js/calc6.js", "/js/calc7.js", "/images/favicon.svg"];
+
+function cleanResponse(res) {
+  /* A redirected response cannot be used to answer a page navigation, so store a clean copy. */
+  if (!res.redirected) return Promise.resolve(res);
+  return res.blob().then(function (b) { return new Response(b, { status: res.status, statusText: res.statusText, headers: res.headers }); });
+}
+function withTimeout(promise, ms) {
+  return new Promise(function (resolve, reject) {
+    var t = setTimeout(function () { reject(new Error("timeout")); }, ms);
+    promise.then(function (v) { clearTimeout(t); resolve(v); }, function (e) { clearTimeout(t); reject(e); });
+  });
+}
+function trim(cache) {
+  return cache.keys().then(function (keys) {
+    var extra = keys.length - MAX_PAGES;
+    return extra > 0 ? Promise.all(keys.slice(0, extra).map(function (k) { return cache.delete(k); })) : null;
+  });
+}
+function store(req, res) {
+  return cleanResponse(res).then(function (c) {
+    return caches.open(CACHE).then(function (cache) { return cache.put(req, c).then(function () { return trim(cache); }); });
+  }).catch(function () {});
+}
+function networkFirst(req, ms, offlinePage) {
+  return withTimeout(fetch(req), ms).then(function (res) {
+    if (res && res.ok && res.type === "basic") store(req, res.clone());
+    return res;
+  }).catch(function () {
+    return caches.match(req).then(function (hit) {
+      return hit || caches.match(req, { ignoreSearch: true });
+    }).then(function (hit) {
+      if (hit) return hit;
+      return offlinePage ? caches.match("/offline.html") : Response.error();
+    });
+  });
+}
+function cacheFirst(req) {
+  return caches.open(CACHE).then(function (cache) {
+    return cache.match(req).then(function (hit) {
+      var net = fetch(req).then(function (res) {
+        if (res && res.ok && res.type === "basic") cache.put(req, res.clone());
+        return res;
+      }).catch(function () { return hit || Response.error(); });
+      return hit || net;
+    });
+  });
+}
+
+self.addEventListener("install", function (e) {
+  e.waitUntil(caches.open(CACHE).then(function (cache) {
+    return Promise.all(PRECACHE.map(function (u) {
+      return fetch(u, { cache: "reload" }).then(function (res) {
+        if (res && res.ok) return cleanResponse(res).then(function (c) { return cache.put(u, c); });
+      }).catch(function () {});
+    }));
+  }).then(function () { return self.skipWaiting(); }));
+});
+
+self.addEventListener("activate", function (e) {
+  e.waitUntil(caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (k) { return k.indexOf("msiq-") === 0 && k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+  }).then(function () { return self.clients.claim(); }));
+});
+
+self.addEventListener("fetch", function (e) {
+  var req = e.request;
+  if (req.method !== "GET") return;
+  var url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.indexOf("/api/") === 0) return;
+  if (req.mode === "navigate") { e.respondWith(networkFirst(req, 5000, true)); return; }
+  if (/\.(?:css|js)$/.test(url.pathname)) { e.respondWith(networkFirst(req, 4000, false)); return; }
+  if (/\.(?:svg|png|jpe?g|webp|gif|ico|woff2?)$/.test(url.pathname)) { e.respondWith(cacheFirst(req)); }
+});
+
+

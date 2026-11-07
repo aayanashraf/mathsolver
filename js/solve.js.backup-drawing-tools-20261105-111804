@@ -1,0 +1,326 @@
+/* MathSolveIQ AI Solver: text, image, PDF and drawing support. */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var btn = $("solveBtn"), box = $("q"), out = $("solveOut");
+  if (!btn || !box || !out) return;
+
+  var history = [], image = null, busy = false;
+
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];
+    });
+  }
+  function fmt(s) {
+    return esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")
+      .replace(/`([^`]+)`/g,"<code>$1</code>");
+  }
+  function mode() {
+    var c=document.querySelector("#modes .chip.on");
+    var t=c?c.textContent.toLowerCase():"";
+    return t.indexOf("hint")>-1?"hint":t.indexOf("socratic")>-1?"socratic":"full";
+  }
+  function cleanQ() {
+    var q=box.value,c=document.querySelector("#modes .chip.on");
+    var pre=c?(c.dataset.m||""):"";
+    if(pre&&q.indexOf(pre)===0)q=q.slice(pre.length);
+    return q.trim();
+  }
+
+  /* Professional toolbar styles */
+  if(!$("msiq-media-styles")){
+    var style=document.createElement("style");
+    style.id="msiq-media-styles";
+    style.textContent=`
+      #msiq-solver-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+      #msiq-solver-toolbar button{min-height:42px;padding:10px 16px;border-radius:12px;font:600 14px system-ui;cursor:pointer;transition:.18s}
+      #msiq-upload-btn{background:var(--card,#fff);color:var(--ink,#1a2233);border:1px solid var(--line,#e3e7ec);box-shadow:var(--shadow,0 2px 8px #0000000a)}
+      #msiq-draw-btn{background:var(--acc2,#e6f4f2);color:var(--acc,#0f766e);border:1px solid var(--line,#e3e7ec)}
+      #msiq-solver-toolbar button:hover{border-color:var(--acc,#0f766e);transform:translateY(-1px)}
+      #msiq-attachment-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px;font-size:13px;color:var(--mute,#667085)}
+      #msiq-remove-attachment{border:0;background:transparent;color:var(--bad,#b42318);font-weight:600;cursor:pointer}
+      #msiq-draw-panel{padding:14px;margin:0 0 14px;background:var(--card,#fff);border:1px solid var(--line,#e3e7ec);border-radius:16px;box-shadow:var(--shadow)}
+      #msiq-draw-panel[hidden]{display:none!important}
+      #msiq-draw-panel canvas{display:block;width:100%;height:230px;background:#fff;border:1px solid #cbd5e1;border-radius:10px;touch-action:none;cursor:crosshair}
+      .msiq-draw-heading{font-weight:700;color:var(--ink,#1a2233);margin-bottom:9px}
+      .msiq-draw-help{font-size:13px;color:var(--mute,#667085);margin-bottom:10px}
+      .msiq-draw-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+      .msiq-draw-actions button{padding:9px 14px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-weight:600;cursor:pointer}
+      .msiq-draw-actions .msiq-submit-drawing{background:var(--acc);color:white;border-color:var(--acc)}
+      @media(max-width:480px){
+        #msiq-solver-toolbar button{flex:1 1 auto;font-size:13px;padding:9px 10px}
+        #msiq-draw-panel canvas{height:190px}
+      }
+      html[data-theme="dark"] #msiq-draw-panel canvas{background:#fff}
+    `;
+    document.head.appendChild(style);
+  }
+
+  /* Remove the old duplicated Photo and Calculator controls. */
+  var home=$("page-home");
+  if(home){
+    Array.prototype.slice.call(home.querySelectorAll("button,a[role='button']")).forEach(function(b){
+      if(b.id==="solveBtn")return;
+      var label=(b.textContent||"").replace(/[^a-z0-9]/gi,"").toLowerCase();
+      if(/photo|camera/.test(label)||label==="calculator")b.remove();
+    });
+  }
+
+  /* Put upload and drawing controls immediately above the problem input. */
+  var host=box.parentNode;
+  var toolbar=document.createElement("div");
+  toolbar.id="msiq-solver-toolbar";
+
+  var photoBtn=document.createElement("button");
+  photoBtn.type="button";
+  photoBtn.id="msiq-upload-btn";
+  photoBtn.textContent="Upload Photo / PDF";
+
+  var drawBtn=document.createElement("button");
+  drawBtn.type="button";
+  drawBtn.id="msiq-draw-btn";
+  drawBtn.textContent="Drawing Mode";
+
+  toolbar.appendChild(photoBtn);
+  toolbar.appendChild(drawBtn);
+  host.insertBefore(toolbar,box);
+
+  var status=document.createElement("div");
+  status.id="msiq-attachment-status";
+  status.hidden=true;
+  var statusText=document.createElement("span");
+  var removeBtn=document.createElement("button");
+  removeBtn.type="button";
+  removeBtn.id="msiq-remove-attachment";
+  removeBtn.textContent="Remove";
+  status.appendChild(statusText);
+  status.appendChild(removeBtn);
+  host.insertBefore(status,box);
+
+  var fileInput=document.createElement("input");
+  fileInput.type="file";
+  fileInput.accept="image/*,application/pdf,.pdf";
+  fileInput.hidden=true;
+  fileInput.setAttribute("aria-label","Choose a photo or PDF");
+  document.body.appendChild(fileInput);
+
+  function showAttachment(message){
+    statusText.textContent=message;
+    status.hidden=false;
+  }
+  removeBtn.onclick=function(){
+    image=null;
+    fileInput.value="";
+    status.hidden=true;
+  };
+  photoBtn.onclick=function(){fileInput.click();};
+
+  /* Read PDF as a document, or resize photos before sending. */
+  fileInput.addEventListener("change",function(){
+    var file=fileInput.files&&fileInput.files[0];
+    if(!file)return;
+
+    if(file.type==="application/pdf"||/\.pdf$/i.test(file.name)){
+      if(file.size>2800000){
+        showAttachment("PDF is too large. Please choose a PDF under 2.8 MB.");
+        fileInput.value="";
+        return;
+      }
+      var reader=new FileReader();
+      reader.onload=function(){
+        var data=String(reader.result||"").split(",")[1];
+        if(!data){showAttachment("Could not read this PDF.");return;}
+        image={type:"application/pdf",media_type:"application/pdf",data:data};
+        showAttachment("PDF attached: "+file.name);
+      };
+      reader.onerror=function(){showAttachment("Could not read this PDF.");};
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    if(!file.type||file.type.indexOf("image/")!==0){
+      showAttachment("Please choose an image or PDF file.");
+      fileInput.value="";
+      return;
+    }
+
+    var url=URL.createObjectURL(file),img=new Image();
+    img.onload=function(){
+      try{
+        var scale=Math.min(1,1600/Math.max(img.width,img.height));
+        var c=document.createElement("canvas");
+        c.width=Math.max(1,Math.round(img.width*scale));
+        c.height=Math.max(1,Math.round(img.height*scale));
+        c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+        image={
+          type:"image/jpeg",
+          media_type:"image/jpeg",
+          data:c.toDataURL("image/jpeg",0.82).split(",")[1]
+        };
+        showAttachment("Photo attached: "+file.name);
+      }catch(e){showAttachment("Could not process this photo.");}
+      URL.revokeObjectURL(url);
+    };
+    img.onerror=function(){
+      URL.revokeObjectURL(url);
+      showAttachment("Could not read this photo.");
+    };
+    img.src=url;
+  });
+
+  /* Drawing Mode canvas */
+  var panel=document.createElement("section");
+  panel.id="msiq-draw-panel";
+  panel.hidden=true;
+  panel.innerHTML=
+    '<div class="msiq-draw-heading">Draw your math problem</div>'+
+    '<div class="msiq-draw-help">Use your mouse, finger or stylus to write an equation or draw a diagram.</div>'+
+    '<canvas id="msiq-draw-canvas" width="1200" height="480" aria-label="Math drawing area"></canvas>'+
+    '<div class="msiq-draw-actions">'+
+      '<button type="button" id="msiq-draw-undo">Undo</button>'+
+      '<button type="button" id="msiq-draw-clear">Clear</button>'+
+      '<button type="button" class="msiq-submit-drawing" id="msiq-draw-submit">Solve Drawing</button>'+
+    '</div>';
+  host.insertBefore(panel,box);
+
+  drawBtn.onclick=function(){
+    panel.hidden=!panel.hidden;
+    if(!panel.hidden)panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+  };
+
+  var canvas=$("msiq-draw-canvas"),ctx=canvas.getContext("2d");
+  var drawing=false,hasDrawing=false,undoStack=[];
+  function clearCanvas(){
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    hasDrawing=false;
+    undoStack=[];
+  }
+  clearCanvas();
+  function point(e){
+    var r=canvas.getBoundingClientRect();
+    return {
+      x:(e.clientX-r.left)*canvas.width/r.width,
+      y:(e.clientY-r.top)*canvas.height/r.height
+    };
+  }
+  canvas.addEventListener("pointerdown",function(e){
+    e.preventDefault();
+    drawing=true;
+    canvas.setPointerCapture(e.pointerId);
+    undoStack.push({data:ctx.getImageData(0,0,canvas.width,canvas.height),ink:hasDrawing});
+    if(undoStack.length>20)undoStack.shift();
+    var p=point(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+    ctx.lineWidth=7;
+    ctx.lineCap="round";
+    ctx.lineJoin="round";
+    ctx.strokeStyle="#172033";
+    ctx.lineTo(p.x+0.1,p.y+0.1);
+    ctx.stroke();
+    hasDrawing=true;
+  });
+  canvas.addEventListener("pointermove",function(e){
+    if(!drawing)return;
+    e.preventDefault();
+    var p=point(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+  });
+  function stopDrawing(){drawing=false;ctx.closePath();}
+  canvas.addEventListener("pointerup",stopDrawing);
+  canvas.addEventListener("pointercancel",stopDrawing);
+
+  $("msiq-draw-clear").onclick=clearCanvas;
+  $("msiq-draw-undo").onclick=function(){
+    var s=undoStack.pop();
+    if(!s)return;
+    ctx.putImageData(s.data,0,0);
+    hasDrawing=s.ink;
+  };
+
+  $("msiq-draw-submit").onclick=function(){
+    if(!hasDrawing){
+      showAttachment("Draw your problem on the canvas first.");
+      return;
+    }
+    image={
+      type:"image/png",
+      media_type:"image/png",
+      data:canvas.toDataURL("image/png").split(",")[1]
+    };
+    showAttachment("Your drawing is attached and ready to solve.");
+    panel.hidden=true;
+    ask(cleanQ(),false);
+  };
+
+  async function ask(question,isFollow){
+    if(busy)return;
+    if(!question&&!image){
+      out.innerHTML='<span class="err">Type a problem, upload a photo/PDF, or use Drawing Mode first.</span>';
+      return;
+    }
+    busy=true;
+    btn.disabled=true;
+    var attachedImage=isFollow?null:image;
+    if(!isFollow)out.innerHTML="";
+    var wrap=document.createElement("div");
+    wrap.className="step";
+    wrap.textContent="Thinking...";
+    out.appendChild(wrap);
+
+    try{
+      var r=await fetch("/api/solve",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          question:question,
+          mode:mode(),
+          lang:(window.msiqLang&&window.msiqLang.current()==="tr")?"Turkish":"English",
+          history:isFollow?history:[],
+          image:attachedImage
+        })
+      });
+      var d=await r.json().catch(function(){return {};});
+      if(!r.ok)throw new Error(d.error||"Something went wrong. Please try again.");
+      if(!isFollow)history=[];
+      history.push(
+        {role:"user",content:question||"Solve the attached photo, PDF or drawing."},
+        {role:"assistant",content:d.answer}
+      );
+      wrap.innerHTML=fmt(d.answer).replace(/\n/g,"<br>");
+      addFollow();
+    }catch(e){
+      wrap.innerHTML='<span class="err">'+esc(e.message)+'</span>';
+    }
+    busy=false;
+    btn.disabled=false;
+  }
+
+  function addFollow(){
+    var old=$("followBox");
+    if(old)old.remove();
+    var d=document.createElement("div");
+    d.id="followBox";
+    d.className="row";
+    d.innerHTML='<input id="followQ" placeholder="Ask a follow-up question..."><button class="btn fit" id="followGo" type="button">Ask</button>';
+    out.appendChild(d);
+    var go=function(){
+      var v=$("followQ").value.trim();
+      if(!v)return;
+      d.remove();
+      var u=document.createElement("div");
+      u.className="hint";
+      u.textContent="You: "+v;
+      out.appendChild(u);
+      ask(v,true);
+    };
+    $("followGo").onclick=go;
+    $("followQ").onkeydown=function(e){if(e.key==="Enter")go();};
+  }
+
+  btn.onclick=function(){ask(cleanQ(),false);};
+  window.MSIQ_SOLVER_MEDIA_READY=true;
+})();

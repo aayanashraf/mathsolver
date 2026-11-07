@@ -1,0 +1,30 @@
+MathSolveIQ - Check My Work update
+
+Files updated:
+- api/solve.js
+- js/solve.js
+
+AI provider setup (Vercel):
+1. Open the MathSolveIQ project in Vercel.
+2. Open Settings -> Environment Variables.
+3. Add GEMINI_API_KEY with your Google AI Studio API key.
+4. Optionally add GEMINI_MODEL = gemini-3.8-flash.
+5. Set AI_PROVIDER = gemini if you want to force Gemini.
+6. Redeploy the project so the new environment variables are applied.
+
+The backend prefers Gemini when GEMINI_API_KEY is present. It uses the existing
+Anthropic key only when Gemini is not configured, or when AI_PROVIDER=claude.
+Do not put API keys in HTML or JavaScript files.
+
+Gemini's free tier has usage limits; it is not unlimited. If the free quota is
+temporarily exhausted, the solver returns a wait-and-retry message rather than
+switching to a paid provider automatically.
+
+New feature:
+- Select "Check my work" below the question box.
+- Enter your own solution in the new working box.
+- Press "Check my work" to receive a verdict and step-by-step feedback.
+
+Important:
+- This is a source-code update only. It has not been deployed to Vercel.
+- Test the feature on a preview deployment before making it public.

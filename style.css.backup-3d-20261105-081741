@@ -1,0 +1,248 @@
+/* Premium Modern Math Solver UI Theme */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-main: #0b0f19;
+  --bg-card: #111827;
+  --bg-card-hover: #1f2937;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --accent: #38bdf8;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --border-color: #1f2937;
+  --border-highlight: #374151;
+  --radius-card: 16px;
+  --radius-input: 12px;
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --accent: #0284c7;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --border-highlight: #cbd5e1;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header Navbar */
+header {
+  background: rgba(17, 24, 39, 0.85);
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+header a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+header a:hover {
+  color: var(--accent);
+}
+
+/* Layout Containers & Solver Box */
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+section, .solver-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Form Controls & Inputs */
+input[type="text"], input[type="search"], textarea, select {
+  background: var(--bg-main) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-highlight) !important;
+  border-radius: var(--radius-input);
+  padding: 14px 18px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+}
+
+/* Buttons */
+button, .btn {
+  font-family: var(--font-family);
+  font-weight: 600;
+  border-radius: var(--radius-input);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* Grid & Cards */
+.card, div[class*="card"] {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* FAQ Accordion Details */
+details {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Graphing Canvas */
+canvas {
+  background: #030712 !important;
+  border: 1px solid var(--border-highlight) !important;
+  border-radius: var(--radius-card);
+}
+
+footer {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Professional Language Selector */
+#msiq-lang-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--border, #d1d5db);
+  border-radius: 12px;
+  background: var(--card, #ffffff);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+  transition: border-color .2s ease, box-shadow .2s ease;
+  z-index: 999;
+}
+
+#msiq-lang-wrap svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  opacity: .8;
+}
+
+#msiq-lang-select {
+  min-width: 125px;
+  min-height: 40px;
+  padding: 0 24px 0 2px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#msiq-lang-wrap:focus-within {
+  border-color: var(--acc, #6366f1);
+  box-shadow: 0 0 0 3px rgba(99,102,241,.12);
+}
+
+#msiq-lang-wrap.msiq-floating {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+}
+
+@media (max-width: 600px) {
+  #msiq-lang-wrap {
+    min-height: 40px;
+    padding: 0 10px;
+    gap: 6px;
+  }
+  #msiq-lang-select {
+    min-width: 105px;
+    font-size: 13px;
+  }
+  #msiq-lang-wrap.msiq-floating {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+#msiq-lang-wrap {
+  position: relative;
+  z-index: 9999;
+  isolation: isolate;
+  flex-shrink: 0;
+}
+
+#msiq-lang-wrap select {
+  position: relative;
+  z-index: 10000;
+  line-height: normal;
+}
+
+#msiq-lang-wrap.msiq-floating {
+  position: fixed;
+  z-index: 99999;
+}
+
