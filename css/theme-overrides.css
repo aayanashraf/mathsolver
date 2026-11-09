@@ -411,3 +411,853 @@ html[data-theme="dark"] .doc .msiq-field-error {
 @media (prefers-reduced-motion: reduce) {
   .doc .out.msiq-result-animated { animation: none !important; }
 }
+
+/* Calculator form helpers, step actions, history, and directory controls */
+.doc .msiq-field-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 24px;
+  min-width: 0;
+}
+
+.doc .msiq-field-label label {
+  min-width: 0;
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.doc .msiq-field-help {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+}
+
+.doc .msiq-tooltip-trigger {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid #8797ad;
+  border-radius: 50%;
+  background: transparent;
+  color: #536783;
+  font: 700 12px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.doc .msiq-field-tooltip {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  top: calc(100% + 7px);
+  display: none;
+  width: min(280px, calc(100vw - 40px));
+  max-width: min(280px, calc(100vw - 48px));
+  padding: 9px 11px;
+  border: 1px solid var(--line, #d6deea);
+  border-radius: 9px;
+  background: var(--card, #fff);
+  color: var(--ink, #253653);
+  box-shadow: 0 8px 24px rgba(24, 39, 67, .16);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: normal;
+}
+
+.doc .msiq-field-help:hover .msiq-field-tooltip,
+.doc .msiq-field-help:focus-within .msiq-field-tooltip,
+.doc .msiq-field-help.is-open .msiq-field-tooltip {
+  display: block;
+}
+
+.doc .msiq-tooltip-trigger:focus-visible,
+.doc .msiq-step-action:focus-visible,
+.msiq-directory-controls :focus-visible,
+.msiq-recent-controls :focus-visible,
+.msiq-history-controls :focus-visible,
+.msiq-favorite-star:focus-visible,
+.msiq-compare-button:focus-visible {
+  outline: 3px solid #5878df !important;
+  outline-offset: 3px !important;
+}
+
+.doc .step {
+  overflow-wrap: anywhere;
+}
+
+.doc .msiq-step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.doc .msiq-step-action {
+  min-height: 32px;
+  padding: 5px 10px;
+  border: 1px solid var(--line, #d6deea);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink, #253653);
+  font: 600 12px/1.2 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.doc .msiq-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.doc .msiq-history-header,
+.doc .msiq-history-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.doc .msiq-history-header > b,
+.doc .msiq-history-controls > * {
+  min-width: 0;
+}
+
+.doc .msiq-history-controls {
+  justify-content: flex-end;
+}
+
+.doc .msiq-history-controls input {
+  width: min(260px, 100%);
+  min-width: 150px;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--line, #d6deea);
+  border-radius: 8px;
+  background: var(--card, #fff);
+  color: var(--ink, #253653);
+  font: inherit;
+  font-size: 13px;
+}
+
+.doc .msiq-history-controls button {
+  min-height: 36px;
+  padding: 6px 10px !important;
+}
+
+.doc .msiq-history-entry {
+  overflow-wrap: anywhere;
+}
+
+.doc .msiq-result-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  color: var(--mute, #64748b);
+  font-size: 12px;
+}
+
+.doc .msiq-result-options label {
+  margin: 0;
+  font-size: 12px;
+}
+
+.doc .msiq-result-options select {
+  min-height: 34px;
+  max-width: 100%;
+  padding: 5px 9px;
+  border: 1px solid var(--line, #d6deea);
+  border-radius: 8px;
+  background: var(--card, #fff);
+  color: var(--ink, #253653);
+  font: 500 12px/1.3 system-ui, sans-serif;
+}
+
+.msiq-directory-controls,
+.msiq-recent-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.doc.directory-doc,
+.doc.directory-doc *,
+.msiq-recently-used *,
+.msiq-compare-panel * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.doc.directory-doc .calculator-card {
+  padding: 58px 18px 56px !important;
+}
+
+.doc.directory-doc .calculator-card b,
+.doc.directory-doc .calculator-card p,
+.doc.directory-doc .calculator-card .calculator-open,
+.msiq-comparison-card,
+.msiq-comparison-card p,
+.msiq-empty-state > div {
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.55;
+}
+
+.doc.directory-doc .calculator-card .calculator-open {
+  margin-top: 8px;
+}
+
+.doc.directory-doc .calculator-card .msiq-compare-button,
+.doc.directory-doc .calculator-card .msiq-favorite-star {
+  max-width: calc(50% - 18px);
+  min-height: 32px;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.msiq-recently-used > div,
+.msiq-compare-panel > div,
+.msiq-comparison-card,
+.msiq-recent-controls > *,
+.msiq-directory-controls > * {
+  max-width: 100%;
+}
+
+.msiq-recently-used a,
+.msiq-compare-panel a,
+.msiq-empty-state a {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.msiq-recently-used,
+.msiq-compare-panel {
+  border-color: var(--line, #d6deea) !important;
+  background: var(--card, #fff) !important;
+  color: var(--ink, #253653);
+}
+
+.msiq-recently-used a {
+  overflow-wrap: anywhere;
+}
+
+.msiq-directory-controls {
+  margin: 10px 0 15px;
+}
+
+.msiq-directory-controls label {
+  margin: 0;
+  color: var(--mute, #64748b);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.msiq-compact-sort {
+  min-height: 34px;
+  max-width: 100%;
+  padding: 5px 9px;
+  border: 1px solid var(--line, #d6deea);
+  border-radius: 8px;
+  background: var(--card, #fff);
+  color: var(--ink, #253653);
+  font: 500 12px/1.3 system-ui, sans-serif;
+}
+
+.msiq-compact-sort:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.msiq-recent-controls button {
+  padding: 6px 8px !important;
+}
+
+.msiq-empty-state {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 12px;
+  border: 1px dashed var(--line, #d6deea);
+  border-radius: 10px;
+  color: var(--mute, #64748b);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.msiq-empty-state > span {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(88, 120, 223, .1);
+  color: #5878df;
+  font-size: 17px;
+}
+
+.msiq-empty-state b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--ink, #253653);
+}
+
+.msiq-empty-state p {
+  margin: 0;
+  color: var(--mute, #64748b);
+}
+
+.msiq-empty-state a {
+  display: inline-block;
+  margin-top: 5px;
+  color: #5878df;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.msiq-empty-state-compact {
+  width: 100%;
+  border: 0;
+  padding: 4px 0;
+}
+
+.msiq-capability-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0;
+  margin: 9px 0;
+  list-style: none;
+}
+
+.msiq-capability-list li {
+  padding: 4px 7px;
+  border: 1px solid var(--line, #d6deea);
+  border-radius: 999px;
+  color: var(--mute, #64748b);
+  font-size: 11px;
+}
+
+.msiq-favorite-star {
+  padding: 0;
+}
+
+html[data-theme="dark"] .doc .msiq-tooltip-trigger {
+  border-color: #7688a5;
+  color: #dce6fa;
+}
+
+html[data-theme="dark"] .doc .msiq-field-tooltip,
+html[data-theme="dark"] .doc .msiq-history-controls input,
+html[data-theme="dark"] .msiq-compact-sort {
+  border-color: #405579;
+  background: #121d2f;
+  color: #f1f5ff;
+}
+
+html[data-theme="dark"] .doc .msiq-step-action,
+html[data-theme="dark"] .doc .msiq-history-controls button,
+html[data-theme="dark"] .doc .msiq-result-options select,
+html[data-theme="dark"] .msiq-compact-sort {
+  border-color: #405579;
+}
+
+html[data-theme="dark"] .msiq-empty-state,
+html[data-theme="dark"] .msiq-capability-list li {
+  border-color: #405579;
+  color: #b7c4d9;
+}
+
+html[data-theme="dark"] .msiq-empty-state b {
+  color: #f1f5ff;
+}
+
+html[data-theme="dark"] .msiq-empty-state p,
+html[data-theme="dark"] .msiq-directory-controls label {
+  color: #b7c4d9;
+}
+
+html[data-theme="dark"] .msiq-empty-state > span {
+  background: #233455;
+  color: #a9bdff;
+}
+
+html[data-theme="dark"] .msiq-recently-used,
+html[data-theme="dark"] .msiq-compare-panel {
+  border-color: #405579 !important;
+  background: #121d2f !important;
+  color: #f1f5ff;
+}
+
+@media (max-width: 560px) {
+  .doc .msiq-history-header {
+    align-items: flex-start;
+  }
+
+  .doc .msiq-history-controls {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .doc .msiq-history-controls input {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .doc .msiq-field-tooltip {
+    width: min(260px, calc(100vw - 36px));
+    max-width: calc(100vw - 36px);
+  }
+
+  .doc.directory-doc .calculator-card {
+    padding: 56px 15px 58px !important;
+  }
+
+  .msiq-recently-used > div:first-child {
+    align-items: flex-start !important;
+  }
+
+  .msiq-recent-controls {
+    justify-content: flex-start;
+  }
+
+  .msiq-compare-panel {
+    overflow-wrap: anywhere;
+  }
+
+  .msiq-directory-controls {
+    align-items: flex-start;
+  }
+
+  .msiq-compare-panel,
+  .msiq-recently-used {
+    padding: 12px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .doc .msiq-history-controls button {
+    flex: 1 1 auto;
+  }
+
+  .msiq-directory-controls {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .doc.directory-doc .calculator-card {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .doc.directory-doc .calculator-card .msiq-compare-button {
+    left: 8px !important;
+    max-width: calc(60% - 12px);
+    padding: 5px 7px !important;
+  }
+
+  .doc.directory-doc .calculator-card .msiq-favorite-star {
+    right: 8px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msiq-recently-used *,
+  .msiq-compare-panel *,
+  .calculator-card,
+  .doc .msiq-step-action {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+/* msiq-verification-status-styles-v1 */
+.msiq-verification-status {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 12px 0 8px;
+  padding: 10px 13px;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-left: 4px solid #64748b;
+  border-radius: 10px;
+  background: rgba(128, 128, 128, 0.07);
+  color: inherit;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.msiq-verification-status[data-status="VERIFIED"] {
+  border-left-color: #16a34a;
+}
+.msiq-verification-status[data-status="INCORRECT"] {
+  border-left-color: #d97706;
+}
+.msiq-verification-status[data-status="INCONCLUSIVE"] {
+  border-left-color: #64748b;
+}
+.msiq-verification-status[data-status="INVALID"] {
+  border-left-color: #dc2626;
+}
+
+/* msiq-professional-clean-polish-v1 */
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body :is(h1,h2,h3,h4) {
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+body :is(.card,.glass-card,.glass-panel,.glass-surface,
+.calculator-card,.calc-card,.tool-card,.panel,.result-card,
+.result-box,.output-box,.formula-card,.info-card,.stat-card,
+.feature-card,.faq-item) {
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+body :is(input,select,textarea) {
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+body :is(button.btn,button.ghost,input[type="submit"],input[type="button"]) {
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+body :is(a,button,input,select,textarea):focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  body :is(.card,.glass-card,.glass-panel,.calculator-card,
+  .calc-card,.tool-card,.feature-card):hover {
+    border-color: var(--acc);
+  }
+  body :is(button.btn,button.ghost,input[type="submit"],
+  input[type="button"]):hover {
+    box-shadow: 0 4px 12px var(--acc2);
+  }
+}
+@media (max-width: 600px) {
+  body main {
+    padding-top: 22px;
+    padding-bottom: 48px;
+  }
+  body :is(.card,.calculator-card,.calc-card,.tool-card) {
+    border-radius: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body :is(.card,.glass-card,.glass-panel,.calculator-card,
+  .calc-card,.tool-card,button,a,input,select,textarea) {
+    transition: none !important;
+  }
+}
+/* end msiq-professional-clean-polish-v1 */
+/* msiq-premium-clean-design-v1 */
+/* Cleaner typography */
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body main {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+body :is(h1,h2,h3,h4,h5,h6) {
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+/* Premium surfaces: retain original colours */
+body :is(.card,.glass-card,.glass-panel,.glass-surface,
+.calculator-card,.calc-card,.tool-card,.panel,.result-card,
+.result-box,.output-box,.formula-card,.info-card,.stat-card,
+.feature-card,.faq-item,.doc) {
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(16,24,40,.045),
+              0 12px 28px rgba(16,24,40,.035) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+/* Remove excessive 3D pseudo decoration */
+body :is(.card,.glass-card,.glass-panel,.glass-surface,
+.calculator-card,.calc-card,.tool-card,.panel)::before,
+body :is(.card,.glass-card,.glass-panel,.glass-surface,
+.calculator-card,.calc-card,.tool-card,.panel)::after {
+  box-shadow: none !important;
+}
+/* Cleaner navigation */
+body header {
+  box-shadow: 0 2px 12px rgba(16,24,40,.035);
+}
+body nav a {
+  border-radius: 9px;
+  transition: background .18s ease, color .18s ease;
+}
+/* Refined form controls */
+body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body select,
+body textarea {
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  min-height: 42px;
+}
+body textarea {
+  min-height: 130px;
+}
+body input:focus,
+body select:focus,
+body textarea:focus {
+  border-color: var(--acc) !important;
+  box-shadow: 0 0 0 3px var(--acc2) !important;
+}
+/* Buttons */
+body button,
+body input[type="submit"],
+body input[type="button"] {
+  border-radius: 10px;
+  transition: transform .18s ease, box-shadow .18s ease,
+              opacity .18s ease !important;
+}
+body button.btn,
+body button.ghost {
+  box-shadow: none;
+  font-weight: 600;
+  letter-spacing: .005em;
+}
+body button:focus-visible,
+body a:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
+/* Grid cards */
+body .grid {
+  gap: 16px;
+}
+body .grid > a {
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(16,24,40,.04) !important;
+  transform: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  body :is(.card,.calculator-card,.calc-card,.tool-card,
+  .panel,.feature-card,.grid > a):hover {
+    border-color: var(--acc) !important;
+    box-shadow: 0 5px 16px rgba(16,24,40,.07) !important;
+    transform: translateY(-1px);
+  }
+  body button.btn:hover,
+  body button.ghost:hover {
+    box-shadow: 0 3px 10px var(--acc2);
+  }
+}
+/* Better mobile spacing */
+@media (max-width: 600px) {
+  body main {
+    padding: 20px 13px 45px;
+  }
+  body :is(.card,.calculator-card,.calc-card,.tool-card,
+  .panel,.doc) {
+    border-radius: 13px !important;
+  }
+  body .grid {
+    gap: 11px;
+  }
+}
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body * {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+/* end msiq-premium-clean-design-v1 */
+/* msiq-final-premium-override-v1 */
+/* Main layout */
+html body .wrap {
+  max-width: 1120px !important;
+}
+html body main.wrap {
+  padding-top: 36px !important;
+  padding-bottom: 65px !important;
+}
+/* Header */
+html body header {
+  background: var(--card) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  border-right: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 2px 12px rgba(16,24,40,.04) !important;
+  backdrop-filter: none !important;
+}
+/* Main cards */
+html body .card,
+html body .panel,
+html body .tool-card,
+html body .calculator-card,
+html body .calc-card,
+html body .result-card,
+html body .doc,
+html body .content-card,
+html body .workspace,
+html body .feature-card {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 2px 5px rgba(16,24,40,.035),
+              0 8px 22px rgba(16,24,40,.045) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+}
+/* Homepage hero */
+html body #page-home .hero {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 5px 22px rgba(16,24,40,.055) !important;
+  backdrop-filter: none !important;
+  overflow: hidden;
+}
+html body #page-home .hero::before,
+html body #page-home .hero::after {
+  display: none !important;
+  content: none !important;
+}
+/* Calculator and feature grids */
+html body .grid {
+  gap: 16px !important;
+}
+html body .grid > a,
+html body .grid .card {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 13px !important;
+  padding: 18px !important;
+  box-shadow: 0 2px 7px rgba(16,24,40,.035) !important;
+  transform: none !important;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+/* Keep existing accent colours */
+html body .grid > a b {
+  color: var(--acc) !important;
+}
+/* Buttons and inputs */
+html body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html body select,
+html body textarea {
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+html body button,
+html body input[type="submit"],
+html body input[type="button"] {
+  border-radius: 10px !important;
+}
+/* Remove excessive 3D hover movement */
+html body .card:hover,
+html body .panel:hover,
+html body .tool-card:hover,
+html body .calculator-card:hover,
+html body .grid > a:hover {
+  transform: none !important;
+  border-color: var(--line) !important;
+  box-shadow: 0 5px 16px rgba(16,24,40,.065) !important;
+}
+@media (max-width: 768px) {
+  html body main.wrap {
+    padding: 20px 13px 45px !important;
+  }
+  html body .grid {
+    gap: 11px !important;
+  }
+  html body .card,
+  html body .grid > a {
+    border-radius: 13px !important;
+  }
+}
+/* end msiq-final-premium-override-v1 *//* MSI Q - Premium Language Dropdown Polish */
+body #msiq-lang-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  min-height: 42px !important;
+  padding: 5px 12px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 11px !important;
+  background: var(--card) !important;
+  box-shadow: 0 2px 8px rgba(16,24,40,.06) !important;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+body #msiq-lang-wrap:hover,
+body #msiq-lang-wrap:focus-within {
+  border-color: var(--acc) !important;
+  box-shadow: 0 0 0 3px var(--acc2) !important;
+}
+body #msiq-lang-wrap svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0 !important;
+  stroke: var(--acc) !important;
+}
+body #msiq-lang-wrap #msiq-lang-select {
+  min-width: 112px !important;
+  max-width: 155px !important;
+  height: 30px !important;
+  padding: 0 22px 0 2px !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  font: 600 13px system-ui, sans-serif !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+body #msiq-lang-wrap #msiq-lang-select option {
+  background: var(--card) !important;
+  color: var(--ink) !important;
+}
+body #msiq-lang-wrap::after {
+  width: 7px !important;
+  height: 7px !important;
+  border-right: 1.8px solid var(--mute) !important;
+  border-bottom: 1.8px solid var(--mute) !important;
+  transform: rotate(45deg) !important;
+  margin-left: -22px !important;
+  margin-top: -4px !important;
+  pointer-events: none !important;
+}
+@media (max-width: 480px) {
+  body #msiq-lang-wrap {
+    min-height: 38px !important;
+    padding: 4px 9px !important;
+    gap: 7px !important;
+  }
+  body #msiq-lang-wrap #msiq-lang-select {
+    min-width: 100px !important;
+    max-width: 125px !important;
+    font-size: 12px !important;
+  }
+}
+/* End Premium Language Dropdown Polish */
